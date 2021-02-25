@@ -2,6 +2,22 @@
 Classify and recognize emotions through voice signal in a foreign language
 
 
+### Project Structure
+```
+Project
+|_______data
+|       |_______external
+|       |_______interim
+|       |_______processed
+|       |_______raw
+|_______models
+|_______notebook
+|_______reports
+|_______src
+       |_______data
+       |_______features
+       |_______model
+```
 
 
 
