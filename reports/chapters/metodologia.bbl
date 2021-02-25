@@ -1,0 +1,263 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{AbdulQayyum2019}{article}{}
+      \name{author}{3}{}{%
+        {{hash=5840a3706034af75658c388004e7982d}{%
+           family={{Abdul Qayyum}},
+           familyi={A\bibinitperiod},
+           given={Alif\bibnamedelima Bin},
+           giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=a2eaece6233ed618173d7ae154daea40}{%
+           family={Arefeen},
+           familyi={A\bibinitperiod},
+           given={Asiful},
+           giveni={A\bibinitperiod}}}%
+        {{hash=eaa7bcc9dcc4555a73e0da9d487b8969}{%
+           family={Shahnaz},
+           familyi={S\bibinitperiod},
+           given={Celia},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \strng{fullhash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \strng{bibnamehash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \strng{authorbibnamehash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \strng{authornamehash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \strng{authorfullhash}{f8bd8a5aaf73d7c98e8f37d55f978db6}
+      \field{sortinit}{A}
+      \field{sortinithash}{a3dcedd53b04d1adfd5ac303ecd5e6fa}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Speech is considered as the widest and most natural medium of communication. Speech can convey a plethora of information regarding one's mental, behavioral, emotional traits. Besides, speech-emotion recognition related work can aid in averting cyber crimes. Research on speech-emotion recognition exploiting concurrent machine learning techniques has been on the peak for some time. Numerous techniques like Recurrent Neural Network (RNN), Deep Neural Network (DNN), spectral feature extraction and many more have been applied on different datasets. This paper presents a unique Convolutional Neural Network (CNN) based speech-emotion recognition system. A model is developed and fed with raw speech from specific dataset for training, classification and testing purposes with the help of high end GPU. Finally, it comes out with a convincing accuracy of 83.61% which is better compared to any other similar task on this dataset by a large margin. This work will be influential in developing conversational and social robots and allocating all the nuances of their sentiments.}
+      \field{isbn}{9781728142944}
+      \field{journaltitle}{2019 IEEE International Conference on Signal Processing, Information, Communication and Systems, SPICSCON 2019}
+      \field{number}{November}
+      \field{title}{{Convolutional Neural Network (CNN) Based Speech-Emotion Recognition}}
+      \field{year}{2019}
+      \field{pages}{122\bibrangedash 125}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/SPICSCON48833.2019.9065172
+      \endverb
+      \verb{file}
+      \verb :home/luisa/Downloads/ConvolutionalNeuralNetworkCNNBasedSpeech-EmotionRecognition.pdf:pdf
+      \endverb
+      \keyw{Convolutional Neural Network (CNN),Deep Neural Network (DNN),Discrete Cosine Transform (DCT),Emotion,Emotional state,Modulation Spectral Features (MSF),Multi class,Multivariate Linear Regression Classification (MLR),Recurrent Neural Network (RNN),SAVEE dataset,Speech Processing,Speech-emotion,Support Vector Machines (SVM)}
+    \endentry
+    \entry{Farooq2020}{article}{}
+      \name{author}{6}{}{%
+        {{hash=59add5d4795b49b701b82f2b7297e3a4}{%
+           family={Farooq},
+           familyi={F\bibinitperiod},
+           given={Misbah},
+           giveni={M\bibinitperiod}}}%
+        {{hash=20f77e6e2ce71ad1ff1e258f6d84e951}{%
+           family={Hussain},
+           familyi={H\bibinitperiod},
+           given={Fawad},
+           giveni={F\bibinitperiod}}}%
+        {{hash=24ffbf1f7436bff42c8ca5bd8839d9d4}{%
+           family={Baloch},
+           familyi={B\bibinitperiod},
+           given={Naveed\bibnamedelima Khan},
+           giveni={N\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=f664c7be349900bdea364b34b715a56c}{%
+           family={Raja},
+           familyi={R\bibinitperiod},
+           given={Fawad\bibnamedelima Riasat},
+           giveni={F\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=97cd142d5c48d8083ec92a967e0d0da4}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Heejung},
+           giveni={H\bibinitperiod}}}%
+        {{hash=0d23778b441fe33df41b2c31c90e7b61}{%
+           family={Zikria},
+           familyi={Z\bibinitperiod},
+           given={Yousaf\bibnamedelima Bin},
+           giveni={Y\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{422ce05dfae023a486a32bb3dbb12239}
+      \strng{fullhash}{c3dcc8b3f869a80d3020dcc6c60ef7a2}
+      \strng{bibnamehash}{422ce05dfae023a486a32bb3dbb12239}
+      \strng{authorbibnamehash}{422ce05dfae023a486a32bb3dbb12239}
+      \strng{authornamehash}{422ce05dfae023a486a32bb3dbb12239}
+      \strng{authorfullhash}{c3dcc8b3f869a80d3020dcc6c60ef7a2}
+      \field{sortinit}{F}
+      \field{sortinithash}{fb0c0faa89eb6abae8213bf60e6799ea}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Speech emotion recognition (SER) plays a significant role in human-machine interaction. Emotion recognition from speech and its precise classification is a challenging task because a machine is unable to understand its context. For an accurate emotion classification, emotionally relevant features must be extracted from the speech data. Traditionally, handcrafted features were used for emotional classification from speech signals; however, they are not efficient enough to accurately depict the emotional states of the speaker. In this study, the benefits of a deep convolutional neural network (DCNN) for SER are explored. For this purpose, a pretrained network is used to extract features from state-of-the-art speech emotional datasets. Subsequently, a correlation-based feature selection technique is applied to the extracted features to select the most appropriate and discriminative features for SER. For the classification of emotions, we utilize support vector machines, random forests, the k-nearest neighbors algorithm, and neural network classifiers. Experiments are performed for speaker-dependent and speaker-independent SER using four publicly available datasets: the Berlin Dataset of Emotional Speech (Emo-DB), Surrey Audio Visual Expressed Emotion (SAVEE), Interactive Emotional Dyadic Motion Capture (IEMOCAP), and the Ryerson Audio Visual Dataset of Emotional Speech and Song (RAVDESS). Our proposed method achieves an accuracy of 95.10% for Emo-DB, 82.10% for SAVEE, 83.80% for IEMOCAP, and 81.30% for RAVDESS, for speaker-dependent SER experiments. Moreover, our method yields the best results for speaker-independent SER with existing handcrafted features-based SER approaches.}
+      \field{issn}{14248220}
+      \field{journaltitle}{Sensors (Switzerland)}
+      \field{number}{21}
+      \field{title}{{Impact of feature selection algorithm on speech emotion recognition using deep convolutional neural network}}
+      \field{volume}{20}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 18}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.3390/s20216008
+      \endverb
+      \verb{file}
+      \verb :home/luisa/Downloads/sensors-20-06008.pdf:pdf
+      \endverb
+      \keyw{Correlation-based feature selection,Deep convolutional neural network,Speech emotion recognition}
+    \endentry
+    \entry{Hellbernd2016}{article}{}
+      \name{author}{2}{}{%
+        {{hash=5d22a7e311282f495584f158c5ee05c8}{%
+           family={Hellbernd},
+           familyi={H\bibinitperiod},
+           given={Nele},
+           giveni={N\bibinitperiod}}}%
+        {{hash=07f4cf026fb884952d11a81f7b0edb28}{%
+           family={Sammler},
+           familyi={S\bibinitperiod},
+           given={Daniela},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{9b1f5177935cc5e47b601e8c980435f5}
+      \strng{fullhash}{9b1f5177935cc5e47b601e8c980435f5}
+      \strng{bibnamehash}{9b1f5177935cc5e47b601e8c980435f5}
+      \strng{authorbibnamehash}{9b1f5177935cc5e47b601e8c980435f5}
+      \strng{authornamehash}{9b1f5177935cc5e47b601e8c980435f5}
+      \strng{authorfullhash}{9b1f5177935cc5e47b601e8c980435f5}
+      \field{sortinit}{H}
+      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Action-theoretic views of language posit that the recognition of others' intentions is key to successful interpersonal communication. Yet, speakers do not always code their intentions literally, raising the question of which mechanisms enable interlocutors to exchange communicative intents. The present study investigated whether and how prosody-the vocal tone-contributes to the identification of "unspoken" intentions. Single (non-)words were spoken with six intonations representing different speech acts-as carriers of communicative intentions. This corpus was acoustically analyzed (Experiment 1), and behaviorally evaluated in two experiments (Experiments 2 and 3). The combined results show characteristic prosodic feature configurations for different intentions that were reliably recognized by listeners. Interestingly, identification of intentions was not contingent on context (single words), lexical information (non-words), and recognition of the speaker's emotion (valence and arousal). Overall, the data demonstrate that speakers' intentions are represented in the prosodic signal which can, thus, determine the success of interpersonal communication.}
+      \field{issn}{0749596X}
+      \field{journaltitle}{Journal of Memory and Language}
+      \field{title}{{Prosody conveys speaker's intentions: Acoustic cues for speech act perception}}
+      \field{volume}{88}
+      \field{year}{2016}
+      \field{pages}{70\bibrangedash 86}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1016/j.jml.2016.01.001
+      \endverb
+      \verb{file}
+      \verb :C$\backslash$:/Users/Usuario/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Hellbernd, Sammler - 2016 - Prosody conveys speaker's intentions Acoustic cues for speech act perception.pdf:pdf
+      \endverb
+      \keyw{Acoustics,Intention,Pragmatics,Prosody,Speech acts}
+    \endentry
+    \entry{Langari2020}{article}{}
+      \name{author}{3}{}{%
+        {{hash=14ba3a3cf6b4e4b5369d491a58b3c2c9}{%
+           family={Langari},
+           familyi={L\bibinitperiod},
+           given={Shadi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1b4160491bffd92aadb3a66a158b8b60}{%
+           family={Marvi},
+           familyi={M\bibinitperiod},
+           given={Hossein},
+           giveni={H\bibinitperiod}}}%
+        {{hash=0d179d28f9b2f5efc14456c8f7ee0d10}{%
+           family={Zahedi},
+           familyi={Z\bibinitperiod},
+           given={Morteza},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier Ltd}%
+      }
+      \strng{namehash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \strng{fullhash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \strng{bibnamehash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \strng{authorbibnamehash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \strng{authornamehash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \strng{authorfullhash}{2f38107d1a6bdf56fc56e04f0ef2e94c}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{One of the most important issues in human-computer interaction is to create a system that can hear and respond correctly like a human. This has led to the design of the Automatic Speech Emotion Recognition system (SER) that is able to identify different emotional classes by extracting and selecting effective features from speech signals. For this reason, in this study, we propose a novel feature extraction method based on adaptive time-frequency coefficients to improve the SER. The simulations are performed using the Berlin Emotional Speech Database (EMO-DB), the Surrey Audio-Visual Expressed Emotion Database (SAVEE), and the Persian Drama Radio Emotional Corpus (PDREC). The main contribution of our work is to extract novel features, called Adaptive Time-Frequency features, based on the Fractional Fourier Transform and to combine them with Cepstral features. Experimental results show that the proposed method effectively identifies different emotional classes in EMO-DB (97.57{\%} accuracy), SAVEE (80{\%} accuracy), and PDREC (91.46{\%} accuracy) data sets.}
+      \field{issn}{23529148}
+      \field{journaltitle}{Informatics in Medicine Unlocked}
+      \field{title}{{Efficient speech emotion recognition using modified feature extraction}}
+      \field{volume}{20}
+      \field{year}{2020}
+      \field{pages}{100424}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.imu.2020.100424
+      \endverb
+      \verb{file}
+      \verb :C$\backslash$:/Users/Usuario/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Langari, Marvi, Zahedi - 2020 - Efficient speech emotion recognition using modified feature extraction.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016/j.imu.2020.100424
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016/j.imu.2020.100424
+      \endverb
+      \keyw{Evolutionary algorithms,Feature extraction,Feature selection,Human-computer interaction,Speech emotion recognition}
+    \endentry
+    \entry{Rashid2018}{incollection}{}
+      \name{author}{2}{}{%
+        {{hash=62eb8cb615049d5b956d850d5fbda455}{%
+           family={Rashid},
+           familyi={R\bibinitperiod},
+           given={Sabur\bibnamedelimb Ajibola\bibnamedelima Alim},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=7660fcf6dba9e5a7893efccf1e25a942}{%
+           family={Alang},
+           familyi={A\bibinitperiod},
+           given={Nahrul\bibnamedelima Khair},
+           giveni={N\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \strng{namehash}{af8fdcad1044adefd902e1907426c501}
+      \strng{fullhash}{af8fdcad1044adefd902e1907426c501}
+      \strng{bibnamehash}{af8fdcad1044adefd902e1907426c501}
+      \strng{authorbibnamehash}{af8fdcad1044adefd902e1907426c501}
+      \strng{authornamehash}{af8fdcad1044adefd902e1907426c501}
+      \strng{authorfullhash}{af8fdcad1044adefd902e1907426c501}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Speech is a complex naturally acquired human motor ability. It is characterized in adults with the production of about 14 different sounds per second via the harmonized actions of roughly 100 muscles. Speaker recognition is the capability of a software or hardware to receive speech signal, identify the speaker present in the speech signal and recognize the speaker afterwards. Feature extraction is accomplished by changing the speech waveform to a form of parametric representation at a relatively minimized data rate for subsequent processing and analysis. Therefore, acceptable classification is derived from excellent and quality features. Mel Frequency Cepstral Coefficients (MFCC), Linear Prediction Coeffi- cients (LPC), Linear Prediction Cepstral Coefficients (LPCC), Line Spectral Frequencies (LSF), Discrete Wavelet Transform (DWT) and Perceptual Linear Prediction (PLP) are the speech feature extraction techniques that were discussed in these chapter. These methods have been tested in a wide variety of applications, giving them high level of reliability and acceptability. Researchers have made several modifications to the above discussed tech- niques to make them less susceptible to noise, more robust and consume less time. In conclusion, none of the methods is superior to the other, the area of application would determine which method to select.}
+      \field{booktitle}{From Natural to Artificial Intelligence: Algorithms and Applications}
+      \field{chapter}{Chapter 1}
+      \field{number}{tourism}
+      \field{title}{{Some Commonly Used Speech Feature Extraction Algorithms}}
+      \field{year}{2018}
+      \field{pages}{13}
+      \range{pages}{1}
+      \verb{file}
+      \verb :C$\backslash$:/Users/Usuario/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Rashid - 2018 - Some Commonly Used Speech Feature Extraction Algorithms.pdf:pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.intechopen.com/books/advanced-biometric-technologies/liveness-detection-in-biometrics
+      \endverb
+      \verb{url}
+      \verb https://www.intechopen.com/books/advanced-biometric-technologies/liveness-detection-in-biometrics
+      \endverb
+      \keyw{discrete wavelet transform (DWT),human speech,line spectral frequencies (LSF),linear prediction cepstral coefficients (LPCC),linear prediction coefficients (LPC),mel frequency cepstral coefficients (MFCC),perceptual linear prediction (PLP),speech features}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
