@@ -18,3 +18,5 @@
 * [CookieCutter: Structure dataScience project](https://drivendata.github.io/cookiecutter-data-science/)
 * [ML project structure template](https://github.com/ThomasRobertFr/ml-project-structure)
 * [create ml app](https://github.com/shreyashankar/create-ml-app)
+
+* [Peer Review](https://www.kdnuggets.com/2020/04/peer-reviewing-data-science-projects.html) A collection of questions to ensure the correctness of results
