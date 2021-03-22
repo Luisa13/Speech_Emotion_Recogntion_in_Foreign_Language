@@ -12,6 +12,7 @@
 #### Technical Examples
  * [SER python project](https://towardsdatascience.com/building-a-speech-emotion-recognizer-using-python-4c1c7c89d713): Consigue un 79.3 y explica MEL y MFCC
  * [FrontEnd for Audio Classification - GoogleAI](https://ai.googleblog.com/2021/03/leaf-learnable-frontend-for-audio.html?m=1)
+ * [Breaking down the components in SER](https://towardsdatascience.com/automatic-speech-recognition-breaking-down-components-of-speech-85d065061517)
 
 #### ML Organization
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
