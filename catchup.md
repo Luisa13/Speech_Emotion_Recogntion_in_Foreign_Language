@@ -46,6 +46,9 @@ The goal is to get an accuracy good enough to extend it to the other languages
 * [D.A. examples in kaggle](https://www.kaggle.com/CVxTz/audio-data-augmentation)
 * [Augmentation methods](https://www.kaggle.com/haqishen/augmentation-methods-for-audio)
 
+### Datasets
+[SER Datasets](https://github.com/SuperKogito/SER-datasets)
+
 #### ML Organization
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
 * [CookieCutter: Structure dataScience project](https://drivendata.github.io/cookiecutter-data-science/)
