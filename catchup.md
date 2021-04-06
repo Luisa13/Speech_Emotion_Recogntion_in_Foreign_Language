@@ -1,12 +1,38 @@
 
 ## TODO
 * -[ ] Read [this article](https://towardsdatascience.com/how-i-understood-what-features-to-consider-while-training-audio-files-eedfb6e9002b) about feature importance, extract information and write the corresponding conclusion 
-* -[ ] Experiments: 
-> * -[ ] Ex.1 Result by gender
-> * -[ ] Ex.2 Dynamic Value Change
-> * -[ ] Ex.3 Pitch tunning
-> * -[ ] Ex.4 Shifting
-> * -[ ] Ex.5 White noise
+ 
+* ### English
+The goal is to get an accuracy good enough to extend it to the other languages
+* -[x] 1_SER_RAVDESS_English:
+> * Split data set by gender
+> * Use SGD as optimizer
+> * Result: Got 55% accuracy and highly overfitted
+> * -[ ] Why SGD (what's SGD, which type of problems it solves)
+> * -[X] Accuracy and loss plots in one row
+> * -[ ] Shows prediction table
+
+* -[x] 2_SER_RAVDESS_English_Simplified:
+> * Simplified the model
+> * RMS as optimizer
+> * -[ ] Why RMS (what's RMS, which type of problems it solves, why's better the the other one) [see](https://towardsdatascience.com/understanding-rmsprop-faster-neural-network-learning-62e116fcf29a)
+> * -[x] Accuracy and loss plots in one row
+> * -[ ] sparse_categorical_crossentropy? [consider this](https://datascience.stackexchange.com/questions/41921/sparse-categorical-crossentropy-vs-categorical-crossentropy-keras-accuracy)
+> * -[ ] Shows prediction table
+
+* -[x] 2_SER_RAVDESS_English_Augmentation
+> * [ ] Dynamic Value Change
+> * [ ] Pitch tuning
+> * [ ] White noise
+> * [ ] Shiftting
+
+* ### Add Another Language
+
+**GENERAL TODO**
+* [ ] Explain dataset RAVDESS
+* [ ] Titles and seccions definitions
+* [ ] Clean code up and SPANISH
+
 
 ## REFERENCES
 #### Technical Examples
