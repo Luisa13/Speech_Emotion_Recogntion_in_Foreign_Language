@@ -1,4 +1,4 @@
-# SpeechEmotionRecognition
+# Speech Emotion Recognition in a Foreign Language
 Classify and recognize emotions through voice signal in a foreign language
 
 
