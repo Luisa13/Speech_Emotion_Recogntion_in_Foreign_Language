@@ -22,9 +22,9 @@ The goal is to get an accuracy good enough to extend it to the other languages
 
 * -[x] 2_SER_RAVDESS_English_Augmentation
 > * [X] Audio sample to play
-> * [ ] Dynamic Value Change
-> * [ ] Pitch tuning
-> * [ ] White noise
+> * [X] Dynamic Value Change --> shiftting
+> * [X] Pitch tuning
+> * [X] White noise
 > * [ ] Shiftting
 
 * ### Add Another Language
