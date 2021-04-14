@@ -31,7 +31,7 @@ _results for female_
 In [3_SER_RAVDESS_English_Augmentation](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/notebooks/English/3_SER_RAVDESS_English_Augmentation.ipynb) I will try some basic techniques for Speech Emotion Recognition. 
 Regarding the result of the previous experiment and given the fact I will probably face the lack of data in the next analysis for the other languages, exploring Data Agumentation techniques will be a good practice before starting to look for other dataset to combine.
 
-* MFCC features decreased to 40 (from 216)
+* MFCC features were reduced to 40 (from 216)
 * Performed the next DA techniques: adding white noise, Shiftting and Pitch Tunning (each one is explained inside the notebook)
 * Given the need of more data I tried to fit the model merging male and female prosodies. It resulted in a higher accuracy decreasing also the overfitting.
 
