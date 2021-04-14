@@ -37,12 +37,13 @@ Regarding the result of the previous experiment and given the fact I will probab
 
 Results carried out in **female dataset**
 White Noise | Shiftting | Pitch Tunning 
-------|-------|-------
-![3_RAVDESS_English_female_WhiteNoise](https://user-images.githubusercontent.com/3811449/114694990-663ec680-9d1b-11eb-82f5-81a9f7b7dfe0.png) |![3_RAVDESS_English_Shiftting](https://user-images.githubusercontent.com/3811449/114696635-2973cf00-9d1d-11eb-8ac5-41f754c6515e.png)| ![3_RAVDESS_English_PitchTunning](https://user-images.githubusercontent.com/3811449/114696651-30024680-9d1d-11eb-995a-03dbfeaebd67.png)
+------------|--------------|--------------
+![3_RAVDESS_English_female_WhiteNoise](https://user-images.githubusercontent.com/3811449/114694990-663ec680-9d1b-11eb-82f5-81a9f7b7dfe0.png)|![5_SER_RAVDESS_female_DA_shiftted_mfcc_40](https://user-images.githubusercontent.com/3811449/114697830-a94e6900-9d1e-11eb-9275-ef10cc6d96c6.png) | ![6_SER_RAVDESS_female_DA_pitch-tunning_mfcc_40](https://user-images.githubusercontent.com/3811449/114697846-ad7a8680-9d1e-11eb-982d-ee58bd9ab972.png)
+
 
 Results carried out in the **whole dataset**
 White Noise | Shiftting | Pitch Tunning 
-------|-------|-------
+------------|--------------|--------------
 ![3_RAVDESS_English_WhiteNoise](https://user-images.githubusercontent.com/3811449/114696222-b9654900-9d1c-11eb-8a9e-4098b9cc480a.png)| ![3_RAVDESS_English_Shiftting](https://user-images.githubusercontent.com/3811449/114695117-88d0df80-9d1b-11eb-9135-0797c622edea.png) |![3_RAVDESS_English_PitchTunning](https://user-images.githubusercontent.com/3811449/114695024-6e970180-9d1b-11eb-8260-57d4c55e00c1.png)  
 acc: 50.98% |acc: 45.84%| acc: 44.11%
 
