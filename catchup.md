@@ -5,20 +5,20 @@
 * ### English
 The goal is to get an accuracy good enough to extend it to the other languages
 * -[x] **1_SER_RAVDESS_English:**
+* -[ ] Why SGD (what's SGD, which type of problems it solves)
 > * Split data set by gender
 > * Use SGD as optimizer
 > * Result: Got 55% accuracy and highly overfitted
- * -[ ] Why SGD (what's SGD, which type of problems it solves)
- * -[X] Accuracy and loss plots in one row
- * -[X] Shows prediction table
+> * -[X] Accuracy and loss plots in one row
+> * -[X] Shows prediction table
 
 * -[x] **2_SER_RAVDESS_English_Simplified:**
 > * Simplified the model
 > * RMS as optimizer
+> * -[x] Accuracy and loss plots in one row
+> * -[X] sparse_categorical_crossentropy? [consider this](https://datascience.stackexchange.com/questions/41921/sparse-categorical-crossentropy-vs-categorical-crossentropy-keras-accuracy) (inly format issues)
+> * -[X] Shows prediction table
  * -[ ] Why RMS (what's RMS, which type of problems it solves, why's better the the other one) [see](https://towardsdatascience.com/understanding-rmsprop-faster-neural-network-learning-62e116fcf29a)
- * -[x] Accuracy and loss plots in one row
- * -[X] sparse_categorical_crossentropy? [consider this](https://datascience.stackexchange.com/questions/41921/sparse-categorical-crossentropy-vs-categorical-crossentropy-keras-accuracy) (inly format issues)
- * -[X] Shows prediction table
 
 * -[x] **3_SER_RAVDESS_English_Augmentation**
 * -[ ] Save new images with corrected y_test
@@ -26,6 +26,7 @@ The goal is to get an accuracy good enough to extend it to the other languages
 * -[ ] Keep only DA: remove lrfn
 * -[ ] Keep only DA: remove regularization l2
 * -[ ] Split experiment with tunning
+* -[ ] Add readme
 > * [X] Audio sample to play
 > * [X] Shiftting: whole experiment
 > * [X] Pitch tuning: whole experiment
