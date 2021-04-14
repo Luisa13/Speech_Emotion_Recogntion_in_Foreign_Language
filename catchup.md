@@ -21,12 +21,23 @@ The goal is to get an accuracy good enough to extend it to the other languages
  * -[ ] Shows prediction table
 
 * -[x] **3_SER_RAVDESS_English_Augmentation**
+* -[ ] Save new images with corrected y_test
+* -[ ] Load correctly h5 feature files
+* -[ ] Keep only DA: remove lrfn
+* -[ ] Keep only DA: remove regularization l2
+* -[ ] Split experiment with tunning
 > * [X] Audio sample to play
 > * [X] Shiftting: whole experiment
 > * [X] Pitch tuning: whole experiment
 > * [X] White noise: whole experiment
-> * [ ] Combination pitch and shiftting: Whole experiment
+> * [x] Combination pitch and shiftting: Whole experiment
 > * [ ] Explain how number of features affect to the overfitting
+
+* -[x] **3_SER_RAVDESS_English_Tunning**
+* -[ ] Add L2 Regularization
+* -[ ] Add lrfn
+* -[ ] Add lrfn + early stopping
+* -[ ] Add lrlrp + early stopping + lrfn
 
 * ### Add Another Language
 
