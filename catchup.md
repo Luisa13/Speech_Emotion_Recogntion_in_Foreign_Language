@@ -5,7 +5,7 @@
 * ### English
 The goal is to get an accuracy good enough to extend it to the other languages
 * -[x] **1_SER_RAVDESS_English:**
-* -[ ] Why SGD (what's SGD, which type of problems it solves)
+* -[X] Why SGD (what's SGD, which type of problems it solves)
 > * Split data set by gender
 > * Use SGD as optimizer
 > * Result: Got 55% accuracy and highly overfitted
@@ -21,12 +21,10 @@ The goal is to get an accuracy good enough to extend it to the other languages
  * -[ ] Why RMS (what's RMS, which type of problems it solves, why's better the the other one) [see](https://towardsdatascience.com/understanding-rmsprop-faster-neural-network-learning-62e116fcf29a)
 
 * -[x] **3_SER_RAVDESS_English_Augmentation**
-* -[ ] Save new images with corrected y_test
+* -[X] Save new images with corrected y_test
 * -[ ] Load correctly h5 feature files
-* -[ ] Keep only DA: remove lrfn
-* -[ ] Keep only DA: remove regularization l2
-* -[ ] Split experiment with tunning
-* -[ ] Add readme
+* -[X] Split experiment with tunning
+* -[X] Add readme
 > * [X] Audio sample to play
 > * [X] Shiftting: whole experiment
 > * [X] Pitch tuning: whole experiment
@@ -63,6 +61,7 @@ The goal is to get an accuracy good enough to extend it to the other languages
 
 ### Datasets
 [SER Datasets](https://github.com/SuperKogito/SER-datasets)
+[Persian Dataset](https://www.kaggle.com/mansourehk/shemo-persian-speech-emotion-detection-database)
 
 #### ML Organization
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
