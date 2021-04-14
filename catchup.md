@@ -63,6 +63,7 @@ The goal is to get an accuracy good enough to extend it to the other languages
 ### Datasets
 - [SER Datasets](https://github.com/SuperKogito/SER-datasets)
 - [Persian Dataset](https://www.kaggle.com/mansourehk/shemo-persian-speech-emotion-detection-database)
+- [datasets search in kaggle](https://www.kaggle.com/search?q=dataset+speech+emotion+recognition+in%3Adatasets)
 
 #### ML Organization
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
