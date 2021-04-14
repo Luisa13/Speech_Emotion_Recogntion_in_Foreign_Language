@@ -34,6 +34,7 @@ Regarding the result of the previous experiment and given the fact I will probab
 * MFCC features were reduced to 40 (from 216)
 * Performed the next DA techniques: adding white noise, Shiftting and Pitch Tunning (each one is explained inside the notebook)
 * Given the need of more data I tried to fit the model merging male and female prosodies. It resulted in a higher accuracy decreasing also the overfitting.
+* Notable improvement after applying L2 regularization
 
 Results carried out in **female dataset**
 White Noise | Shiftting | Pitch Tunning 
