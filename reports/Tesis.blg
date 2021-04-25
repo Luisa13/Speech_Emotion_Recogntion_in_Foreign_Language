@@ -1,0 +1,17 @@
+[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
+[0] Config.pm:307> INFO - Logfile is 'Tesis.blg'
+[49] biber:322> INFO - === Fri Jan  1, 2021, 16:30:34
+[58] Biber.pm:415> INFO - Reading 'Tesis.bcf'
+[103] Biber.pm:943> INFO - Found 5 citekeys in bib section 0
+[112] Biber.pm:4256> INFO - Processing section 0
+[112] Utils.pm:75> INFO - Globbing data source 'referenceLib.bib'
+[112] Utils.pm:91> INFO - Globbed data source 'referenceLib.bib' to referenceLib.bib
+[119] Biber.pm:4455> INFO - Looking for bibtex format file 'referenceLib.bib' for section 0
+[121] bibtex.pm:1653> INFO - LaTeX decoding ...
+[155] bibtex.pm:1471> INFO - Found BibTeX data source 'referenceLib.bib'
+[195] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[195] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[196] Biber.pm:4084> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[196] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[201] bbl.pm:652> INFO - Writing 'Tesis.bbl' with encoding 'UTF-8'
+[205] bbl.pm:755> INFO - Output to Tesis.bbl
