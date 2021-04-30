@@ -4,6 +4,7 @@
 % Le dice a LateX desde donde incluir las imagenes
 \usepackage{graphicx}
 \graphicspath{ {./.images/} }
+\usepackage{float}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \addbibresource{mycol_arte.bib}
@@ -74,29 +75,49 @@
 	\section{Valoración y Propuesta}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, para un único lenguaje. Las dificultades que presenta el reconocimiento de emociones en la lengua extranjera se deben principalmente a [...]\hfill \break
 	
-	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas.A pesar de ser relativamente antiguo, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\\
+	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\\
 	
 	En la extracción de características el uso de MFCC ha sido ampliamente escogido al reportar resultados más elevados en comparación con otros métodos, mientras que en la sección donde se discuten los diversons métodos de clasificación usados en SER, vemos que CNN tiene mayor preferencia en la literatura, sin despreciar el uso de modelos basados en una combinación entre CNN y LSTM.\hfill \break
 	
 	El uso de CNN se ha vuelto cada vez más popular, especialmente en el procesamiento de imágenes, debido a que la principal ventaja que ofrecen en comparación con otras arquitecturas, es la habilidad de detectar características relevantes sin supervisión, a la vez que son computacionalmente eficientes.
-	Ahora bien, el problema en el que se desarrolla en este trabajo gira en torno al procesamiento del audio, entonces, ¿cómo se pueden aprovechar las ventajas que provee CNN en este ámbito?\\
-	No olvidemos que el tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo, y al muestrearlas en un determinado rango de frecuencia, obtendríamos algo como lo siguiente:\\
+	Ahora bien, el problema en el que se desarrolla en este trabajo gira en torno al procesamiento del audio, entonces, ¿cómo se pueden aprovechar las ventajas que provee CNN en este ámbito?
+
+	\newpage
+	No olvidemos que el tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo, y al muestrearlas en un determinado rango de frecuencia, obtendríamos algo como lo siguiente:
 	
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.3]{waveform.png}
+	\begin{figure}[H]
+		\includegraphics[scale=0.4]{waveform.png}
 		\caption{waveform de una señal de audio}
 	\end{figure}
 
 	Esto que vemos es una representación digital de la onda, también llamada \emph{waveform}, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
 	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello se hace obvio pensar en la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
-	Sin embargo el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante la variación de la señal en el tiempo. \emph{short-time Fast Fourier Transform} resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina espectograma.
-	\
+	Sin embargo el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
+	
+	\newpage
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{processFFT.png} 
+		\caption{Proceso del uso de FFT en una señal. Fuente: \href{https://www.mathworks.com/help/dsp/ref/dsp.stft.html}{Mathworks}}
+	\end{figure} 
+	
+	
+	Este espectograma puede ser entendido como una representación tridimensional de la señal donde sus características (tiempo, frecuencia y amplitud de la distribución de energía) pueden ser observadas de manera muy visual. Cuando este espectograma se computa, el eje X representa el tiempo, el eje Y representa la frecuencia, que es convertida a una escala logarítmica, y la gama de colores que se utiliza es para simbolizar la variación de energía expresada (medida decibelios), donde los tonos más oscuros indican unos valores de energía más altos, y viceversa.
+	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.3]{processFFT.png} 
-		\caption{Proceso del uso de FFT en una señal. Fuente: \href{https://www.mathworks.com/help/dsp/ref/dsp.stft.html}{Mathworks}}
+		\includegraphics[scale=0.4]{spectogram.png} 
+		\caption{Espectograma de una muestra aleatoria. Fuente: \href{https://es.other.wiki/wiki/Spectrogram}{Wiki}}
 	\end{figure}
+	
+	La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \cite{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir\cite{StevensVolkmann}. Es por ello que el rango donde se mueve nuestro espectograma, se adapta a lo que se llama escala de Mel, en la cual los armónicos se observan equidistantes.
+
+
+
+	
+	
+		
+
 
 
 	
