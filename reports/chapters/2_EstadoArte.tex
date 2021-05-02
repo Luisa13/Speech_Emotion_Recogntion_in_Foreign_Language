@@ -7,7 +7,7 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
-\addbibresource{mycol_arte.bib}
+\addbibresource{./bibLib/mycol_arte.bib}
 
 \begin{document}
 	%---------------------------
@@ -30,7 +30,15 @@
 	\chapter{Estado del Arte}
 	\section{Contexto}
 	El objetivo del reconocimiento de emociones en el habla (a partir de ahora, referido como  SER, \emph{Speech Emotion Recognition} por sus siglas en inglés) es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
-	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. 
+	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
+	
+	Por otro lado y de manera general, la clasificación de emociones se ha tratado desde dos enfoques principales:
+	\begin{itemize}
+		\item Las emociones como categorías discretas
+		\item Las emociones vistas a través de un modelo dimensional
+	\end{itemize}
+	En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \cite{Ekman1992} quien estableció que estas eran 6: enfado, asco, miedo , felicidad, tristeza y sorpresa.
+	En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que de lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \cite{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro. \hfill \break
 	
 	El proceso de la clasificación emocional en el lenguaje, consiste habitualmente, en tres partes: Procesamiento de la señal, que aplica filtros de audio a la señal original; Extracción de características, el cual es un punto esencial en esta modalidad ya que necesita enfatizar el contenido emocional sin depender del contexto lingüístico; Y por último, la clasificación, que será la encargada de mapear el conjunto de características extraídas anteriormente con las emociones etiquetadas que hayamos definido. Seguidamente se ofrece una revisión más detallada de estas etapas.
 		
@@ -90,7 +98,7 @@
 	
 
 	\section{Valoración y Propuesta}
-	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, para un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, \emph{Automatic Speech Recognition}), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
+	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, \emph{Automatic Speech Recognition}), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
 	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.
 	
