@@ -70,7 +70,7 @@
 	 MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. En \cite{Sarkania2013} implementa un sistema usando redes neuronales que se centra en el uso de MFCC como extracción de características y añade un filtro  de paso alto para reducir el ruido, consiguiendo una precisión de 93.38\% de media. En \cite{Wang2020} también se utiliza MFCC como método de extracción de características destacando especialmente su efectividad en SER combinada con espectogramas de Mel.\hfill \break
 	 
 	
-	Los \textbf{Coeficientes de Predicción Lineal} (LPC, \emph{Linear Prediction Coefficients}) se aplican para obtener el coeficiente de predicción lineal equivalente al tracto vocal reduciendo el mínimo error cuadrado entre la señal de audio dada como entrada y la estimada. Normalmente se usa para extraer las propiedades del tracto vocal ya que hace estimaciones bastante precisas de los parámetros en el habla, no obstante, es altamente sensible al ruido de cuantificación, por lo que demuestra no ser precisa cuando hay ruido de fondo y podría, y al igual que MFCC, no ser apropiada para la generalización.\hfill \break
+	Los \textbf{Coeficientes de Predicción Lineal} (LPC, \emph{Linear Prediction Coefficients}) se aplican para obtener el coeficiente de predicción lineal equivalente al tracto vocal reduciendo el mínimo error cuadrado entre la señal de audio de entrada y la que es estimada. Normalmente se usa para extraer las propiedades del tracto vocal ya que hace estimaciones bastante precisas de los parámetros en el habla, no obstante, es altamente sensible al ruido de cuantificación, por lo que demuestra no ser precisa cuando hay ruido de fondo y podría, y al igual que MFCC, no ser apropiada para la generalización.\hfill \break
 	
 	 Los \textbf{Coeficientes Cepstrales con Predicción Lineal} (LPCC, \emph{Linear Prediction Cepstral Coefficient}) calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 	
@@ -134,16 +134,17 @@
 	
 	La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \cite{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir\cite{StevensVolkmann}. Es por ello que el rango donde se mueve nuestro espectograma, se adapta a lo que se llama \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas.\\
 	
-	Finalmente nos queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello debemos entender como el sonido (respecto a la articulación de palabras) es producido. En el modelo de la figura se representa el habla como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda (\emph{waveform}) de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal.\\
+	Finalmente nos queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello debemos entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en nuestra anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda (\emph{waveform}) de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal.\\
 	El papel de Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a como los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal. En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC}.
 	
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.3]{waveform_process.jpeg} 
-		\caption{Visualización de los coeficientes cepstrales de una muestra aleatoria. Fuente: \href{https://www.ee.columbia.edu/~stanchen/spring16/e6870/slides/lecture3.pdf}{Columbia University}}
+		\caption{Visualización de los coeficientes cepstrales de una muestra aleatoria. Aquí se puede observar el resultado de los pasos que hemos estado discutiendo hasta ahora. Fuente: \href{https://www.ee.columbia.edu/~stanchen/spring16/e6870/slides/lecture3.pdf}{Columbia University}}
 	\end{figure}
 
 	Dado que hemos convertido una señal de audio en una imagen, ahora se podrá proceder a usar un modelo basado en redes convolucionales, aprovechando sus ventajas en el campo donde mejor rendimiento reporta: el procesamiento de imágenes.
+	
 
 
 
