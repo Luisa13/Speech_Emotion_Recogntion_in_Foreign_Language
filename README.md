@@ -1,6 +1,7 @@
 # Speech Emotion Recognition in a Foreign Language
 Classify and recognize emotions through voice signal in a foreign language
 
+### Installation
 
 ### Project Structure
 ```
@@ -19,7 +20,8 @@ Project
        |_______model
 ```
 
-
+### Author and License
+Luisa Sanchez Avivar 2021
 
 REFERENCES:
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
