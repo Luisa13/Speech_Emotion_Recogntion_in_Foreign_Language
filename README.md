@@ -3,6 +3,8 @@ Classify and recognize emotions through voice signal in a foreign language
 
 ### Installation
 
+### Requirements
+
 ### Project Structure
 ```
 Project
