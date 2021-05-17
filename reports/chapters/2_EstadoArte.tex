@@ -1,16 +1,13 @@
 \documentclass[11pt,a4paper,spanish]{book}
 %\usepackage{estilo_unir}
 \usepackage{biblatex}
-\usepackage[utf8]{inputenc}
+% Le dice a LateX desde donde incluir las imagenes
 \usepackage{graphicx}
-\graphicspath{ {./chapters/.images/} }
+\graphicspath{ {./.images/} }
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
-
-\addbibresource{referenceLib.bib}
-
-
+\addbibresource{mycol_arte.bib}
 
 \begin{document}
 	%---------------------------
@@ -30,46 +27,13 @@
 	%---------------------------
 	%---------------------------
 	%---------------------------
-	
-	
-	\chapter{Resumen}
-	
-	
-	
-	\chapter{Abstract}
-	Durante años se han llevado a cabo estudios sobre el reconocimiento de emociones a través de la voz en diferentes idiomas, sin embargo la mayoría de estas investigaciones han medido la habilidad para clasificar y reconocer dichas emociones dentro de la poca cultura y existe poca literatura sobre cómo afecta la prosodia al lenguaje desde el punto de vista de la lengua extranjera.
-	Sería interesante por lo tanto, comparar esta clasificación y reconocimiento de emociones entre diferentes idiomas para estudiar la interdependencia de la cultura y el lenguaje.
-	El objetivo de este trabajo es entender cómo influye el lenguaje y la cultura a la expresión de emociones donde se construirá un modelo que clasifique y reconozca 6 emociones básicas (enfado, asco, miedo, tristeza, felicidad y sorpresa) en 4 idiomas con raíces morfológicas distintas para más tarde comparar los resultados obtenidos en las distintas lenguas.
-	
-	
-	
-	\mainmatter
-	\chapter{Introducción}
-	Desde hace años, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo siempre se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. Esta habilidad ha sido respaldada por numerosos artículos donde se concluye que es posible distinguir e identificar entre al menos cuatro emociones básicas (felicidad, tristeza, tristeza, y enfado) a través de la voz (sin necesidad del procesamiento del lenguaje natural y por lo tanto de un contexto).
-	
-	Atendiendo al estudio de las emociones expresadas según la lengua existen estudios donde se demuestra que individuos de diferentes culturas pueden reconocer emociones básicas en diferentes niveles, pero es menos abundante la evidencia de un acuerdo en cómo las emociones básicas son reconocidas desde la expresión vocal de un interlocutor \cite{Pell2009a}
-	Análogamente el debate del reconocimiento de emociones en un plano intercultural también se ha enfocado a través del estudio de los gestos faciales en conjunto con la expresión vocal, donde se concluye los factores sociales tienen un gran impacto, ya que la identificación de las emociones es más fácil para los miembros de la misma cultura que para los de otra distinta \cite{Pell2009a} y \cite{Pell2009}. A pesar de ello hay una gran carencia de comparativas con respecto a la voz donde se demuestre una sólida influencia cultural, sin embargo parece claro que las dimensiones socio culturales que engloban nuestras interacciones pueden tener un gran impacto en nuestra comunicación dentro de un marco emocional.
-	
-	La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas, las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono si no también el patrón lingüístico asociado \cite{Davletcharova2015}. Por ejemplo la tristeza tiende a mostrarse con un tono notablemente bajo mientras que la felicidad, la sorpresa, o el enfado son producidas con un tono moderadamente alto. En general se esperaría que las expresiones de tristeza y enfado tiendan a marcar una mayor diferencia entre ellas y por lo tanto sean reconocidas con más precisión con independencia del lenguaje al estar situadas en los extremos (opuestos) del espectro.
-	En literatura anterior \cite{Pell2011} se argumenta que las 6 emociones básicas felicidad, miedo, asco, sorpresa, enfado y tristeza) son exitósamente reconocidas desde la prosodia. Cabe destacar la diferencia entre prosodia y la calidad vocal, donde la primera se centra en características tales como la entonación, el estrés y el ritmo del habla mientras que la segunda se refiere al tono, energía y tempo \cite{Processing2015} . 
-	
-	Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita) como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como explica en \cite{Chen2017}.
-	
-	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla.Esta observación puede llevar a que se pregunte si en lenguajes tan dispares, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
-	De nuevo, en \cite{Pell2009} se describen anómalas pseudo-manifestaciones semánticas (discurso sin sentido) que se asemejan a la lengua materna para expresar cada tipo de emoción. Aquí se evidencia claramente que la emoción de cada interlocutor puede ser reconocida con precisión desde la prosodia independientemente del contexto semántico. Además argumenta que el significado emocional en la voz se transmite por cambios en diferentes parámetros acústicos como el tono, la intensidad, la duración, el ritmo y distintos aspectos de la calidad de la voz.
-	
-	Finalmente, obtener datos necesarios de la extracción de características es un problema porque apenas cubre el amplio espectro emocional que hoy conocemos. C.Bakir y M.Yuzkat \cite{BAKIR2018} proponen un modelo híbrido para clasificar cinco emociones básicas en el lenguaje turco donde combinan SVM y GMM y aplicando antes MFCC y MFDWC para la extracción de características.
-	
-	
-	
-	
 	\chapter{Estado del Arte}
 	\section{Contexto}
 	El objetivo del reconocimiento de emociones en el habla (a partir de ahora, referido como  SER, \emph{Speech Emotion Recognition} por sus siglas en inglés) es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
 	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. 
 	
 	El proceso de la clasificación emocional en el lenguaje, consiste habitualmente, en tres partes: Procesamiento de la señal, que aplica filtros de audio a la señal original; Extracción de características, el cual es un punto esencial en esta modalidad ya que necesita enfatizar el contenido emocional sin depender del contexto lingüístico; Y por último, la clasificación, que será la encargada de mapear el conjunto de características extraídas anteriormente con las emociones etiquetadas que hayamos definido. Seguidamente se ofrece una revisión más detallada de estas etapas.
-	
+		
 	\section{Extracción de Características}
 	La extracción de características es una de las secciones más importantes en el reconocimiento de emociones a través de la voz debido a la ambigüedad de las características y la variedad vocal. La extracción de características es el paso principal en el procesamiento del diálogo (speech), y se lleva a cabo para centrarse en la información contenida en la señal y mejorar el grado de similitud y/o diferenciación entre las clases.\cite{Hellbernd2016} Hasta ahora, por lo general hay dos enfoques principales  con respecto al tipo de características usadas en SER:\\
 	Los rasgos prosódicos, los cuales extraen información de la prosodia, en concreto, tono, energía y duración, y por otro lado, las características del tracto vocal que normalmente indican la distribución de la energía en la frecuencia del rango vocal (conocidos como Coeficientes Cepstrales).
@@ -87,23 +51,23 @@
 		\item Ajuste a como los humanos percibimos el ruido y la frecuencia del sonido.
 		\item Capturar la dinámica fonética, que definirá el contexto.
 	\end{itemize}
-	
+
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.25]{MFCC_process.jpeg} 
 		\caption{Proceso en la aplicación de MFCC en una señal.}
 		\label{fig:mfcc_process}
 	\end{figure}
-	
-	MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. En \cite{Sarkania2013} implementa un sistema usando redes neuronales que se centra en el uso de MFCC como extracción de características y añade un filtro  de paso alto para reducir el ruido, consiguiendo una precisión de 93.38\% de media. En \cite{Wang2020} también se utiliza MFCC como método de extracción de características destacando especialmente su efectividad en SER combinada con espectogramas de Mel.\hfill \break
-	
+
+	 MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. En \cite{Sarkania2013} implementa un sistema usando redes neuronales que se centra en el uso de MFCC como extracción de características y añade un filtro  de paso alto para reducir el ruido, consiguiendo una precisión de 93.38\% de media. En \cite{Wang2020} también se utiliza MFCC como método de extracción de características destacando especialmente su efectividad en SER combinada con espectogramas de Mel.\hfill \break
+	 
 	
 	Los \textbf{Coeficientes de Predicción Lineal} (LPC, \emph{Linear Prediction Coefficients}) se aplican para obtener el coeficiente de predicción lineal equivalente al tracto vocal reduciendo el mínimo error cuadrado entre la señal de audio dada como entrada y la estimada. Normalmente se usa para extraer las propiedades del tracto vocal ya que hace estimaciones bastante precisas de los parámetros en el habla, no obstante, es altamente sensible al ruido de cuantificación, por lo que demuestra no ser precisa cuando hay ruido de fondo y podría, y al igual que MFCC, no ser apropiada para la generalización.\hfill \break
 	
-	Los \textbf{Coeficientes Cepstrales con Predicción Lineal} (LPCC, \emph{Linear Prediction Cepstral Coefficient}) calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
+	 Los \textbf{Coeficientes Cepstrales con Predicción Lineal} (LPCC, \emph{Linear Prediction Cepstral Coefficient}) calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 	
 	La \textbf{Transformada Wavelets} (DWT, \emph{Discrete Wavelet Transform}) descompone la señal en grupos de funciones básicas llamadas wavelets. La Transformada de Wavelet discreta es una extensión de esta donde mejora dicho proceso de descomposición discretizando los parámetros de tiempo y frecuencia. Los parámetros de DWT contienen información de diferentes escalas de frecuencia, lo cual es importante porque supone una mejora en la información que se obtiene del diálogo en la correspondiente banda de frecuencia. A pesar de ello, los coeficientes de Wavelet presentan variaciones indeseadas en los límites ya que las señales de entrada son de una longitud finita.\hfill \break
-	
+
 	
 	
 	\section{Clasificación}
@@ -111,7 +75,7 @@
 	No obstante,en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo y en redes neuronales densas (DNN, \emph{Deep Neural Network}) los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio.
 	
 	\subsection{RNN}
-	Las Redes Recurrentes Neuronales (RNN, \emph{Recurrent Neural Network}) son convenientes en tareas en las que los datos son procesados secuencialmente.
+	 Las Redes Recurrentes Neuronales (RNN, \emph{Recurrent Neural Network}) son convenientes en tareas en las que los datos son procesados secuencialmente.
 	Lee y Tashev \cite{Lee2015} afirman que los sistemas basados en simples redes neuronales densas no cubren el efecto contextual a largo plazo para interpretar las emociones en el diálogo (esto es, la necesidad de un contexto emocional previo en la prosodia para mejorar la clasificación en el tramo que se está actualmente analizando) y resuelven este problema presentando un modelo basado en RNN. Por otro lado, W.Lim \cite{Lim2017} estudia el resultado de un sistema híbrido que usa CNN y RNN para clasificar emociones en una secuencia de audio, consiguiendo un 88.01\% de precisión.
 	No obstante, los modelos RNN no son suficientes para representar el espectro emocional a lo largo de una conversación debido al problema de desvanecimiento de gradientes*.
 	
@@ -124,7 +88,7 @@
 	La tendencia de los modelos DNN en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica, en especial las redes neuronales convolucionales (CNN, \emph{Convolutional Neural Networks}) suponen una importante contribución en SER debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años.
 	En \cite{Harar2017} describe un método que utiliza una arquitectura basada en redes convolucionales sin selección de características para distinguir únicamente entre tres emociones en alemán (usando Berlin Database Emotional Speech, la cual contiene 800 muestras de audio etiquetadas) consiguiendo una exactitud de 96.97\%. En \cite{AbdulQayyum2019} se presenta un modelo de redes convolucionales que no necesita de un preprocesado de la señal para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión.
 	
-	
+
 	\section{Valoración y Propuesta}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, para un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, \emph{Automatic Speech Recognition}), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
@@ -133,14 +97,14 @@
 	En la extracción de características el uso de MFCC ha sido ampliamente escogido al reportar resultados más elevados en comparación con otros métodos, mientras que en la sección donde se discuten los diversons métodos de clasificación usados en SER, vemos que CNN tiene mayor preferencia en la literatura, sin despreciar el uso de modelos basados en una combinación entre CNN y LSTM.\hfill \break
 	El uso de CNN se ha vuelto cada vez más popular, especialmente en el procesamiento de imágenes, debido a que la principal ventaja que ofrecen en comparación con otras arquitecturas, es la habilidad de detectar características relevantes sin supervisión, a la vez que son computacionalmente eficientes.
 	Ahora bien, el problema en el que se desarrolla en este trabajo gira en torno al procesamiento del audio, entonces, ¿cómo se pueden aprovechar las ventajas que provee CNN en este ámbito?
-	
+
 	No olvidemos que el tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo, y al muestrearlas en un determinado rango de frecuencia, obtendríamos algo como lo siguiente:
 	
 	\begin{figure}[H]
 		\includegraphics[scale=0.4]{waveform.png}
 		\caption{waveform de una señal de audio}
 	\end{figure}
-	
+
 	Esto que vemos es una representación digital de la onda, también llamada \emph{waveform}, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
 	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello se hace obvio pensar en la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
 	Sin embargo el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
@@ -170,27 +134,23 @@
 		\includegraphics[scale=0.3]{waveform_process.jpeg} 
 		\caption{Visualización de los coeficientes cepstrales de una muestra aleatoria. Fuente: \href{https://www.ee.columbia.edu/~stanchen/spring16/e6870/slides/lecture3.pdf}{Columbia University}}
 	\end{figure}
-	
+
 	Dado que hemos convertido una señal de audio en una imagen, ahora se podrá proceder a usar un modelo basado en redes convolucionales, aprovechando sus ventajas en el campo donde mejor rendimiento reporta: el procesamiento de imágenes.
+
+
+
+	
+	
+		
+
+
+
+	
+	
+
+	
 	
 	\printbibliography
 	
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
