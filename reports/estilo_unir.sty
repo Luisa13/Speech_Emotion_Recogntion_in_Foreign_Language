@@ -1,0 +1,169 @@
+%
+%Comandos y paquetes que se introducen
+%
+%
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{unir}
+%
+%---paquetes---------------------
+%
+%idioma i codificación
+\usepackage{babel}
+%\usepackage[utf8]{inputenc} %descomentar esta línea si se trabaja en linux
+\usepackage[latin1]{inputenc} %comentar esta línea si se trabaja en linux
+
+
+%simbolos
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathabx}
+\usepackage{amsfonts}
+
+\usepackage{titling}
+
+%imagenes
+\usepackage[dvips]{epsfig}
+\usepackage{graphicx}
+\usepackage{color}
+
+%colores en tablas
+\usepackage{colortbl}
+
+
+%para insertar pdf's
+\usepackage{pdfpages}
+
+%cabeceras y pies de página
+\usepackage{vmargin}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhfoffset{20pt}
+\renewcommand{\headrulewidth}{0.0pt}
+
+\renewcommand{\maketitle}{\creaportada}
+
+\renewcommand{\baselinestretch}{1.5}
+
+
+
+\usepackage{etoolbox}
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{\if@openright\clearpage\else\clearpage\fi}{}{}
+
+
+
+%hiper-referencias
+\usepackage{hyperref}
+
+
+%
+%
+%
+\definecolor{azulunir}{rgb}{0.26,0.46,0.70}
+
+\newcommand\director[1]{\def\@director{#1}}
+\newcommand\nombreciudad[1]{\def\@nombreciudad{#1}}
+\director{}
+\nombreciudad{}
+
+
+%Entornos de teoremas
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{prop}{Proposición}
+\newtheorem{coro}{Corolario}
+\newtheorem{lema}{Lema}
+\newtheorem{defi}{Definición}
+%aquests entorns no estan en italica
+\theoremstyle{definition}
+\newtheorem{obs}{Observación}
+\newtheorem{ex}{Ejemplo}
+
+%
+%shortcuts
+%
+%lletres dobles
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\F}{\mathbb{F}}
+%cals
+\newcommand{\CC}{\mathcal{C}}
+%gregues
+\newcommand{\al}{\alpha}
+\newcommand{\g}{\gamma}
+\renewcommand{\d}{\delta}
+\newcommand{\s}{\sigma}
+\newcommand{\la}{\lambda}
+\newcommand{\e}{\varepsilon}
+\newcommand{\om}{\omega}
+\newcommand{\vp}{\varphi}
+%derivada parcial
+\newcommand{\p}{\partial}
+%dispstyle
+\newcommand{\ds}{\displaystyle}
+%mathrm's
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\diag}{\mathrm{diag}}
+
+
+
+
+
+\newcommand{\creaportada}{\begingroup  
+\thispagestyle{empty}
+\includegraphics[width= 0.8\textwidth]{logo_unir}
+
+\vspace{1cm}
+\centering{
+\begin{tabular}{!{\color{azulunir}\vrule width 2pt}p{12cm}}
+{\Large {\bf Universidad Internacional de la Rioja (UNIR)}} \\ \vspace{0.1cm}
+{ \huge {\bf ESIT}} \\ \vspace{0.1cm}
+{ \Large {\bf Máster Universitario en Inteligencia Artificial }}\\ \vspace{1cm}
+{\Huge {\bf {\color{azulunir}{\thetitle} }  }  }
+\end{tabular}
+}
+\vfill
+
+\noindent
+\flushleft{
+{\bf Trabajo Fin de Máster}\\  \vspace{0.3cm}
+{\bf presentado por:} \theauthor\\  \vspace{0.3cm}
+{\bf Dirigido por:} \@director %\thedirector
+}
+\vspace{3cm}
+
+{\color{azulunir}{Ciudad:}}\@nombreciudad\\
+{\color{azulunir}{Fecha:}} \thedate
+\newpage
+\thispagestyle{empty}
+\endgroup}
+
+
+
+
+
+%---------------------------
+%cabecera del trabajo
+%---------------------------
+\lhead{\theauthor}
+\rhead{Máster Universitario en Inteligencia Artificial}
+\lfoot{\thetitle}
+\rfoot{\thepage}
+\cfoot[]{}
+\chead[]{}
+
+
+
+
+
+
+
+
+
+
+

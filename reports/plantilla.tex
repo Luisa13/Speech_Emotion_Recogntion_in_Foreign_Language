@@ -1,0 +1,99 @@
+\documentclass[11pt,a4paper,spanish]{book}
+\usepackage{estilo_unir}
+
+
+
+%---------------------------
+%título del trabajo y autor
+%---------------------------
+\title{Escribir el título del documento}
+\author{Nombre y Apellidos}
+\date{d de mes de 2019}
+\director{ nombre y apellidos}
+\nombreciudad{Nombre ciudad}
+
+%---------------------------
+%marges
+%---------------------------
+%\usepackage[margin=1.9cm]{geometry}
+%---------------------------
+%---------------------------
+%---------------------------
+%---------------------------
+\begin{document}
+\renewcommand{\listfigurename}{Índice de Ilustraciones}
+\renewcommand{\listtablename}{Índice de Tablas}
+\renewcommand{\contentsname}{Índice de Contenidos}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla} 
+
+\maketitle
+
+\frontmatter
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter{Resumen}
+{\bf Nota:} En este apartado se introducirá un breve resumen en español del trabajo realizado (extensión máxima: 150 palabras). Este resumen debe incluir el objetivo o propósito de la investigación, la metodología, los resultados y las conclusiones.
+
+
+{\bf Palabras Clave:} Se deben incluir de 3 a 5 palabras claves en español
+
+\chapter{Abstract}
+{\bf Nota:} En este apartado se introducirá un breve resumen en español del trabajo realizado (extensión máxima: 150 palabras). Este resumen debe incluir el objetivo o propósito de la investigación, la metodología, los resultados y las conclusiones.
+
+
+{\bf Palabras Clave:} Se deben incluir de 3 a 5 palabras claves en inglés
+
+
+
+
+\mainmatter
+\chapter{Introducción}
+
+\chapter{Contexto y Estado del Arte}
+
+\chapter{Identificación de Requisitos}
+
+\chapter{Objetivos}
+
+\chapter{Desarrollo del trabajo}
+
+\chapter{Conclusiones y Trabajo Futuro}
+
+\begin{thebibliography}{a}
+\bibitem{etiqueta} \textsc{Autores},
+\textit{nombre referencia.}
+Información addicional
+\end{thebibliography}
+%\bibliographystyle{plain} 
+%\bibliography{bibliografia}
+
+\appendix
+\chapter{Apendices}
+Atención, deberá generar un pdf con la plantilla de artículo y añadirla como anexo utilizando includepdf.
+
+%\includepdf[pages=-]{anexo.pdf} %descomentar cuándo esté el artículo terminado.
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
