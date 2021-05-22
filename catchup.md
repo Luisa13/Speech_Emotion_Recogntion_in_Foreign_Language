@@ -54,12 +54,15 @@ The goal is to get an accuracy good enough to extend it to the other languages
  * [FrontEnd for Audio Classification - GoogleAI](https://ai.googleblog.com/2021/03/leaf-learnable-frontend-for-audio.html?m=1)
  * [Breaking down the components in SER](https://towardsdatascience.com/automatic-speech-recognition-breaking-down-components-of-speech-85d065061517)
  * [TF audio processing](https://www.tensorflow.org/tutorials/audio/simple_audio)
+ * [Speedometer gauge component in ReactJS](https://github.com/palerdot/react-d3-speedometer)
+ * 
 
 #### Agumentation Techniques
 * [Data Augmentation for speech recognition](https://towardsdatascience.com/data-augmentation-for-speech-recognition-e7c607482e78)
 * [Data Augmentation for Audio](https://medium.com/@makcedward/data-augmentation-for-audio-76912b01fdf6)
 * [D.A. examples in kaggle](https://www.kaggle.com/CVxTz/audio-data-augmentation)
 * [Augmentation methods](https://www.kaggle.com/haqishen/augmentation-methods-for-audio)
+* [Flask + React application for ML](https://thevatsalsaglani.medium.com/training-and-deploying-a-multi-label-image-classifier-using-pytorch-flask-reactjs-and-firebase-28c6150c04c)
 
 ### Datasets
 - [SER Datasets](https://github.com/SuperKogito/SER-datasets)
