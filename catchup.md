@@ -55,7 +55,8 @@ The goal is to get an accuracy good enough to extend it to the other languages
  * [Breaking down the components in SER](https://towardsdatascience.com/automatic-speech-recognition-breaking-down-components-of-speech-85d065061517)
  * [TF audio processing](https://www.tensorflow.org/tutorials/audio/simple_audio)
  * [Speedometer gauge component in ReactJS](https://github.com/palerdot/react-d3-speedometer)
- * 
+ * [SER EDA](https://github.com/rajamohanharesh/Emotion-Recognition/tree/master/Codes)
+ 
 
 #### Agumentation Techniques
 * [Data Augmentation for speech recognition](https://towardsdatascience.com/data-augmentation-for-speech-recognition-e7c607482e78)
