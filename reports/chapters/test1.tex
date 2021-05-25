@@ -43,9 +43,6 @@
 	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 	
 	\subsection{Reconocimiento del habla}
-	[...] Breve introducción a lo que se va a explicar
-	
-	
 	De manera general, la clasificación de emociones se ha tratado desde dos enfoques principales:
 	\begin{itemize}
 		\item Las emociones como categorías discretas
@@ -69,9 +66,6 @@
 	Entre los más populares, donde nos encontramos con los Coeficientes Cepstrales con Predicción Lineal (LPCC), que tras hacer una conversión a coeficientes cepstrales consiguen una baja vulnerabilidad al ruido de fondo en comparación con su predecesor LPC, y Coeficientes Cepstrales en la escala de Mel (MFCC), los cuales se basan en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante \emph{Cepstrum} que divide la señal en dos bandas de frecuencias, baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso. En este útimo se señalan los trabajos de \cite{Hajarolasvadi2019} y \cite{AbdulQayyum2019}. 
 	
 	\begin{comment}
-		Comúnmente las técnicas de extracción de características más usadas son Coeficientes Cepstrales en la escala de Mel (MFCC), Coeficientes de Predicción Lineal (LPC), Coeficientes Cepstrales con Predicción Lineal (LPCC) y Transformada Wavelets Discreta (DWT).
-		Tal y como se detalla en la revisión hecha por S.Rashid \cite{Rashid2018}, donde se ofrece una breve explicación de cada una de estas técnicas analizando sus puntos fuertes y débiles.\hfill \break 
-		
 		
 		La Transformada de Wavelets descompone la señal en grupos de funciones básicas llamadas wavelets. La \textbf{Transformada de Wavelet Discreta} es una extensión de esta donde mejora dicho proceso de descomposición discretizando los parámetros de tiempo y frecuencia. Los parámetros de DWT contienen información de diferentes escalas de frecuencia, lo cual es importante porque supone una mejora en la información que se obtiene del diálogo en la correspondiente banda de frecuencia. A pesar de ello, los coeficientes de Wavelet presentan variaciones indeseadas en los límites ya que las señales de entrada son de una longitud finita.\hfill \break
 		
@@ -155,22 +149,28 @@
 	En estudios más recientes, \cite{Anvarjon2020} aborda el problema del Reconocimiento de Emociones en el Habla con una red CNN computacionalmente eficiente que es alimentada con los espectogramas de la señal; es decir, se consigue una representación en 2D de la señal de audio aprovechando mejor las ventajas de una red de este tipo. El sistema es probado en con dos datasets distintos independientemente, IEMOCAP (en inglés) y EMO-DB (alemán) extrayendo, como hemos visto en otros trabajos, un subconjunto para reducir el número de clases entre las que se distingue (enfado, felicidad, neutral y tristeza) consiguiendo un 77.01\% y 92.02\%  de precisión respectivamente.
 	\begin{comment}
 		Finalmente, en \cite{Mustaqeem2021} exploran los efectos de la combinación de un mecanismo de atención junto a una red convolucional ligera. Al sistema se le pasa como entrada el espectograma de la señal y es probada en 3 datasets distintos: IEMOCAP (inglés),  RAVDESS (inglés), y EMO-B (alemán) consiguiendo un 78.01\%, 80.00\% y 93.00\% , para distinguir entre 4, 8 y 7 emociones respectivamente.
+		
+		
+		Hablar del trabajo de https://arxiv.org/pdf/1912.10458.pdf
 	\end{comment}
 	
-	 Finalmente, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
+	 Finalmente, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
 	
 	\section{Conclusiones parciales}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
-	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.
+	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\\
 	
-	En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \cite{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión de emociones.
+	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara se diluye. No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, intuitivamente cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
 	
+	En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \cite{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión de emociones. Los parámetros que se computan en MFCC como el número de filtros o la escala de frecuencia, son a menudo escogidos de manera experimental y dependen en gran medida del conjunto de datos con el que se pruebe y el clasificador que implemente el sistema.
 	
+	Observamos también que CNN (con diferentes modificaciones) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes. La combinación de probabilidades resultantes identifica conjuntos de características que determinan una clasificación.
 	
 	\begin{comment} 
 	Tal y como se muestra en el trabajo de J.Lee e I.Tashev \cite{Lee2015}, un sistema basado en una red neuronal densa puede no ser suficiente para cubrir el efecto contextual a largo plazo para interpretar las emociones en el diálogo (esto es, la necesidad de un contexto emocional previo en la prosodia para mejorar la clasificación en el tramo que se está actualmente analizando), por lo que este problema puede ser abordado desde una arquitectura RNN. Aún así
 	
+	 
 	
 	CNN es la opcion más sólida entre los trabajos más recientes
 	
