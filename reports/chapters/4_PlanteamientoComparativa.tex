@@ -1,24 +1,44 @@
 \documentclass[11pt,a4paper,spanish]{book}
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
-\addbibresource{}
+
 
 \begin{document}
+	\chapter{Planteamiento de la comparativa}
 	
-	\begin{comment}
-		En este capítulo se debe indicar el trabajo previo realizado para identificar el problema
-		concreto a tratar, así como las posibles soluciones alternativas que se van a evaluar.
-		También se deben identificar los criterios de éxito para la comparativa, las medidas que
-		se van a tomar, etc.
-	\end{comment}
 	En este capítulo se identificará el problema en concreto a tratar, a la vez que el diseño de los experimentos para acometerlo. Para ello se exponen los datos utilizados así como un análisis en detalle de estos respondiendo a por qué se escogen esos conjuntos. Finalmente las técnicas de procesamiento y el diseño de la red neuronal propuesta que se usan en este trabajo
 	
-	El objetivo de esta comparativa es contrastar los resultados obtenidos tras aplicar el mismo sistema de reconocimiento de emociones en la voz entrenado con un lenguaje de referencia, con los otros dos lenguajes escogidos. Mediante esta comparativa se pretende responder a la pregunta si es posible reconocer emociones en un idioma que en principio se desconoce
+	El objetivo de esta comparativa es contrastar los resultados obtenidos tras aplicar el mismo sistema de reconocimiento de emociones en la voz entrenado con un lenguaje de referencia, con los otros dos lenguajes escogidos. Mediante esta comparativa se pretende responder a la pregunta si es posible reconocer emociones en un idioma que en principio se desconoce.
 	
-	\subsection{Conjunto de Datos}
+	\section{Conjunto de Datos}
+	El conjunto de datos que se usará para el idioma de referencia, será La Base de Datos Audiovisual del Discurso y Canción Emocional RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), el cual contiene 7356 archivos entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
 	
+	Cada uno de estos archivos están nombrados de manera única mediante 7 números a modo de descripción de las características del audio. Éste respeta la siguiente convención:
+	\begin{itemize}
+		\item Modalidad (01 Audio y vídeo, 2 Solo vídeo, 3 Solo audio)
+		\item Canal vocal (01 discurso normal, 02 canción)
+		\item Emoción que representa
+		\item Intensidad Emocional Si es normal o fuerte. La voz neutral no contempla la intensidad fuerte.
+		\item Repetición (si es la primera repetición 01 o la segunda 02)
+		\item Actor que ejecuta la acción
+	\end{itemize}
+
+	Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de sólo audio, donde se vocaliza una frase de manera hablada y con tono alegre. La intensidad es normal, corresponde a la primera repetición y el actor que la ejecuta es el n. 1
 	
-	\subsection{Arquitectura}
+		\begin{comment}
+			distribución de los datos una vez se divide en entrenamiento
+			
+			Comentar las otras bases de datos
+		\end{comment}
+	
+
+	\section{Pre-procesado de los datos}
+	
+		\begin{comment}
+		conversion de la señal a imagen
+		\end{comment}
+	
+	\section{Arquitectura}
 	
 		\printbibliography
 	
