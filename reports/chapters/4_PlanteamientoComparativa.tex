@@ -11,33 +11,56 @@
 	El objetivo de esta comparativa es contrastar los resultados obtenidos tras aplicar el mismo sistema de reconocimiento de emociones en la voz entrenado con un lenguaje de referencia, con los otros dos lenguajes escogidos. Mediante esta comparativa se pretende responder a la pregunta si es posible reconocer emociones en un idioma que en principio se desconoce.
 	
 	\section{Conjunto de Datos}
-	El conjunto de datos que se usará para el idioma de referencia, será La Base de Datos Audiovisual del Discurso y Canción Emocional RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), el cual contiene 7356 archivos entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
+	Los datos en un proyecto de inteligencia artificial son clave, de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
+	
+	\paragraph{Idioma de referencia} El idioma de referencia será el cuál aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
+	
+	El conjunto de datos que se usará para el idioma de referencia, será La Base de Datos Audiovisual del Discurso y Canción Emocional RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), el cual contiene 7356 archivos en total, entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
 	
 	Cada uno de estos archivos están nombrados de manera única mediante 7 números a modo de descripción de las características del audio. Éste respeta la siguiente convención:
 	\begin{itemize}
-		\item Modalidad (01 Audio y vídeo, 2 Solo vídeo, 3 Solo audio)
+		\item Modalidad (01 Audio y vídeo, 02 Sólo vídeo, 03 Sólo audio)
 		\item Canal vocal (01 discurso normal, 02 canción)
 		\item Emoción que representa
 		\item Intensidad Emocional Si es normal o fuerte. La voz neutral no contempla la intensidad fuerte.
-		\item Repetición (si es la primera repetición 01 o la segunda 02)
+		\item Repetición (si es la primera repetición 01, si es la segunda 02)
 		\item Actor que ejecuta la acción
 	\end{itemize}
 
-	Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de sólo audio, donde se vocaliza una frase de manera hablada y con tono alegre. La intensidad es normal, corresponde a la primera repetición y el actor que la ejecuta es el n. 1
+	Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de sólo audio (03), donde se vocaliza una frase de manera hablada (01) y con tono alegre (03). La intensidad es normal (01), corresponde a la primera repetición (01) y el actor que la ejecuta es el n.01.
+
 	
-		\begin{comment}
-			distribución de los datos una vez se divide en entrenamiento
-			
-			Comentar las otras bases de datos
-		\end{comment}
+	\paragraph{Idioma con raíces fonéticas similares: Inglés} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
+	
+	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
+	\begin{itemize}
+		\item Las dos primeras posiciones determinan el actor que las interpreta.
+		\item De la posición 3 a las 5 se define el texto que se pronuncia
+		\item La posición 6 indica la emoción.
+		\item Versión del audio en caso de que la hubiese (codificado con letras).
+	\end{itemize}
+
+	Como ejemplo, el archivo \emph{03a01Fa.wav} indica que el actor 03 (hombre de 31 años) cita el texto a01 (\emph{Der Lappen liegt auf dem Eisschrank}, en alemán "El mantel está colgando del frigo"), con la emoción F (felicidad), y es la versión \emph{a} (la primera).
+	
+	La documentación del corpus también nos ofrece información sobre el género y edad de los actores, lo cual se ha determinado irrelevante, y las distintas frases que pueden aparecer en los archivos.
+	Las emociones que clasifica son enfado (W), aburrimiento (L), asco (E), miedo o ansiedad (A), felicidad (F), tristeza (T) y neutral (N) codificadas en el nombre del archivo por su inicial en alemán (especificada entre paréntesis).
+
+
+	
+	\paragraph{Idioma con raíces fonéticas distintas: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
+	
 	
 
 	\section{Pre-procesado de los datos}
+	Será necesario, antes del entrenamiento, un previo procesado de los datos.
 	
-		\begin{comment}
-		conversion de la señal a imagen
-		\end{comment}
-	
+	\subsection{Conversión de la señal a imagen}
+	\subsection{Normalización}
+	\subsection{Ténicas de aumento de datos}
+		\subsubsection{White Noise o Ruido Blanco}
+		\subsubsection{Shiftting}
+		\subsubsection{Pitch Tunning}
+		
 	\section{Arquitectura}
 	
 		\printbibliography
