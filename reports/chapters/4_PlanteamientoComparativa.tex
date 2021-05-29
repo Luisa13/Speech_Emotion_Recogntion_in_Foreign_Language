@@ -1,6 +1,10 @@
 \documentclass[11pt,a4paper,spanish]{book}
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
+% Imagenes
+\usepackage{graphicx}
+\graphicspath{ {./.images/} }
+\usepackage{float}
 
 
 \begin{document}
@@ -11,9 +15,10 @@
 	El objetivo de esta comparativa es contrastar los resultados obtenidos tras aplicar el mismo sistema de reconocimiento de emociones en la voz entrenado con un lenguaje de referencia, con los otros dos lenguajes escogidos. Mediante esta comparativa se pretende responder a la pregunta si es posible reconocer emociones en un idioma que en principio se desconoce.
 	
 	\section{Conjunto de Datos}
+	\label{lb_c4_datos}
 	Los datos en un proyecto de inteligencia artificial son clave, de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
 	
-	\paragraph{Idioma de referencia} El idioma de referencia será el cuál aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
+	\paragraph{Idioma de referencia: Inglés} El idioma de referencia será el cuál aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
 	
 	El conjunto de datos que se usará para el idioma de referencia, será La Base de Datos Audiovisual del Discurso y Canción Emocional RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), el cual contiene 7356 archivos en total, entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
 	
@@ -28,9 +33,18 @@
 	\end{itemize}
 
 	Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de sólo audio (03), donde se vocaliza una frase de manera hablada (01) y con tono alegre (03). La intensidad es normal (01), corresponde a la primera repetición (01) y el actor que la ejecuta es el n.01.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{ravdess_distribucion.png} 
+		\caption{Distribución de las emociones en RAVDESS}
+		\label{fig:emociones_ravdess}
+	\end{figure}
+	
+	Como se puede apreciar en la figura \ref{fig:emociones_ravdess} las emociones están regularmente distribuidas, sin embargo, a pesar de que en este dataset hay 7356 muestras, para este proyecto sólo podremos usar los que presentan una modalidad de sólo audio, lo que nos deja con un total de 1440 muestras. 
 
 	
-	\paragraph{Idioma con raíces fonéticas similares: Inglés} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
+	\paragraph{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
 	
 	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 	\begin{itemize}
@@ -47,22 +61,54 @@
 
 
 	
-	\paragraph{Idioma con raíces fonéticas distintas: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
+	\paragraph{Idioma con raíces fonéticas distintas} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
 	
 	
-
+	\section{Extracción de características}
+	Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
+	\paragraph{MFCC}
+	
+	\paragraph{Espectogramas de Mel}
+	
 	\section{Pre-procesado de los datos}
+	Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
 	Será necesario, antes del entrenamiento, un previo procesado de los datos.
 	
+	\subsection{División de los datos por género}
+	En un primer análisis exploratorio de los datos, se han estudiado las diferencias entre la voz masculina y la voz femenina en las emociones, observando lo siguiente:
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{comparative_waveform.png} 
+		\caption{Comparativa de los extractos de voz por género en RAVDESS}
+		\label{fig:comp_emociones_genero}
+	\end{figure}
+	En la figura \ref{fig:comp_emociones_genero} podemos ver la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
+	
+	
 	\subsection{Conversión de la señal a imagen}
-	\subsection{Normalización}
+	
+	\subsection{Normalización y cambio de dimensión}
 	\subsection{Ténicas de aumento de datos}
+	Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
+	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, debemos alterar la señal de audio, modificando la frecuencia, añadiendo ruido...
+	
+	
 		\subsubsection{White Noise o Ruido Blanco}
-		\subsubsection{Shiftting}
+		Añade ruido blanco a la pista de audio, mediante la inyección de valores aleatorios a la señal.
+		
+		\subsubsection{Shiftting o Desplazamiento del sonido}
+		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos.
+		
 		\subsubsection{Pitch Tunning}
+		Cambia el tono de la señal de audio de manera aleatoria.
 		
 	\section{Arquitectura}
 	
+	\section{Configuración}
+	Aquí hablo de aspectos técnicos, conifiguración y diseño de los experimentos
+	
+	\section{Configuración}
 		\printbibliography
 	
 \end{document}
