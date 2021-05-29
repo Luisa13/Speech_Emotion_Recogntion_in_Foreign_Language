@@ -61,7 +61,7 @@
 	
 	\begin{comment} 
 		Buscar referencias para cada uno
-		Añadir quiza STFT
+		Añadir quiza STFT ?
 	\end{comment}
 	
 	En \cite{Rashid2018} se ofrece una breve explicación de cada una de las técnicas más comunes analizando sus puntos fuertes y débiles. Así pues, podemos encontrar la Transformada Wavelets Discreta (DWT) que a pesar de mejorar la información que se obtiene del diálogo en la correspondiente banda de frecuencia presenta variaciones indeseadas en los límites debido a que las señales de entrada son de una longitud finita. También podemos encontrar trabajos donde se usen Coeficientes de Predicción Lineal (LPC) los cuales hacen estimaciones bastante precisas al extraer las propiedades del tracto vocal, pero son altamente sensibles al ruido de cuantificación, por lo que demuestran no ser precisos cuando hay ruido de fondo. \\
@@ -95,6 +95,51 @@
 	\end{figure}
 	\end{comment}
 
+	\subsubsection{Procesamiento de la señal como imagen}
+	\begin{comment}
+		En algunos trabajos hemos visto que blablabla y esto lleva a blablabla
+		En el auge de las redes convolucionales blablabla
+	\end{comment}
+	
+	No olvidemos que el tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo, y al muestrearlas en un determinado rango de frecuencia, obtendríamos algo como lo siguiente:
+	
+	\begin{figure}[H]
+		\includegraphics[scale=0.4]{waveform.png}
+		\caption{waveform de una señal de audio}
+	\end{figure}
+	
+	Esto que vemos es una representación digital de la onda, también llamada \emph{waveform}, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
+	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello se hace obvio pensar en la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
+	Sin embargo el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{processFFT.png} 
+		\caption{Proceso del uso de FFT en una señal. Fuente: \href{https://www.mathworks.com/help/dsp/ref/dsp.stft.html}{Mathworks}}
+	\end{figure} 
+	
+	
+	Este espectograma puede ser entendido como una representación tridimensional de la señal donde sus características (tiempo, frecuencia y amplitud de la distribución de energía) pueden ser observadas de manera muy visual. Cuando este espectograma se computa, el eje X representa el tiempo, el eje Y representa la frecuencia, que es convertida a una escala logarítmica, y la gama de colores que se utiliza es para simbolizar la variación de energía expresada (medida decibelios), donde los tonos más oscuros indican unos valores de energía más altos, y viceversa.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.3]{spectogram.png} 
+		\caption{Espectograma de una muestra aleatoria. Fuente: \href{https://es.other.wiki/wiki/Spectrogram}{Wiki}}
+	\end{figure}
+	
+	La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \cite{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir\cite{StevensVolkmann}. Es por ello que el rango donde se mueve nuestro espectograma, se adapta a lo que se llama \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas.\\
+	
+	Finalmente nos queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello debemos entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en nuestra anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda (\emph{waveform}) de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal.\\
+	El papel de Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a como los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal. En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC}.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.3]{waveform_process.jpeg} 
+		\caption{Visualización de los coeficientes cepstrales de una muestra aleatoria. Aquí se puede observar el resultado de los pasos que hemos estado discutiendo hasta ahora. Fuente: \href{https://www.ee.columbia.edu/~stanchen/spring16/e6870/slides/lecture3.pdf}{Columbia University}}
+	\end{figure}
+	
+	Dado que hemos convertido una señal de audio en una imagen, ahora se podrá proceder a usar un modelo basado en redes convolucionales, aprovechando sus ventajas en el campo donde mejor rendimiento reporta: el procesamiento de imágenes.
+	
 	
 	\subsubsection{Algoritmos de Clasificación}
 	
@@ -146,11 +191,11 @@
 	En \cite{Atmaja2019} proponen sistema basado en una arquitectura LSTM bidireccional (BLSTM) que aplican a un subconjunto de la base de datos IEMOCAP para distinguir entre cuatro emociones(enfado, excitación, tristeza y neutral). Discuten la incapacidad del un modelo BLSTM para detectar características relevantes, y palian el problema añadiendo un modelo de atención. Teniendo ese modelo como punto de partida (BLSTM + modelo de atención), experimentan escogiendo diferentes valores de duración del silencio para medir la eficacia que tendría el modelo si este se eliminara. Además utilizan un complejo sistema de extracción de características entre las que destacan MFCC. Los resultados muestran un máximo del 70.34\% de precisión en los datos sin necesidad de eliminar el silencio de la señal de audio.
 	Un año después, J.Wang \cite{Wang2020} propone un modelo dual LSTM donde cada uterancia, se procesa con características MFCC y espectogramas de Mel simultáneamente. El modelo es entrenado y evaluado en el conjunto de datos IEMOCAP llegando a un 72.7\% de exactitud.
 		
-	Las redes LSTM cubren en mencionado antes, efecto de contexto, resolviendo el desvanecimiento de gradientes que podemos encontrar en las redes recurrentes, pero de manera aislada no son las que mejores resultados ofrecen y es por ello, que en otros trabajos se han combinado con CNN para aumentar su rendimiento. Por ejemplo en \cite{Lim2017} se lleva a cabo una comparación de tres  arquitecturas (CNN, LSTM y CNN distribuida en el tiempo) donde LSTM (utilizada de manera aislada) es la que puntúa más bajo. W.Lim y su equipo, por otro lado estudian el resultado de un sistema híbrido que usa una red convolucional distribuida en el tiempo (una combinación de CNN y LSTM) para clasificar emociones en una secuencia de audio, consiguiendo un 88.01\% de precisión. De nuevo, para aprovechar las ventajas que ofrecen las redes convolucionales, la señal es convertida a imagen (espectograma), que es entrenada y probada con el corpus EMO-DB (alemán) distinguiendo entre 7 emociones.
+	Las redes LSTM cubren en mencionado antes, efecto de contexto, resolviendo el desvanecimiento de gradientes que podemos encontrar en las redes recurrentes, pero de manera aislada no son las que mejores resultados ofrecen y es por ello, que en otros trabajos se han combinado con CNN para aumentar su rendimiento. Por ejemplo en \cite{Lim2017} se lleva a cabo una comparación de tres  arquitecturas (CNN, LSTM y CNN distribuida en el tiempo) donde LSTM (utilizada de manera aislada) es la que puntúa más bajo. Al mismo tiempo, W.Lim y su equipo estudian el resultado de un sistema híbrido que usa una red convolucional distribuida en el tiempo (una combinación de CNN y LSTM) para clasificar emociones en una secuencia de audio, consiguiendo un 88.01\% de precisión. De nuevo, para aprovechar las ventajas que ofrecen las redes convolucionales, la señal es convertida a imagen (espectograma), que es entrenada y probada con el corpus EMO-DB (alemán) distinguiendo entre 7 emociones.
 	
-	En \cite{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (enfado, neutral, y tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
+	Por otro lado, en \cite{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (enfado, neutral, y tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado, se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
 	
-	Por otro lado, en \cite{AbdulQayyum2019} se presenta un modelo de redes convolucionales que no necesita de un preprocesado de la señal para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
+	 Siguiendo por el enfoque de CNN, en \cite{AbdulQayyum2019} se presenta un modelo de redes convolucionales que no necesita de un preprocesado de la señal para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
 	
 	En estudios más recientes, \cite{Anvarjon2020} aborda el problema del Reconocimiento de Emociones en el Habla con una red CNN computacionalmente eficiente que es alimentada con los espectogramas de la señal; es decir, se consigue una representación en 2D de la señal de audio aprovechando mejor las ventajas de una red de este tipo. El sistema es probado en con dos datasets distintos independientemente, IEMOCAP (en inglés) y EMO-DB (alemán) extrayendo, como hemos visto en otros trabajos, un subconjunto para reducir el número de clases entre las que se distingue (enfado, felicidad, neutral y tristeza) consiguiendo un 77.01\% y 92.02\%  de precisión respectivamente.
 	\begin{comment}
@@ -169,13 +214,33 @@
 	\section{Conclusiones parciales}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
-	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\\
+	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\hfill \break
+	
+	\begin{comment}
+		introduccion a la tabla comentando que se ve, que es un resumen de lo anteriormente descrito
+		que algunos textos citados son en realidad una comparación y sólo se expone el que mejor resultado dio (que para eso estamos aqui)
+	\end{comment}
+	
+	\begin{table}[h]
+		\begin{center}
+			\begin{tabular}{| r | l | c | c| c | c|}
+				Autores & Año & Método características & Clasificador & Base de Datos  & Acierto \\ \hline
+				Atmaja & 2019 &  & BLSTM + Att & IEMOCAP & 73.34\% 	\\
+				J.Wang & 2020 & MFCC & LSTM dual & IEMOCAP & 72.7\% \\
+				W.Lim & 2017 &   & LSTM + CNN & EMO-DB &  88.01\%	\\ 
+				Harar & 2017 & & CNN & & \\
+				& & & & & \\\hline
+			\end{tabular}
+			\caption{Tabla comparativa de los trabajos mencionados}
+			\label{tab:metod_comp}
+		\end{center}
+	\end{table}
 	
 	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, y de manera intuitiva, cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, y por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
 	
 	En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \cite{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión de emociones. Los parámetros que se computan en MFCC como el número de filtros o la escala de frecuencia, son a menudo escogidos de manera experimental y dependen en gran medida del conjunto de datos con el que se pruebe y el clasificador que implemente el sistema.
 	
-	Observamos también que CNN (con diferentes modificaciones dependiendo del trabajo) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes. La combinación de probabilidades resultantes identifica conjuntos de características que determinan una clasificación.
+	Observamos también que CNN (con diferentes modificaciones dependiendo del estudio) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes, y la combinación de probabilidades resultantes identifica conjuntos de características que determinan una clasificación.
 	
 	\begin{comment} 
 	Tal y como se muestra en el trabajo de J.Lee e I.Tashev \cite{Lee2015}, un sistema basado en una red neuronal densa puede no ser suficiente para cubrir el efecto contextual a largo plazo para interpretar las emociones en el diálogo (esto es, la necesidad de un contexto emocional previo en la prosodia para mejorar la clasificación en el tramo que se está actualmente analizando), por lo que este problema puede ser abordado desde una arquitectura RNN. Aún así
