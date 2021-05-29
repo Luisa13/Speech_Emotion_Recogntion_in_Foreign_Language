@@ -2,9 +2,11 @@
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
 % Imagenes
-\usepackage{graphicx}
+\usepackage{graphicx, wrapfig, lipsum}
 \graphicspath{ {./.images/} }
 \usepackage{float}
+\usepackage{comment}
+\addbibresource{./bibLib/mycol_arte.bib}
 
 
 \begin{document}
@@ -66,9 +68,18 @@
 	
 	\section{Extracción de características}
 	Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
-	\paragraph{MFCC}
+	\subsubsection{Coeficientes Cepstrales en la escala de Mel}
+	Como ya hemos mencionado, MFCC es uno de los mejores algoritmos para capturar características de la señal de audio debido a su similitud a como el sistema auditivo humano procesa el sonido y las frecuencias, así mismo, su efectividad se ha visto reportada y discutida a lo largo de otros estudios.
+	La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo propio del archivo de audio.
+
+	\begin{comment}
+	Razon por el numero de características:
+	https://dsp.stackexchange.com/questions/28898/mfcc-significance-of-number-of-features
+		Mencionar que otros estudios
+	\end{comment}
 	
-	\paragraph{Espectogramas de Mel}
+%	\paragraph{Espectogramas de Mel}
+%	La escala de Mel transforma  frecuencias lineales a una escala logarítmica
 	
 	\section{Pre-procesado de los datos}
 	Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
@@ -86,9 +97,29 @@
 	En la figura \ref{fig:comp_emociones_genero} podemos ver la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
 	
 	
-	\subsection{Conversión de la señal a imagen}
+	%\subsection{Conversión de la señal a imagen}
+	% quiza no sea necesario
 	
-	\subsection{Normalización y cambio de dimensión}
+	\subsection{Configuración y normalización de los datos}
+	En esta sub-sección se muestra los recursos a los que se ha accedido para el desarrollo del estudio, así como su correspondiente configuración.
+\begin{comment}
+		\begin{wrapfigure}{l}{0.40\textwidth}
+		\vspace{-20pt}
+		\centering
+		\includegraphics[width=0.4\linewidth]{/logos/colab_icon.png} 
+		\vspace{-20pt}
+		\end{wrapfigure}
+\end{comment}
+
+
+	\paragraph{Google Colab} Para la exploración de los datos así como el desarrollo, y entrenamiento de los modelos se ha hecho uso de la plataforma gratuita desarrollada por Google, Google Colab. Esta plataforma ofrece 12GB de RAM  y 107.77 espacio en disco, que será más que suficiente dado el tamaño que nuestro dataset.
+	
+	\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \cite{librosa082}
+	
+	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático
+	
+	\paragraph{Python 3} Todo el código para este proyecto ha sido desarrollado en python 3.
+	
 	\subsection{Ténicas de aumento de datos}
 	Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
 	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, debemos alterar la señal de audio, modificando la frecuencia, añadiendo ruido...
@@ -104,11 +135,13 @@
 		Cambia el tono de la señal de audio de manera aleatoria.
 		
 	\section{Arquitectura}
-	
+	Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
+	Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados
+	\section{Criterios de éxito}
 	\section{Configuración}
-	Aquí hablo de aspectos técnicos, conifiguración y diseño de los experimentos
+	Aquí hablo de aspectos técnicos, configuración y diseño de los experimentos
 	
-	\section{Configuración}
+	
 		\printbibliography
 	
 \end{document}
