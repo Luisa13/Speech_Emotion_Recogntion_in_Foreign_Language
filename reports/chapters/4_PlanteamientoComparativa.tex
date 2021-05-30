@@ -18,7 +18,7 @@
 	
 	\section{Conjunto de Datos}
 	\label{lb_c4_datos}
-	Los datos en un proyecto de inteligencia artificial son clave, de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
+	Los datos en un proyecto de inteligencia artificial son clave de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
 	
 	\paragraph{Idioma de referencia: Inglés} El idioma de referencia será el cuál aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
 	
@@ -70,7 +70,7 @@
 	Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
 	\subsubsection{Coeficientes Cepstrales en la escala de Mel}
 	Como ya hemos mencionado, MFCC es uno de los mejores algoritmos para capturar características de la señal de audio debido a su similitud a como el sistema auditivo humano procesa el sonido y las frecuencias, así mismo, su efectividad se ha visto reportada y discutida a lo largo de otros estudios.
-	La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo propio del archivo de audio.
+	La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo del propio archivo de audio.
 
 	\begin{comment}
 	Razon por el numero de características:
@@ -80,6 +80,26 @@
 	
 %	\paragraph{Espectogramas de Mel}
 %	La escala de Mel transforma  frecuencias lineales a una escala logarítmica
+
+	\section{Configuración}
+	En esta sub-sección se muestra los recursos a los que se ha accedido para el desarrollo del estudio, así como su correspondiente configuración.
+	\begin{comment}
+	\begin{wrapfigure}{l}{0.40\textwidth}
+	\vspace{-20pt}
+	\centering
+	\includegraphics[width=0.4\linewidth]{/logos/colab_icon.png} 
+	\vspace{-20pt}
+	\end{wrapfigure}
+	\end{comment}
+	
+	
+	\paragraph{Google Colab} Para la exploración de los datos así como el desarrollo, y entrenamiento de los modelos se ha hecho uso de la plataforma gratuita desarrollada por Google, Google Colab. Esta plataforma ofrece 12GB de RAM  y 107.77GB de espacio en disco, que será más que suficiente dado el tamaño que nuestro dataset.
+	
+	\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \cite{librosa082}. Esta librería ha sido esencial para la extracción de características MFCC así como algunas técnicas de aumento de datos.
+	
+	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
+	
+	\paragraph{Python 3} Python es un lenguage interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en python 3.
 	
 	\section{Pre-procesado de los datos}
 	Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
@@ -100,25 +120,8 @@
 	%\subsection{Conversión de la señal a imagen}
 	% quiza no sea necesario
 	
-	\subsection{Configuración y normalización de los datos}
-	En esta sub-sección se muestra los recursos a los que se ha accedido para el desarrollo del estudio, así como su correspondiente configuración.
-\begin{comment}
-		\begin{wrapfigure}{l}{0.40\textwidth}
-		\vspace{-20pt}
-		\centering
-		\includegraphics[width=0.4\linewidth]{/logos/colab_icon.png} 
-		\vspace{-20pt}
-		\end{wrapfigure}
-\end{comment}
-
-
-	\paragraph{Google Colab} Para la exploración de los datos así como el desarrollo, y entrenamiento de los modelos se ha hecho uso de la plataforma gratuita desarrollada por Google, Google Colab. Esta plataforma ofrece 12GB de RAM  y 107.77 espacio en disco, que será más que suficiente dado el tamaño que nuestro dataset.
+	\subsection{Normalización de los datos}
 	
-	\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \cite{librosa082}
-	
-	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático
-	
-	\paragraph{Python 3} Todo el código para este proyecto ha sido desarrollado en python 3.
 	
 	\subsection{Ténicas de aumento de datos}
 	Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
@@ -129,17 +132,41 @@
 		Añade ruido blanco a la pista de audio, mediante la inyección de valores aleatorios a la señal.
 		
 		\subsubsection{Shiftting o Desplazamiento del sonido}
-		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos.
+		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos. Por ejemplo, si el sonido ha sido desplazado hacia delante (izquierda) x segundos, los x primeros segundos se marcan con 0. Si por el contrario han sido desplazados hacia detrás (derecha), los últimos x segundos se marcarán con 0.
 		
 		\subsubsection{Pitch Tunning}
 		Cambia el tono de la señal de audio de manera aleatoria.
 		
 	\section{Arquitectura}
 	Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
-	Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados
+	Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados.
+	blabla...
+	
+	%Los trabajos como los de \cite{AbdulQayyum2019}, \cite{Anvarjon2020} utilizan CNN en sus trabajos. 
+	%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \cite{AbdulQayyum2019}, la cual consta de:
+	En un principio, se optó por una línea de trabajo inspirada en el estudio de \cite{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
+	
+	\begin{itemize}
+		\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
+		En las dos capas convolucionales se usa regularización de tipo L2 para aplicar una penalización a las capas del kernel con un valor de 0.01 y corregir así el overfitting.
+		
+		\item La primera capa convolucional está seguida de un dropout del 0.5 y una capa \emph{max pooling} con un tamaño 8.
+		
+		\item A la segunda capa convolucional se sigue otra capa de Dropout con un valor de 0.25 y una capa \emph{Flatten}.
+		
+		\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación 'softmax'.
+	\end{itemize}
+	% Hablar de las bondades las redes con 1 dimension
+	% En que ayudan
+	En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió.La función de pérdida utilizada para este propósito es 'categorical crossentropy'.\\
+	
+	Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante demasiadas épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
+	Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
+
 	\section{Criterios de éxito}
+	
 	\section{Configuración}
-	Aquí hablo de aspectos técnicos, configuración y diseño de los experimentos
+	Aquí hablo del  diseño de los experimentos
 	
 	
 		\printbibliography
