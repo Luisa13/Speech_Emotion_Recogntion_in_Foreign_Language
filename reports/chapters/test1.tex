@@ -47,7 +47,7 @@
 	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 	
 	\subsection{Reconocimiento del habla}
-	De manera general, la clasificación de emociones se ha tratado desde dos enfoques principales:
+	De manera general y atendiendo a la manera de como modelar las emociones, la clasificación de emociones se ha tratado desde dos enfoques principales:
 	\begin{itemize}
 		\item Las emociones como categorías discretas
 		\item Las emociones vistas a través de un modelo dimensional
@@ -72,7 +72,7 @@
 	No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados, estos son:
 	
 	\paragraph{Coeficientes Cepstrales con Predicción Lineal (LPCC)}
-	Calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
+	Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 	
 	\paragraph{Coeficientes Cepstrales en la escala de Mel (MFCC)}
 	Se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante lo que llamamos cepstrales (\emph{Cepstrum}) que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). \\
@@ -265,7 +265,7 @@
 		\end{center}
 	\end{table}
 
-	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar.
+	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar.\\
 	
 	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
 	
