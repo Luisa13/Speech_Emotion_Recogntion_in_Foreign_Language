@@ -9,6 +9,7 @@
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{comment}
+\setcounter{secnumdepth}{3}
 
 \addbibresource{./bibLib/referenceLib.bib}
 
@@ -39,6 +40,7 @@
 	
 	\subsection{Temas fonéticos}
 	El objetivo del reconocimiento de emociones en el habla es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
+	
 	La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas, las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono si no también el patrón lingüístico asociado \cite{Davletcharova2015}.
 	Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita) como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como se explica en \cite{Chen2017}.
 	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla. Esta observación puede llevar a que se pregunte si en lenguajes tan dispares, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
@@ -66,47 +68,45 @@
 	\end{comment}
 	
 	En \cite{Rashid2018} se ofrece una breve explicación de cada una de las técnicas más comunes analizando sus puntos fuertes y débiles. Así pues, podemos encontrar la Transformada Wavelets Discreta (DWT) que a pesar de mejorar la información que se obtiene del diálogo en la correspondiente banda de frecuencia presenta variaciones indeseadas en los límites debido a que las señales de entrada son de una longitud finita. También podemos encontrar trabajos donde se usen Coeficientes de Predicción Lineal (LPC) los cuales hacen estimaciones bastante precisas al extraer las propiedades del tracto vocal, pero son altamente sensibles al ruido de cuantificación, por lo que demuestran no ser precisos cuando hay ruido de fondo. \\
-	Entre los más populares, (por ejemplo, \cite{Hajarolasvadi2019} y \cite{AbdulQayyum2019}) donde nos encontramos con los Coeficientes Cepstrales con Predicción Lineal (LPCC), que tras hacer una conversión a coeficientes cepstrales consiguen una baja vulnerabilidad al ruido de fondo en comparación con su predecesor LPC, y Coeficientes Cepstrales en la escala de Mel (MFCC), los cuales se basan en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante \emph{Cepstrum} que divide la señal en dos bandas de frecuencias, baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso\cite{Hajarolasvadi2019}.
 	
-	\begin{comment}
-		
-		La Transformada de Wavelets descompone la señal en grupos de funciones básicas llamadas wavelets. La \textbf{Transformada de Wavelet Discreta} es una extensión de esta donde mejora dicho proceso de descomposición discretizando los parámetros de tiempo y frecuencia. Los parámetros de DWT contienen información de diferentes escalas de frecuencia, lo cual es importante porque supone una mejora en la información que se obtiene del diálogo en la correspondiente banda de frecuencia. A pesar de ello, los coeficientes de Wavelet presentan variaciones indeseadas en los límites ya que las señales de entrada son de una longitud finita.\hfill \break
-		
-		Los \textbf{Coeficientes Cepstrales con Predicción Lineal} se aplican para obtener el coeficiente de predicción lineal equivalente al tracto vocal reduciendo el mínimo error cuadrado entre la señal de audio de entrada y la que es estimada. Normalmente se usa para extraer las propiedades del tracto vocal ya que hace estimaciones bastante precisas de los parámetros en el habla, no obstante, es altamente sensible al ruido de cuantificación, por lo que demuestra no ser precisa cuando hay ruido de fondo y podría, y al igual que MFCC, no ser apropiada para la generalización.\hfill \break
-		
-		Los \textbf{Coeficientes de Predicción Lineal} calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
-		
-		Los \textbf{Coeficientes Cepstrales en la escala de Mel}, se basan en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante \emph{Cepstrum} que divide la señal en dos bandas de frecuencias, baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso.
+	No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados, estos son:
 	
+	\paragraph{Coeficientes Cepstrales con Predicción Lineal (LPCC)}
+	Calcula una envolvente a LPC y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 	
+	\paragraph{Coeficientes Cepstrales en la escala de Mel (MFCC)}
+	Se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante lo que llamamos cepstrales (\emph{Cepstrum}) que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). \\
+	Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso.\hfill \break
 	
-	Los objetivos clave, serían:
+	Resumiéndolo, los objetivos clave, serían:
 	\begin{itemize}
 		\item Eliminar la excitación del tracto vocal.
-		\item Hacer independientes a las características extraídas.
+		\item Independizar las características extraídas.
 		\item Ajuste a como los humanos percibimos el ruido y la frecuencia del sonido.
 		\item Capturar la dinámica fonética, que definirá el contexto.
 	\end{itemize}
 	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.25]{MFCC_process.jpeg} 
-		\caption{Proceso en la aplicación de MFCC en una señal.}
-		\label{fig:mfcc_process}
-	\end{figure}
+	MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. 
+	
+	\begin{comment}
+			Entre los más populares, (por ejemplo, \cite{Hajarolasvadi2019} y \cite{AbdulQayyum2019}) donde nos encontramos con los Coeficientes Cepstrales con Predicción Lineal (LPCC), que tras hacer una conversión a coeficientes cepstrales consiguen una baja vulnerabilidad al ruido de fondo en comparación con su predecesor LPC, y Coeficientes Cepstrales en la escala de Mel (MFCC), los cuales se basan en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante \emph{Cepstrum} que divide la señal en dos bandas de frecuencias, baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso\cite{Hajarolasvadi2019}.
+		
 	\end{comment}
 
 	\subsubsection{Procesamiento de la señal como imagen}
 	\begin{comment}
-		En algunos trabajos hemos visto que blablabla y esto lleva a blablabla
-		En el auge de las redes convolucionales blablabla
+		TODO
+		- En algunos trabajos hemos visto que blablabla y esto lleva a blablabla
+		- En el auge de las redes convolucionales blablabla
+		- Se debe referenciar
 	\end{comment}
 	
 	No olvidemos que el tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo, y al muestrearlas en un determinado rango de frecuencia, obtendríamos algo como lo siguiente:
 	
 	\begin{figure}[H]
-		\includegraphics[scale=0.4]{waveform.png}
-		\caption{waveform de una señal de audio}
+		\centering
+		\includegraphics[scale=0.3]{waveform.png}
+		\caption{Forma de onda de una señal de audio}
 	\end{figure}
 	
 	Esto que vemos es una representación digital de la onda, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
@@ -124,7 +124,7 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.3]{spectogram.png} 
+		\includegraphics[scale=0.25]{spectogram.png} 
 		\caption{Espectograma de una muestra aleatoria. Fuente: \href{https://es.other.wiki/wiki/Spectrogram}{Wiki}}
 	\end{figure}
 	
@@ -176,7 +176,7 @@
 		
 		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde 24 actores profesionales vocalizan frases en inglés norteamericano modulando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Es de acceso público.
 		
-		\item EMODB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
+		\item EMO-DB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
 		
 	\end{itemize}
 
@@ -198,9 +198,26 @@
 	
 	Por otro lado, en \cite{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (enfado, neutral, y tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado, se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
 	
-	 Siguiendo por el enfoque de CNN, en \cite{AbdulQayyum2019} se presenta un modelo de redes convolucionales que no necesita de un preprocesado de la señal para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
+	 Con el fin de eliminar el preprocesado de la señal, en \cite{AbdulQayyum2019}  presenta un modelo de redes convolucionales para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
 	
-	En estudios más recientes, \cite{Anvarjon2020} aborda el problema del Reconocimiento de Emociones en el Habla con una red CNN computacionalmente eficiente que es alimentada con los espectogramas de la señal; es decir, se consigue una representación en 2D de la señal de audio aprovechando mejor las ventajas de una red de este tipo. El sistema es probado en con dos datasets distintos independientemente, IEMOCAP (en inglés) y EMO-DB (alemán) extrayendo, como hemos visto en otros trabajos, un subconjunto para reducir el número de clases entre las que se distingue (enfado, felicidad, neutral y tristeza) consiguiendo un 77.01\% y 92.02\%  de precisión respectivamente.
+	En estudios más recientes, \cite{Anvarjon2020} aborda el problema del Reconocimiento de Emociones en el Habla con una red CNN computacionalmente eficiente que es alimentada con los espectogramas de la señal; es decir, se consigue una representación en 2D de la señal de audio aprovechando mejor las ventajas de una red de este tipo. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{anvarjon2020_emodb.JPG} 
+		\caption{Resultados de T.Anvarjon sobre la base de datos EMO-DB}
+		\label{fig:anvarjon_emo_plot}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{anvarjon2020_imeocap.JPG} 
+		\caption{Resultados de T.Anvarjon sobre la base de datos IEMOCAP}
+		\label{fig:anvarjon_ime_plot}
+	\end{figure}
+
+	El sistema es probado en con dos datasets distintos independientemente, IEMOCAP (en inglés, y eliminando 'frustración') y EMO-DB (alemán) consiguiendo un 77.01\% y 92.02\%  de precisión respectivamente. En las figuras \ref{fig:anvarjon_emo_plot} y \ref{fig:anvarjon_ime_plot} vemos el rendimiento del modelo en los conjuntos de datos correspondientes comprobando el sólido resultado.
+	
+	
 	\begin{comment}
 		Finalmente, en \cite{Mustaqeem2021} exploran los efectos de la combinación de un mecanismo de atención junto a una red convolucional ligera. Al sistema se le pasa como entrada el espectograma de la señal y es probada en 3 datasets distintos: IEMOCAP (inglés),  RAVDESS (inglés), y EMO-B (alemán) consiguiendo un 78.01\%, 80.00\% y 93.00\% , para distinguir entre 4, 8 y 7 emociones respectivamente.
 		
@@ -208,23 +225,21 @@
 		Hablar del trabajo de https://arxiv.org/pdf/1912.10458.pdf
 		
 		Muy importante hablar de \cite{Tamulevicius2020}: En uno de los últimos estudios relacionados con este campo y que más que ver tienen con el tema que nos aborda, encontramos el trabajo de Tamulevicius donde lleva a cabo un estudio del reconocimiento emocional empleando el cruce de x lenguas blablabla
-		
-		Igual se puede poner una tabla a modo de resumen esquematizado
 	\end{comment}
 	
-	 Finalmente, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
+	 Siguiendo por el enfoque de CNN, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
+	 
+	 Finalmente, en una línea más cercana al objetivo de este proyecto es obligatorio hablar del trabajo de \cite{Tamulevicius2020} donde lleva a cabo un estudio del reconocimiento emocional empleando el cruce de 6 lenguas (lituano, inglés, serbio, español, alemán y polaco). La clasificación se lleva a cabo mediante el uso de una red neuronal convolucional bidimensional de 3 capas, e insisten en la importancia del uso de características en 2 dimensiones, ya que proveen información temporal además de las características acústicas de las emociones. En el estudio exploran varias de estas características, siendo el uso de cocleogramas las que consiguen una mayor exactitud.
 	
 	\section{Conclusiones parciales}
-En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
+	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
 	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\hfill \break
 	
-	\begin{comment}
-		introduccion a la tabla comentando que se ve, que es un resumen de lo anteriormente descrito
-		que algunos textos citados son en realidad una comparación y sólo se expone el que mejor resultado dio (que para eso estamos aqui)
-	\end{comment}
 	Bajo estas líneas, podemos ver la tabla donde se resumen los estudios previamente comentados en la sección \ref{lb_estado_arte}.\\
-	\begin{table}[h]
+
+	\begin{table}[H]
+		\centering
 		\begin{center}
 			\begin{tabular}{| c | c | c | c| c | c|}
 				\hline
@@ -236,11 +251,11 @@ En esta sección se valorarán las conclusiones que se extraigan del análisis p
 					Harar & 2017 &  CNN & EMOD-DB (3 emociones) &  96.97\%			\\
 					Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
 					Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
+					Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\
 					Lim & 2017 & & & \\
-					Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB (4 emociones) & 92.02.01\%\\
 					Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
 					Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\  
-					Tamulevicius & 2020 & & &\\
+					Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\
 					%& & & &
 				\hline	
 			\end{tabular}
@@ -250,9 +265,11 @@ En esta sección se valorarán las conclusiones que se extraigan del análisis p
 		\end{center}
 	\end{table}
 
-	En la tabla \ref{tab:metod_comp} se muestran la revisión de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar.
+	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar.
 	
-	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, y de manera intuitiva, cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, y por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
+	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
+	
+	No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, y de manera intuitiva, cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, y por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
 	
 	En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \cite{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión humana de emociones. Los parámetros que se computan en MFCC como el número de filtros o la escala de frecuencia, son a menudo escogidos de manera experimental y dependen en gran medida del conjunto de datos con el que se pruebe y el clasificador que implemente el sistema.
 	
@@ -270,11 +287,6 @@ En esta sección se valorarán las conclusiones que se extraigan del análisis p
 	
 	Hablar del overfitting a pesar de una alta precisión
 	\end{comment}
-
-	
-	
-	
-		
 	
 	\printbibliography
 \end{document}
