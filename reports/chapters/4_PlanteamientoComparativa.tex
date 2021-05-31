@@ -48,7 +48,7 @@
 	
 	\paragraph{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
 	
-	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
+	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 	\begin{itemize}
 		\item Las dos primeras posiciones determinan el actor que las interpreta.
 		\item De la posición 3 a las 5 se define el texto que se pronuncia
@@ -128,19 +128,19 @@
 	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, debemos alterar la señal de audio, modificando la frecuencia, añadiendo ruido...
 	
 	
-		\subsubsection{White Noise o Ruido Blanco}
+		\subsubsection{Ruido Blanco}
 		Añade ruido blanco a la pista de audio, mediante la inyección de valores aleatorios a la señal.
 		
-		\subsubsection{Shiftting o Desplazamiento del sonido}
+		\subsubsection{Desplazamiento del sonido}
 		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos. Por ejemplo, si el sonido ha sido desplazado hacia delante (izquierda) x segundos, los x primeros segundos se marcan con 0. Si por el contrario han sido desplazados hacia detrás (derecha), los últimos x segundos se marcarán con 0.
 		
-		\subsubsection{Pitch Tunning}
+		\subsubsection{Cambio de tono}
 		Cambia el tono de la señal de audio de manera aleatoria.
 		
 	\section{Arquitectura}
 	Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
-	Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados.
-	blabla...
+	%Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados.
+	%blabla...
 	
 	%Los trabajos como los de \cite{AbdulQayyum2019}, \cite{Anvarjon2020} utilizan CNN en sus trabajos. 
 	%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \cite{AbdulQayyum2019}, la cual consta de:
@@ -150,7 +150,7 @@
 		\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
 		En las dos capas convolucionales se usa regularización de tipo L2 para aplicar una penalización a las capas del kernel con un valor de 0.01 y corregir así el overfitting.
 		
-		\item La primera capa convolucional está seguida de un dropout del 0.5 y una capa \emph{max pooling} con un tamaño 8.
+		\item La primera capa convolucional está seguida de una capa Dropout del 0.5 y una capa \emph{max pooling} con un tamaño 8.
 		
 		\item A la segunda capa convolucional se sigue otra capa de Dropout con un valor de 0.25 y una capa \emph{Flatten}.
 		
@@ -158,12 +158,22 @@
 	\end{itemize}
 	% Hablar de las bondades las redes con 1 dimension
 	% En que ayudan
-	En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió.La función de pérdida utilizada para este propósito es 'categorical crossentropy'.\\
+	En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió.La función de pérdida utilizada para este propósito es entropía cruzada categórica (categorical crossentropy).\\
 	
-	Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante demasiadas épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
+	Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
 	Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
-
+	
+	El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+	
 	\section{Criterios de éxito}
+	El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.
+	
+	Las dos principales métricas que se usarán para decidir cómo de buena es la predicción del modelo serán:
+	\begin{itemize}
+		\item Accuracy
+		\item F1 score
+	\end{itemize}
+	
 	
 	\section{Configuración}
 	Aquí hablo del  diseño de los experimentos
