@@ -2,11 +2,12 @@
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
 % Imagenes
-\usepackage{graphicx, wrapfig, lipsum}
+\usepackage{graphicx, wrapfig, hyperref}
 \graphicspath{ {./.images/} }
 \usepackage{float}
 \usepackage{comment}
 \addbibresource{./bibLib/mycol_arte.bib}
+
 
 
 \begin{document}
@@ -120,7 +121,7 @@
 	%\subsection{Conversión de la señal a imagen}
 	% quiza no sea necesario
 	
-	\subsection{Normalización de los datos}
+	%\subsection{Normalización de los datos}
 	
 	
 	\subsection{Ténicas de aumento de datos}
@@ -166,13 +167,45 @@
 	El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
 	
 	\section{Criterios de éxito}
-	El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.
-	
+	El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.\\
 	Las dos principales métricas que se usarán para decidir cómo de buena es la predicción del modelo serán:
 	\begin{itemize}
-		\item Accuracy
-		\item F1 score
+		\item \textbf{Exactitud o \emph{Accuracy} } Establece una comparación entre los resultados predichos y los obtenidos determinando cómo de preciso es el algoritmo cuando se trata de identificar las clases
+		
+			\[
+				Accuracy = \frac{TP + TN}{ TP + FN + TN + FP} 
+			\]
+ 			\hfill \break
+
+		\item \textbf{F1 score} Siendo el \emph{recall} la fracción de elementos relevantes que son recuperados (el cociente de las predicciones positivas y el número de clases positivas en el conjunto de test), la medida de F1 Score conviene el balance entre la precisión y el \emph{recall}.
+		\[
+			Recall = \frac{TP}{ TP + FN} 
+		\]
+		
+		\[
+		%\begin{equation}
+			Precision = \frac{TP}{TP + FP}
+		%\end{equation}
+		\]
+		
+		\[
+			F1 Score = \frac{2 * (Precision * Recall)}{Precision + Recall}
+		\]
+		\hfill \break
+		
+		\item \textbf{Matriz de confusión} Permite una rápida visualización del resultado de la ejecución del algoritmo. Muestra el nivel de predicción por cada clase. En la figura \ref{fig:confusionMatrix} podemos ver una representación de esta.
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.3]{confusionMatrix.png}
+			\caption{Representación de la matriz de confusión. Fuente: \href{https://rpubs.com/chzelada/275494}{Rpubs}}
+			\label{fig:confusionMatrix}
+		\end{figure}
+	
 	\end{itemize}
+
+	En algunos casos, la \emph{accuracy} puede ser errónea debido a la paradoja de la exactitud donde puede existir un sesgo debido a una distribución desbalanceada de las clases. Esto hace que pueda ser más inteligente elegir un modelo con menor exactitud pero con mayor poder predictivo.
+	Para ver ese poder predictivo por lo tanto, es aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión, y la matriz de confusión que nos permitirá observar como se comporta un modelo especifico preidiciendo las clases.
 	
 	
 	\section{Configuración}
