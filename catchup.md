@@ -6,6 +6,7 @@ Nombre | Descripcion | Codigo   | Tutorial
 **Kaggle RAVDESS** | Hace una mezcla de datasets, entre ellos RAVDESS, extrae MEL y MFCC y entrena con **CNN 2D**. 66% acc | [kaggle](https://www.kaggle.com/yfliao/audio-emotion-part-6-2d-cnn-66-accuracy)  |  X  
 **RAVDESS 2D CNN comparator** | complejisimo pero completo proyecto usando RAVDESS con diferentes enfoques en CNN 2D, pero usa pytorch|[github](https://github.com/Data-Science-kosta/Speech-Emotion-Classification-with-PyTorch/blob/master/notebooks/stacked_cnn_attention_lstm.ipynb)| X
 **RAVDESS 2D CNN** |RAVDESS con mel y MFCC con 1d y 2d. Muy recomendable, aunque la forma que tiene de leer las imagenes es confusa |[github](https://github.com/mkosaka1/Speech_Emotion_Recognition) | X
+**RAVDESS Transformer** | Muy muy complejo. Modelo usa transformer y CNN sobre RAVDESS que es aumentado con AWGN | [github](https://github.com/IliaZenkov/transformer-cnn-emotion-recognition)| X
 
 
 
