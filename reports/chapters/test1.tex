@@ -153,18 +153,32 @@
 	
 	No obstante,en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo y en redes neuronales densas (DNN) los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio.
 	
-	Las \textbf{Redes Neuronales Recurrentes} (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente como se explica en \cite{Lim2017}. En \cite{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
+	\paragraph{Redes Neuronales Recurrentes}\hfill \break
+	Las Redes Neuronales Recurrentes (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente como se explica en \cite{Lim2017}. En \cite{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.25]{rnn_structure.JPG} 
+		\includegraphics[scale=0.30]{rnn_structure.JPG} 
 		\caption{Fuente:  \href{http://personal.cimat.mx:8181/~mrivera/cursos/aprendizaje_profundo/RNN_LTSM/introduccion_rnn.html}{Estructura de RNN}}
 		\label{fig:rnn_structure}
 	\end{figure}
 	
-	La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde podemos observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo. Como podemos ver, los trabajos que implementan este tipo de arquitectura son relativamente antiguos (2017, y 2015 respectivamente) y en trabajos más recientes , a destacar \cite{Wang2020} y \cite{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de \textbf{Memoria a Largo Corto-Plazo} (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.
+	La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde podemos observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo. 
 	
-	La tendencia de los modelos basados en redes neuronales densas en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las \textbf{Redes Neuronales Convolucionales} (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \cite{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \cite{AbdulQayyum2019}, \cite{Anvarjon2020} y %\cite{Farooq2020}.
+	\paragraph{Redes LSTM}\hfill \break
+	Como podemos ver, los trabajos que implementan este tipo de arquitectura RNN son relativamente antiguos (2017, y 2015 respectivamente) y en trabajos más recientes , a destacar \cite{Wang2020} y \cite{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de Memoria a Largo Corto-Plazo (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.\\
+	Las redes LSTM son un tipo de red recurrente que fueron diseñadas para resolver el problema de la dependencia a largo plazo del que sufre RNN. Como podemos ver en la figura \ref{fig:netLSTM}, estas presentan una estructura en cadena al igual que las redes recurrentes, pero el modulo de repetición en lugar de tener una única capa de red neuronal, tiene 4 que interactúan.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{LSTM3-chain.png}
+		\caption{Estructura de una red LSTM. Fuente: \href{https://colah.github.io/posts/2015-08-Understanding-LSTMs/}{Colah}}
+		\label{fig:netLSTM} 
+	\end{figure}
+	
+	\paragraph{Redes Neuronales Convolucionales}\hfill \break
+	Uno de los mayores avances de los últimos años en el campo de la inteligencia artificial son las redes convolucionales, debido a la alta precisión que proporcionan en el procesamiento de imágenes.
+	
+	La tendencia de los modelos basados en redes neuronales densas en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las Redes Neuronales Convolucionales (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \cite{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \cite{AbdulQayyum2019} y \cite{Anvarjon2020}  %\cite{Farooq2020}.
 	
 	\subsubsection{Bases de datos}
 	Aquí se recogen las bases de datos sobre el reconocimiento de emociones más usadas en los estudios comentados anteriormente.
@@ -252,7 +266,7 @@
 					Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
 					Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
 					Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\
-					Lim & 2017 & & & \\
+					%Lim & 2017 & & & \\
 					Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
 					Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\  
 					Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\

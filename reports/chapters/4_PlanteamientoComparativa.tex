@@ -122,6 +122,11 @@
 	% quiza no sea necesario
 	
 	%\subsection{Normalización de los datos}
+	\begin{comment}
+		# Now because we are mixing up a few different data sources, it would be wise to normalise the data. 
+		# This is proven to improve the accuracy and speed up the training process. Prior to the discovery of this solution in the embrionic years of neural network, 
+		# the problem used to be know as "exploding gradients".
+	\end{comment}
 	
 	
 	\subsection{Ténicas de aumento de datos}
@@ -208,8 +213,17 @@
 	Para ver ese poder predictivo por lo tanto, es aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión, y la matriz de confusión que nos permitirá observar como se comporta un modelo especifico preidiciendo las clases.
 	
 	
-	\section{Configuración}
-	Aquí hablo del  diseño de los experimentos
+	\section{Diseño de experimentos}
+	
+		\paragraph{E1}  %RAVDESS-1DCNN
+		Conjunto de datos: RAVDESS
+		Método: MFCC + Red convolucional unidimensional 
+		\paragraph{E1.A}  %RAVDESS-1DCNN-AUGMENTATION
+		\paragraph{E1.B}  %RAVDESS+TESS - 1DCNN
+		\paragraph{E1.C}  %RAVDESS-2DCNN
+	
+	
+		
 	
 	
 		\printbibliography
