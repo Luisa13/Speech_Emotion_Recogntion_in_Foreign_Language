@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper,spanish]{book}
+\usepackage{estilo_unir}
+\usepackage[style=apa, natbib=true, backend=biber]{biblatex}
+\addbibresource{./bibLib/referenceLib.bib}
+
+%---------------------------
+%título del trabajo y autor
+%---------------------------
+\title{Reconocimiento de Emociones en la Lengua no Aprendida}
+\author{Luisa Sánchez Avivar}
+\director{Ciro Rodríguez León}
+\date{Junio del 2021}
+
+%---------------------------
+%marges
+%---------------------------
+%\usepackage[margin=1.9cm]{geometry}
+%---------------------------
+%---------------------------
+%---------------------------
+%---------------------------
+\begin{document}
+\renewcommand{\listfigurename}{Índice de Ilustraciones}
+\renewcommand{\listtablename}{Índice de Tablas}
+\renewcommand{\contentsname}{Índice de Contenidos}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla} 
+
+\maketitle
+
+
+\chapter{Resumen}
+{\bf Nota:} En este apartado se introducirá un breve resumen en español del trabajo realizado (extensión máxima: 150 palabras). Este resumen debe incluir el objetivo o propósito de la investigación, la metodología, los resultados y las conclusiones.
+
+
+{\bf Palabras Clave:} Se deben incluir de 3 a 5 palabras claves en español
+
+\chapter{Abstract}
+{\bf Nota:} En este apartado se introducirá un breve resumen en español del trabajo realizado (extensión máxima: 150 palabras). Este resumen debe incluir el objetivo o propósito de la investigación, la metodología, los resultados y las conclusiones.
+
+
+{\bf Palabras Clave:} Se deben incluir de 3 a 5 palabras claves en inglés
+
+
+
+
+\mainmatter
+\chapter{Introducción}
+
+
+	\section{Motivación}
+	Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri (Apple) o Alexa (Amazon), que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos.
+	En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo 16 palabras y dígitos, hasta la aparición de Google Home en 2017, ente tipo de asistentes han ido mejorando su alcance y capacidades.\\
+	
+	El uso de estos asistentes no sólo se limita al ámbito doméstico, por ejemplo, la industria del videojuego creció un 23\% durante la pandemia del Covid-19 en 2020 más que en el año anterior, 2019. La tendencia en el uso de este dominio empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica. 
+	
+	Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. Por ejemplo, Facebook usa inteligencia emocional para monitorizar signos de depresión en los usuarios.
+	
+	Cabe pensar que en este tipo de tecnología haya un potencial interés para la asistencia sanitaria, o incluso, para la industria automovilística. Visualicemos por ejemplo, un conductor tratando de resolver una incidencia mientras conduce. Esta incidencia puede variar desde buscar una ruta alternativa a un hospital o servicio de emergencia, y el estado emocional en el que se encuentre, puede afectar limitando su habilidad para resolver el problema. 
+	
+	De la misma manera el reconocimiento de emociones puede ocupar un lugar en los asistentes virtuales de cualquier servicio al integrarlo con técnicas del procesamiento del lenguaje natural, permitiendo mayor eficiencia del procesamiento de la conversación al detectar -por ejemplo-  irritabilidad o frustración en el usuario. 
+	
+	El espectro emocional que una persona esconde en su discurso es un factor esencial de la comunicación humana y ofrece información sin necesidad de alterar el contenido lingüístico. Es aquí donde reside el potencial de este área y por lo que cabe preguntarse si ese reconocimiento emocional a través de la voz, está fuertemente ligado al idioma y la cultura, o hay emociones que podemos detectar independientemente de este. Por ejemplo, hay áreas con una diversidad cultura y lingüística muy diversa, sólo en Zimbabwe hay 16 lenguas oficiales, o 4 en Suiza. Yace aquí la necesidad de desvincular esta dependencia, lo que podría crear un impulso en el desarrollo de estos sistemas sin la necesidad de un corpus específico, y al mismo tiempo ayudarnos a entender la relación entre la expresión de emociones y la lengua.
+	La idea de este proyecto nació por la motivación de crear un sistema capaz de crear una respuesta, no sólo coherente en el plano semántico, si no también sensible al estado emocional del usuario. Dado el alcance ambicioso con el que se partía, y teniendo en cuenta lo anterior, hemos preferido centrarnos en el estudio del reconocimiento de esas emociones, aplicándolo a la lengua extranjera.
+	
+	
+	
+	\section{Planteamiento del Trabajo}
+	Desde hace años, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo siempre se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. Esta habilidad ha sido respaldada por numerosos artículos donde se concluye que es posible distinguir e identificar entre al menos cuatro emociones básicas (felicidad, tristeza, y enfado) a través de la voz (sin necesidad del procesamiento del lenguaje natural y por lo tanto de un contexto).
+	
+	Atendiendo al estudio de las emociones expresadas según la lengua existen estudios donde se demuestra que individuos de diferentes culturas pueden reconocer emociones básicas en diferentes niveles, pero es menos abundante la evidencia de un acuerdo en cómo las emociones básicas son reconocidas desde la expresión vocal de un interlocutor.% \cite{Pell2009a}
+	Análogamente el debate del reconocimiento de emociones en un plano intercultural también se ha enfocado a través del estudio de los gestos faciales en conjunto con la expresión vocal, donde se concluye los factores sociales tienen un gran impacto, ya que la identificación de las emociones es más fácil para los miembros de la misma cultura que para los de otra distinta \citep{Pell2009a} y \citep{Pell2009}. A pesar de ello hay una gran carencia de comparativas con respecto a la voz donde se demuestre una sólida influencia cultural, sin embargo parece claro que las dimensiones socio culturales que engloban nuestras interacciones pueden tener un gran impacto en nuestra comunicación dentro de un marco emocional.
+	
+	Este trabajo de fin de máster se centra en el uso de técnicas basadas en redes neuronales para la clasificación de emociones en el tracto vocal en la lengua extranjera. Para acercarnos a este escenario, se parte del supuesto que dado un modelo entrenado en un lenguaje capaz de reconocer emociones en este, se evalúa en un idioma distinto que nunca ha formado parte del anterior conjunto de datos. 
+	
+	Con este estudio se pretende entender mejor la relación entre emoción e idioma y arrojar luz a preguntas como qué emociones son más fácilmente reconocibles indistintamente del lenguaje. 
+
+
+
+%\begin{thebibliography}{a}
+%	\bibitem{etiqueta} \textsc{Autores},
+%	\textit{nombre referencia.}
+%	Información addicional
+%\end{thebibliography}
+
+\printbibliography
+%\bibliographystyle{apa}
+%\bibliography{referenceLib}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
