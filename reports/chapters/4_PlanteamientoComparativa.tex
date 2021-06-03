@@ -98,9 +98,9 @@
 	
 	\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \cite{librosa082}. Esta librería ha sido esencial para la extracción de características MFCC así como algunas técnicas de aumento de datos.
 	
-	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
+	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto originalmente creada por Google que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
 	
-	\paragraph{Python 3} Python es un lenguage interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en python 3.
+	\paragraph{Python 3} Python es un lenguaje interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en python 3.
 	
 	\section{Pre-procesado de los datos}
 	Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
@@ -131,17 +131,18 @@
 	
 	\subsection{Ténicas de aumento de datos}
 	Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
-	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, debemos alterar la señal de audio, modificando la frecuencia, añadiendo ruido...
-	
+	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, sabemos que el sonido tiene las siguientes características: tono, duración, timbre e intensidad. Por lo que debemos modificar levemente nuestros datos alrededor de esas características de manera que sólo difieran en pequeños factores de la muestra original.
+	% VER: https://medium.com/@keur.plkar/audio-data-augmentation-in-python-a91600613e47
 	
 		\subsubsection{Ruido Blanco}
-		Añade ruido blanco a la pista de audio, mediante la inyección de valores aleatorios a la señal.
+		Añadir ruido blanco a la pista de audio, implica la inyección de valores aleatorios distribuidos de manera irregular con una media de 0 y una desviación de estándar de 1. Para implementar este método se usará el paquete numpy
+		
 		
 		\subsubsection{Desplazamiento del sonido}
 		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos. Por ejemplo, si el sonido ha sido desplazado hacia delante (izquierda) x segundos, los x primeros segundos se marcan con 0. Si por el contrario han sido desplazados hacia detrás (derecha), los últimos x segundos se marcarán con 0.
 		
 		\subsubsection{Cambio de tono}
-		Cambia el tono de la señal de audio de manera aleatoria.
+		Se refiere al proceso de cambiar el tono a un sonido sin variar su velocidad. Para implementar este método se usará la librería Librosa que ofrece un método específico.
 		
 	\section{Arquitectura}
 	Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
@@ -215,12 +216,19 @@
 	
 	\section{Diseño de experimentos}
 	
-		\paragraph{E1}  %RAVDESS-1DCNN
-		Conjunto de datos: RAVDESS
+		\paragraph{Prueba 1}  %RAVDESS-1DCNN
+		Conjunto de datos: RAVDESS con técnicas de aumento de datos
 		Método: MFCC + Red convolucional unidimensional 
-		\paragraph{E1.A}  %RAVDESS-1DCNN-AUGMENTATION
-		\paragraph{E1.B}  %RAVDESS+TESS - 1DCNN
-		\paragraph{E1.C}  %RAVDESS-2DCNN
+		
+		\paragraph{Prueba 1.A} %RAVDESS+TESS - 1DCNN
+		Conjunto de datos: RAVDESS + TESS con técnicas de aumento de datos
+		Método: MFCC + Red convolucional unidimensional 
+		
+		\paragraph{Prueba 1.B}  
+		Conjunto de datos: RAVDESS + TESS con técnicas de aumento de datos
+		Método: MFCC + Red convolucional bidimensional 
+		
+		%\paragraph{Prueba 1.C}  %RAVDESS-2DCNN
 	
 	
 		
