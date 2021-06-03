@@ -147,6 +147,7 @@
 	\subsubsection{Algoritmos de Clasificación}
 	
 	\begin{comment} 
+	TODO
 		Este parrafo debería ser referenciado
 	\end{comment}
 	Convencionalmente, el estudio del Reconocimiento de Emociones en el Habla incluye el uso de diferentes tipos de clasificadores para distinguir entre emociones: Suport Vector Machines (SVNs) los cuales se han usado extensamente
@@ -168,7 +169,7 @@
 	La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde podemos observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo. 
 	
 	\paragraph{Redes LSTM}\hfill \break
-	Como podemos ver, los trabajos que implementan este tipo de arquitectura RNN son relativamente antiguos (2017, y 2015 respectivamente) y en trabajos más recientes , a destacar \cite{Wang2020} y \cite{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de Memoria a Largo Corto-Plazo (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.\\
+	Como podemos ver, los trabajos anteriormente mencionados que implementan este tipo de arquitectura RNN son relativamente antiguos (2017, y 2015 respectivamente) y en estudios más recientes , a destacar \cite{Wang2020} y \cite{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de Memoria a Largo Corto-Plazo (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.\\
 	Las redes LSTM son un tipo de red recurrente que fueron diseñadas para resolver el problema de la dependencia a largo plazo del que sufre RNN. Como podemos ver en la figura \ref{fig:netLSTM}, estas presentan una estructura en cadena al igual que las redes recurrentes, pero el modulo de repetición en lugar de tener una única capa de red neuronal, tiene 4 que interactúan.
 	\begin{figure}[H]
 		\centering
@@ -190,7 +191,7 @@
 		
 		\item IEMOCAP (por sus siglas en ingles, \emph{Interactive Emotional Dyadic Motion Capture}) es una base de datos multimodal privada utilizada para el reconocimiento y análisis de emociones. Consiste en 12 horas de contenido audiovisual donde 10 actores (5 hombres y 5 mujeres) mantienen diálogos en ingles previamente transcritos en los que se interpretan 5 emociones distintas (enfado, tristeza, alegría, frustración y neutral).
 		
-		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde 24 actores profesionales vocalizan frases en inglés norteamericano modulando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Es de acceso público.
+		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde 24 actores profesionales vocalizan frases en inglés norteamericano modulando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Cuenta con una completa documentacion \cite{Livingstone2018} y es de acceso público.
 		
 		\item EMO-DB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
 		
@@ -236,10 +237,6 @@
 	\begin{comment}
 		Finalmente, en \cite{Mustaqeem2021} exploran los efectos de la combinación de un mecanismo de atención junto a una red convolucional ligera. Al sistema se le pasa como entrada el espectograma de la señal y es probada en 3 datasets distintos: IEMOCAP (inglés),  RAVDESS (inglés), y EMO-B (alemán) consiguiendo un 78.01\%, 80.00\% y 93.00\% , para distinguir entre 4, 8 y 7 emociones respectivamente.
 		
-		
-		Hablar del trabajo de https://arxiv.org/pdf/1912.10458.pdf
-		
-		Muy importante hablar de \cite{Tamulevicius2020}: En uno de los últimos estudios relacionados con este campo y que más que ver tienen con el tema que nos aborda, encontramos el trabajo de Tamulevicius donde lleva a cabo un estudio del reconocimiento emocional empleando el cruce de x lenguas blablabla
 	\end{comment}
 	
 	 Siguiendo por el enfoque de CNN, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
@@ -290,7 +287,7 @@
 	
 	En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \cite{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión humana de emociones. Los parámetros que se computan en MFCC como el número de filtros o la escala de frecuencia, son a menudo escogidos de manera experimental y dependen en gran medida del conjunto de datos con el que se pruebe y el clasificador que implemente el sistema.
 	
-	Observamos también que CNN (con diferentes modificaciones dependiendo del estudio) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes, y la combinación de probabilidades resultantes identifica conjuntos de atributos que determinan una clasificación. El uso de espectrogramas, aprovecha las bondades que las redes convolucionales ofrecen
+	En cuanto a los métodos usados como clasificadores, observamos también que CNN (con diferentes modificaciones dependiendo del estudio) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes, y la combinación de probabilidades resultantes identifica conjuntos de atributos que determinan una clasificación. El uso de espectrogramas, aprovecha las bondades que las redes convolucionales ofrecen
 	%https://blog.soprasteria.se/2019/10/07/using-cnn-for-speech-emotion-recognition/
 	
 	\begin{comment} 
