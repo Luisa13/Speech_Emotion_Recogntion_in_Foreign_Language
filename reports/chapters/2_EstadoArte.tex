@@ -266,7 +266,8 @@
 	
 	 Siguiendo por el enfoque de CNN, en \cite{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
 	 
-	 Finalmente, en una línea más cercana al objetivo de este proyecto es obligatorio hablar del trabajo de \cite{Tamulevicius2020} donde lleva a cabo un estudio del reconocimiento emocional empleando el cruce de 6 lenguas (lituano, inglés, serbio, español, alemán y polaco). La clasificación se lleva a cabo mediante el uso de una red neuronal convolucional bidimensional de 3 capas, e insisten en la importancia del uso de características en 2 dimensiones, ya que proveen información temporal además de las características acústicas de las emociones. En el estudio exploran varias de estas características, siendo el uso de cocleogramas las que consiguen una mayor exactitud.
+	 % TODO: quiza quieres revisar esa verborrea
+	 Finalmente, es obligatorio hablar del trabajo de \cite{Tamulevicius2020}, en una línea más cercana al objetivo de este proyecto, lleva a cabo un estudio del reconocimiento emocional empleando el cruce de 6 lenguas (lituano, inglés, serbio, español, alemán y polaco). Aunque sus resultados no son realmente señalables y acaban diseñando un clasificador que es entrenado con todas las lenguas para distinguir las emociones indistintamente, dicha clasificación se lleva a cabo mediante el uso de una red neuronal convolucional bidimensional de 3 capas, e insisten en la importancia del uso de características en 2 dimensiones, ya que proveen información temporal además de las características acústicas de las emociones. En el estudio exploran varias de estas características, siendo el uso de cocleogramas las que consiguen una mayor exactitud.
 	
 	\section{Conclusiones parciales}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
@@ -289,7 +290,6 @@
 					Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
 					Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
 					Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\
-					%Lim & 2017 & & & \\
 					Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
 					Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\  
 					Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\
@@ -303,7 +303,7 @@
 	\end{table}
 
 	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
-	% No puedo acceder a la base de datos de Lithuanian para referenciarlo
+	% WARNING No puedo acceder a la base de datos de Lithuanian para referenciarlo
 	En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} en donde se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
 	
 	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
