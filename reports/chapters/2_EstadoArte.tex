@@ -47,7 +47,7 @@
 	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 	
 	\subsection{Reconocimiento del habla}
-	De manera general y atendiendo a la manera de como modelar las emociones, la clasificación de emociones se ha tratado desde dos enfoques principales:
+	Atendiendo a la manera de como modelar las emociones, según la literatura, la clasificación de emociones se ha tratado desde dos enfoques principales:
 	\begin{itemize}
 		\item Las emociones como categorías discretas
 		\item Las emociones vistas a través de un modelo dimensional
@@ -55,6 +55,8 @@
 
 	En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \cite{Ekman1992} quien estableció que estas eran 6: enfado, asco, miedo , felicidad, tristeza y sorpresa.
 	En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que de lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \cite{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro. \hfill \break
+	
+	Sin embargo la mayoría de los estudios centrados en la clasificación de emociones se centran en las emociones vistas como categorías discretas.
 
 	\subsubsection{Extracción de Características}
 	La extracción de características es una de las secciones más importantes en el reconocimiento de emociones a través de la voz debido a la ambigüedad de las características y la variedad vocal. La extracción de características es el paso principal en el procesamiento del diálogo, y se lleva a cabo para centrarse en la información contenida en la señal y mejorar el grado de similitud y/o diferenciación entre las clases \cite{Hellbernd2016}. Hasta ahora, por lo general hay dos enfoques principales  con respecto al tipo de características usadas en el Reconocimiento de Emociones en el Discurso:\\
@@ -72,7 +74,8 @@
 	No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados, estos son:
 	
 	\paragraph{Coeficientes Cepstrales con Predicción Lineal (LPCC)}
-	Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
+	Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Esto materializa las características de un canal particular del sonido, teniendo en cuenta que la misma persona con diferentes tonos emocionales tendrá diferentes canales de características, se podrán extraer esos coeficientes para indetificar las emociones contenidas \cite{Sandesara2020}.
+	Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 	
 	\paragraph{Coeficientes Cepstrales en la escala de Mel (MFCC)}
 	Se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante lo que llamamos cepstrales (\emph{Cepstrum}) que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). \\
@@ -85,8 +88,7 @@
 		\item Ajuste a como los humanos percibimos el ruido y la frecuencia del sonido.
 		\item Capturar la dinámica fonética, que definirá el contexto.
 	\end{itemize}
-	
-	MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. 
+	MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente \cite{Farouk2014}. 
 	
 	\begin{comment}
 			Entre los más populares, (por ejemplo, \cite{Hajarolasvadi2019} y \cite{AbdulQayyum2019}) donde nos encontramos con los Coeficientes Cepstrales con Predicción Lineal (LPCC), que tras hacer una conversión a coeficientes cepstrales consiguen una baja vulnerabilidad al ruido de fondo en comparación con su predecesor LPC, y Coeficientes Cepstrales en la escala de Mel (MFCC), los cuales se basan en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante \emph{Cepstrum} que divide la señal en dos bandas de frecuencias, baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso\cite{Hajarolasvadi2019}.
@@ -130,8 +132,8 @@
 	
 	La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \cite{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir\cite{StevensVolkmann}. Es por ello que el rango donde se mueve nuestro espectograma, se adapta a lo que se llama \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas.\\
 	
-	Finalmente nos queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello debemos entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en nuestra anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda (\emph{waveform}) de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal.\\
-	El papel de Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a como los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal. En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC}.
+	Finalmente nos queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello debemos entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en nuestra anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal \cite{Bao2019}.\\
+	El papel de Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a como los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal. En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC} \cite{Nair}.
 	
 	\begin{figure}[h]
 		\centering
@@ -202,7 +204,7 @@
 	
 	\section{Estado del Arte}
 	\label{lb_estado_arte}
-	Aunque la mayoría de estudios se basan en análisis que evalúan la precisión del clasificador sobre la propia lengua, el auge de las técnicas basadas en aprendizaje profundo ha permitido aumentar la capacidad de clasificación en los modelos de reconocimiento de emociones. La creación de un mapa de características a partir de diferentes representaciones de la onda sonora con respecto a su frecuencia y tiempo, permiten a las redes neuronales distinguir más atributos para hacer una preidcción más exacta. A partir de este paradigma, este tema ha sido objeto de estudio aplicando diferntes técnicas.
+	Aunque la mayoría de estudios se basan en análisis que evalúan la precisión del clasificador sobre la propia lengua, el auge de las técnicas basadas en aprendizaje profundo ha permitido aumentar la capacidad de clasificación en los modelos de reconocimiento de emociones. La creación de un mapa de características a partir de diferentes representaciones de la onda sonora con respecto a su frecuencia y tiempo, permiten a las redes neuronales distinguir más atributos para hacer una preidcción más exacta. A partir de este paradigma, el intento de clasificar emociones a través de la voz ha sido objeto de estudio aplicando diferntes técnicas.
 
 	En \cite{Atmaja2019} proponen sistema basado en una arquitectura LSTM bidireccional (BLSTM) que aplican a un subconjunto de la base de datos IEMOCAP para distinguir entre cuatro emociones(enfado, excitación, tristeza y neutral). Discuten la incapacidad del un modelo BLSTM para detectar características relevantes, y palian el problema añadiendo un modelo de atención. Teniendo ese modelo como punto de partida (BLSTM + modelo de atención), experimentan escogiendo diferentes valores de duración del silencio para medir la eficacia que tendría el modelo si este se eliminara. Además utilizan un complejo sistema de extracción de características entre las que destacan MFCC. Los resultados muestran un máximo del 70.34\% de precisión en los datos sin necesidad de eliminar el silencio de la señal de audio.
 	Un año después, J.Wang \cite{Wang2020} propone un modelo dual LSTM donde cada uterancia, se procesa con características MFCC y espectogramas de Mel simultáneamente. El modelo es entrenado y evaluado en el conjunto de datos IEMOCAP llegando a un 72.7\% de exactitud.
@@ -278,7 +280,9 @@
 		\end{center}
 	\end{table}
 
-	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar.\\
+	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
+	% No puedo acceder a la base de datos de Lithuanian para referenciarlo
+	En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} en donde se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
 	
 	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
 	
