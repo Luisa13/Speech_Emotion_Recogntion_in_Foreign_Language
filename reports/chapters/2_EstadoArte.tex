@@ -8,8 +8,11 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
+
 \usepackage{comment}
-\setcounter{secnumdepth}{3}
+\usepackage{multicol}
+% Define el nivel de profundidad de las secciones para numerarlas
+\setcounter{secnumdepth}{3} 
 
 \addbibresource{./bibLib/referenceLib.bib}
 
@@ -152,9 +155,31 @@
 	\end{comment}
 	Convencionalmente, el estudio del Reconocimiento de Emociones en el Habla incluye el uso de diferentes tipos de clasificadores para distinguir entre emociones: Suport Vector Machines (SVNs) los cuales se han usado extensamente
 	para el reconocimiento de emociones y pueden llegar a presentar un buen rendimiento en comparación con otros clasificadores tradicionales, el algoritmo K-NN es de los enfoques más simples, Hidden Markov Model(HMM) es a menudo utilizado para lidiar con los cambios temporales en la señal y por último, Gaussian Mixture Model (GMM) el cual es útil para representar las unidades de sonido en características acústicas.%\cite{Farooq2020}.
+
+	No obstante,en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo, los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio.
+	
+	El aprendizaje profundo es un conjunto de algoritmos de aprendizaje automático que modela abstracciones de alto nivel construyendo conceptos complejos a partir de otros más sencillos mediante el uso de una arquitectura jerárquica.
+	Esta arquitectura jerárquica es lo que denominamos redes neuronales que son estructuras lógicas cuyo diseño se basa en mayor medida en la organización del sistema nervioso de los mamíferos. % referencia 
+	Las neuronas artificiales que la componen son unidades de proceso especializadas en detectar determinadas características de aquello que es percibido (señal).
 	
 	
-	No obstante,en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo y en redes neuronales densas (DNN) los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio.
+	\begin{figure}[!htb]
+		\begin{minipage}{0.48\textwidth}
+			\centering
+			\includegraphics[width=.8\textwidth]{neurona.JPG}
+			\caption{Representación de una neurona real}
+			\label{ref:imgNeuron}
+		\end{minipage}\hfill
+		\begin{minipage}{0.48\textwidth}
+			\centering
+			\includegraphics[width=.6\textwidth]{neuronaArtificial.JPG}\hfill
+			\caption{Representación de una neurona artificial.}
+			\label{ref:imgArtNeuron}
+		\end{minipage}
+	\end{figure}
+
+	La imagen \ref{ref:imgArtNeuron} muestra el funcionamiento de estas neuronas artificiales claramente inspirado en el diseño de la figura \ref{ref:imgNeuron}. Al nodo le llegan unas entradas $x_i$ que tienen asignadas unos pesos $w_i$ y unos sesgos $b_i$ (\emph{biases}), que son procesadas por la función de activación. El proceso de aprendizaje se consigue por transferencia de información de unas capas a otras gracias al algoritmo de retropropagación (\emph{backpropagation}) cuyo objetivo es encontrar la distribución adecuada a cada una de las variables de entrada.
+
 	
 	\paragraph{Redes Neuronales Recurrentes}\hfill \break
 	Las Redes Neuronales Recurrentes (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente como se explica en \cite{Lim2017}. En \cite{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
