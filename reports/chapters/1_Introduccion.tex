@@ -3,6 +3,7 @@
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
 \addbibresource{./bibLib/introLib.bib}
+\usepackage{comment}
 
 
 
@@ -27,20 +28,91 @@
 	
 	\mainmatter
 	\chapter{Introducción}
-	Desde hace años, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo siempre se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. Esta habilidad ha sido respaldada por numerosos artículos donde se concluye que es posible distinguir e identificar entre al menos cuatro emociones básicas (felicidad, tristeza, tristeza, y enfado) a través de la voz (sin necesidad del procesamiento del lenguaje natural y por lo tanto de un contexto).
 	
-	Atendiendo al estudio de las emociones expresadas según la lengua existen estudios donde se demuestra que individuos de diferentes culturas pueden reconocer emociones básicas en diferentes niveles, pero es menos abundante la evidencia de un acuerdo en cómo las emociones básicas son reconocidas desde la expresión vocal de un interlocutor \cite{Pell2009a}
+	
+	\section{Motivación}
+	\begin{comment}
+		Affective computing opens a new area of research in computer science with the aim to improve the way how humans and machines interact. Recognition of human emotions by machines is becoming a significant focus in recent research in different disciplines related to information sciences and Human-Computer Interaction (HCI)
+		Humans verbally communicate by speech and
+		language. This enables faster sharing of messages, conveying of ideas and spreading of inventions. Communication between humans is actually not just what humans say, but also how they say it. Furthermore, facial expressions, as a part of non-verbal communication, are responsible for about 55%, voice intonation for about 38% and actual words for 7% of the message perception [1]
+		S.Lugovic
+	\end{comment}	
+	Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri (Apple) o Alexa (Amazon), que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos.
+	En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo 16 palabras y dígitos, hasta la aparición de Google Home en 2017, ente tipo de asistentes han ido mejorando su alcance y capacidades.\\
+	
+	El uso de estos asistentes no sólo se limita al ámbito doméstico, por ejemplo, la industria del videojuego creció un 23\% durante la pandemia del Covid-19 en 2020 más que en el año anterior, 2019. La tendencia en el uso de este dominio empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica. 
+%	La necesidad del desarrollo de estos sistemas ha disparado la investigación en distintas áreas como la salud o la automoción.
+	Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. Por ejemplo, Facebook usa inteligencia emocional para monitorizar signos de depresión en los usuarios.
+	
+	Cabe pensar que en este tipo de tecnología haya un potencial interés para la asistencia sanitaria, o incluso, para la industria automovilística. Visualicemos por ejemplo, un conductor tratando de resolver una incidencia mientras conduce. Esta incidencia puede variar desde buscar una ruta alternativa a un hospital o servicio de emergencia, y el estado emocional en el que se encuentre, puede afectar limitando su habilidad para resolver el problema. 
+	
+	De la misma manera el reconocimiento de emociones puede ocupar un lugar en los asistentes virtuales de cualquier servicio al integrarlo con técnicas del procesamiento del lenguaje natural, permitiendo mayor eficiencia del procesamiento de la conversación al detectar -por ejemplo-  irritabilidad o frustración en el usuario. 
+	
+	El espectro emocional que una persona esconde en su discurso es un factor esencial de la comunicación humana y ofrece información sin necesidad de alterar el contenido lingüístico. Es aquí donde reside el potencial de este área y por lo que cabe preguntarse si ese reconocimiento emocional a través de la voz, está fuertemente ligado al idioma y la cultura, o hay emociones que podemos detectar independientemente de este. Por ejemplo, hay áreas con una diversidad cultura y lingüística muy diversa, sólo en Zimbabwe hay 16 lenguas oficiales, o 4 en Suiza. Yace aquí la necesidad de desvincular esta dependencia, lo que podría crear un impulso en el desarrollo de estos sistemas sin la necesidad de un corpus específico, y al mismo tiempo ayudarnos a entender la relación entre la expresión de emociones y la lengua.
+	La idea de este proyecto nació por la motivación de crear un sistema capaz de crear una respuesta, no sólo coherente en el plano semántico, si no también sensible al estado emocional del usuario. Dado el alcance ambicioso con el que se partía, y teniendo en cuenta lo anterior, hemos preferido centrarnos en el estudio del reconocimiento de esas emociones, aplicándolo a la lengua extranjera.
+ 
+
+	\begin{comment}
+	
+	Es indudable de la importancia que está cobrando hoy en día la interac
+	A día de hoy, la interacción humano-máquina usando la tecnología de la voz se ha convertido en una realidad y cada vez es más popular. La aparición de asistentes inteligentes como Siri (Apple) o Alexa (Amazon) ha explotado las diferentes áreas en el reconocimiento de la voz con el objetivo de mejorar la experiencia de usuario
+	
+	
+		importancia de la interaccion con las maquinas a traves de comandos de voz
+		El primer software de reconocimiento de voz fue presentado por IBM en 1961 reconociendo 16 palabras y digitos hasta la aparición de Google Home en 2017, este tipo de asistentes han ido mejorando su alcance y capacidades.
+		Otras compañias como OTO han desarrollado modelos de analisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usado por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos
+		
+		Las tendencias en el uso de este dominio empieza a aplicarse a asistentes personalizados para coches automaticos o asistencia de ayuda telefónica.
+		
+		Interactuar con una máquina en un momento de estres puede ser particularmente desafiante, y disponer de un asistente que 
+		
+		El uso de estos asistentes no solo se limita al ambito domestico, por ejemplo, la industria del videojuego creció un 23% durante la pandemia del Covid19 en 2020 más que en el año anterior, 2019.
+		
+		El estado emocional que una persona esconde en su diálogo es un factor esencial de la comunicación humana y ofrece información sin necesidad de alterar el contenido linguistico
+		
+		En el libro Diseño Emocional de Donald A. Normal en 2003 recalca como la atractividad afecta a la percepción de los usuarios
+		
+		
+		The necessity to develop intelligent robotic systems has triggered innovative research in many fields such as the healthcare, industry automation [3], human–computer interaction [4], and many other practical application areas. Embedding emotional intelligence in business units such as customer call centers is providing a better alternative of measuring customer satisfaction and evaluation of agents
+		Sin embargo este reconocimiento hasta hoy, depende fuertemente del lenguaje.
+		Hay áreas con una diversidad cultura y linguistica muy diversa.
+		
+		
+		Regardless of how advanced technology has become, it is still in the early stages. Chatbots, voice assistants, and automated service interfaces frequently lack the ability to recognize when you are angry or upset, and that gap has kept AI from filling a more substantial role in things like customer service and sales.
+		
+		The problem is that words—the part of the conversation that AI can quantify and evaluate—aren’t enough. It’s less about what we say and more about how we say it. Studies have been conducted showing that the tone or intonation of your voice is far more indicative of your mood and mental state than the words you say.
+
+		
+	\end{comment}
+	
+	\section{Planteamiento del Trabajo}
+	Desde hace años, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo siempre se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. Esta habilidad ha sido respaldada por numerosos artículos donde se concluye que es posible distinguir e identificar entre al menos cuatro emociones básicas (felicidad, tristeza, y enfado) a través de la voz (sin necesidad del procesamiento del lenguaje natural y por lo tanto de un contexto).
+	
+	Atendiendo al estudio de las emociones expresadas según la lengua existen estudios donde se demuestra que individuos de diferentes culturas pueden reconocer emociones básicas en diferentes niveles, pero es menos abundante la evidencia de un acuerdo en cómo las emociones básicas son reconocidas desde la expresión vocal de un interlocutor.% \cite{Pell2009a}
 	Análogamente el debate del reconocimiento de emociones en un plano intercultural también se ha enfocado a través del estudio de los gestos faciales en conjunto con la expresión vocal, donde se concluye los factores sociales tienen un gran impacto, ya que la identificación de las emociones es más fácil para los miembros de la misma cultura que para los de otra distinta \cite{Pell2009a} y \cite{Pell2009}. A pesar de ello hay una gran carencia de comparativas con respecto a la voz donde se demuestre una sólida influencia cultural, sin embargo parece claro que las dimensiones socio culturales que engloban nuestras interacciones pueden tener un gran impacto en nuestra comunicación dentro de un marco emocional.
 	
-	La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas, las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono si no también el patrón lingüístico asociado \cite{Davletcharova2015}. Por ejemplo la tristeza tiende a mostrarse con un tono notablemente bajo mientras que la felicidad, la sorpresa, o el enfado son producidas con un tono moderadamente alto. En general se esperaría que las expresiones de tristeza y enfado tiendan a marcar una mayor diferencia entre ellas y por lo tanto sean reconocidas con más precisión con independencia del lenguaje al estar situadas en los extremos (opuestos) del espectro.
-	En literatura anterior \cite{Pell2011} se argumenta que las 6 emociones básicas felicidad, miedo, asco, sorpresa, enfado y tristeza) son exitósamente reconocidas desde la prosodia. Cabe destacar la diferencia entre prosodia y la calidad vocal, donde la primera se centra en características tales como la entonación, el estrés y el ritmo del habla mientras que la segunda se refiere al tono, energía y tempo \cite{Processing2015} . 
+	Este trabajo de fin de máster se centra en el uso de técnicas basadas en redes neuronales para la clasificación de emociones en el tracto vocal en la lengua extranjera. Para acercarnos a este escenario, se parte del supuesto que dado un modelo entrenado en un lenguaje capaz de reconocer emociones en este, se evalúa en un idioma distinto que nunca ha formado parte del anterior conjunto de datos. 
 	
-	Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita) como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como explica en \cite{Chen2017}.
+	Con este estudio se pretende entender mejor la relación entre emoción e idioma y arrojar luz a preguntas como qué emociones son más fácilmente reconocibles indistintamente del lenguaje. 
+	%La mayoría de los estudios que guardan relación con la temática del proyecto se centran en una sola lengua
+	\begin{comment}
+		[Estado del Arte]
+		La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas, las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono si no también el patrón lingüístico asociado \cite{Davletcharova2015}.
+		[]
+		 Por ejemplo la tristeza tiende a mostrarse con un tono notablemente bajo mientras que la felicidad, la sorpresa, o el enfado son producidas con un tono moderadamente alto. En general se esperaría que las expresiones de tristeza y enfado tiendan a marcar una mayor diferencia entre ellas y por lo tanto sean reconocidas con más precisión con independencia del lenguaje al estar situadas en los extremos (opuestos) del espectro.
+		En literatura anterior \cite{Pell2011} se argumenta que las 6 emociones básicas felicidad, miedo, asco, sorpresa, enfado y tristeza) son exitósamente reconocidas desde la prosodia. Cabe destacar la diferencia entre prosodia y la calidad vocal, donde la primera se centra en características tales como la entonación, el estrés y el ritmo del habla mientras que la segunda se refiere al tono, energía y tempo \cite{Processing2015}.
+		  
+		[Estado del Arte]
+		Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita) como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como explica en \cite{Chen2017}.	
+		Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla.Esta observación puede llevar a que se pregunte si en lenguajes tan dispares, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
+		
+		[]
+		De nuevo, en \cite{Pell2009} se describen anómalas pseudo-manifestaciones semánticas (discurso sin sentido) que se asemejan a la lengua materna para expresar cada tipo de emoción. Aquí se evidencia claramente que la emoción de cada interlocutor puede ser reconocida con precisión desde la prosodia independientemente del contexto semántico. Además argumenta que el significado emocional en la voz se transmite por cambios en diferentes parámetros acústicos como el tono, la intensidad, la duración, el ritmo y distintos aspectos de la calidad de la voz.
+		
+		Finalmente, obtener datos necesarios de la extracción de características es un problema porque apenas cubre el amplio espectro emocional que hoy conocemos. C.Bakir y M.Yuzkat \cite{BAKIR2018} proponen un modelo híbrido para clasificar cinco emociones básicas en el lenguaje turco donde combinan SVM y GMM y aplicando antes MFCC y MFDWC para la extracción de características.
+	\end{comment}
 	
-	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla.Esta observación puede llevar a que se pregunte si en lenguajes tan dispares, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
-	De nuevo, en \cite{Pell2009} se describen anómalas pseudo-manifestaciones semánticas (discurso sin sentido) que se asemejan a la lengua materna para expresar cada tipo de emoción. Aquí se evidencia claramente que la emoción de cada interlocutor puede ser reconocida con precisión desde la prosodia independientemente del contexto semántico. Además argumenta que el significado emocional en la voz se transmite por cambios en diferentes parámetros acústicos como el tono, la intensidad, la duración, el ritmo y distintos aspectos de la calidad de la voz.
 	
-	Finalmente, obtener datos necesarios de la extracción de características es un problema porque apenas cubre el amplio espectro emocional que hoy conocemos. C.Bakir y M.Yuzkat \cite{BAKIR2018} proponen un modelo híbrido para clasificar cinco emociones básicas en el lenguaje turco donde combinan SVM y GMM y aplicando antes MFCC y MFDWC para la extracción de características.
 
 
 	\printbibliography
