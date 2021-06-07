@@ -5,8 +5,9 @@ Nombre | Descripcion | Codigo   | Tutorial
 **DiegoErios**| TESS + RAVDESS en una complicada arquitectura CNN 1D consigue un 73.00 |[github](https://github.com/diegoerios/capstoneproject-speech-emotion-machine-learning/blob/master/speech_emotion_final_notebook.ipynb)| [tutorial](https://medium.com/@diego-rios/speech-emotion-recognition-with-convolutional-neural-network-ae5406a1c0f7)
 **Kaggle RAVDESS** | Hace una mezcla de datasets, entre ellos RAVDESS, extrae MEL y MFCC y entrena con **CNN 2D**. 66% acc | [kaggle](https://www.kaggle.com/yfliao/audio-emotion-part-6-2d-cnn-66-accuracy)  |  X  
 **RAVDESS 2D CNN comparator** | complejisimo pero completo proyecto usando RAVDESS con diferentes enfoques en CNN 2D, pero usa pytorch|[github](https://github.com/Data-Science-kosta/Speech-Emotion-Classification-with-PyTorch/blob/master/notebooks/stacked_cnn_attention_lstm.ipynb)| X
-**RAVDESS 2D CNN** |RAVDESS con mel y MFCC con 1d y 2d. Muy recomendable, aunque la forma que tiene de leer las imagenes es confusa |[github](https://github.com/mkosaka1/Speech_Emotion_Recognition) | X
+**Mkosaka** |RAVDESS con mel y MFCC con 1d y 2d. Implementa bastantes modelos entre ellos VG16. Muy recomendable, aunque la forma que tiene de leer las imagenes es confusa |[github](https://github.com/mkosaka1/Speech_Emotion_Recognition) | X
 **RAVDESS Transformer** | Muy muy complejo. Modelo usa transformer y CNN sobre RAVDESS que es aumentado con AWGN | [github](https://github.com/IliaZenkov/transformer-cnn-emotion-recognition)| X
+**Ayushgoal** | RAVDESS y SAVEE con tecnicas de data augmentation y cnn y lstm (2D)| [github](https://github.com/ayushgoyal7796/Speech-Emotion-Recognition) | X
 
 
 
