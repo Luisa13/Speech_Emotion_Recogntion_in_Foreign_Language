@@ -3,11 +3,14 @@ import numpy as np
 from tqdm import tqdm
 import pandas as pd
 import pickle
+import matplotlib.pyplot as plt
+import os
 
 
 class MFCC():
     '''
-    Esta clase gestiona la generacion de las caracteristicas MFCC
+    Esta clase gestiona la generacion de las caracteristicas MFCC a traves de un dataframe en
+    cuya estructura se asumen las columnas path y emotion
     '''
 
     def __init__(self, df_data, outpath='', n_features=40):

@@ -2,6 +2,8 @@ import librosa
 import numpy as np
 from tqdm import tqdm
 import pandas as pd
+import soundfile as sf
+import os
 
 class SpeechFeatures():
     def __init__(self, df):
@@ -126,7 +128,6 @@ class SpeechFeatures():
 
         return data_features
 
-
     def pitch_shift(self, data, bins_per_octave=12, pitch_pm=2):
         '''
         Modula el tono y modifica la velocidad de una pista de audio
@@ -152,4 +153,72 @@ class SpeechFeatures():
         data_shiftted = np.roll(data, d_range)
 
         return data_shiftted
+
+    def generate_ravdess_dataAugmentation(self, augmented_path='', pitch=True, stretch=True, step_list={1}, rate_list={1},
+                                      verbose=False):
+        '''
+        Genera archivos de audio basado en las modificaciones que se especifican en los parametros.
+        La informacion de las pistas de audio se le pasa al funcion mediante un dataframe.
+        '''
+        for index, row in self.df.iterrows():
+            # Data augmentation basado en desplazar el tono
+            if pitch:
+                self.save_augmented_pitch(row['path'], step_list, augmented_path + '/' + row['emotion'], index, verbose)
+                if verbose:
+                    print("Generadas {} muestras de {}".format(len(step_list), row['emotion']))
+            # Data augmentation basado en stretching
+            if stretch:
+                self.save_augmented_stretch(row['path'], rate_list, augmented_path + '/' + row['emotion'], index, verbose)
+                if verbose:
+                    print("Generadas {} muestras de {}".format(len(rate_list), row['emotion']))
+
+
+    def save_augmented_pitch(dirdata, step_list, outpath, index, verbose=False):
+        '''
+        Modifica desplazando el tono una pista de audio y la guarda. Esta funcion
+        guarda las pistas generadas creando una carpeta con el nombre de la clase
+        a la que pertenece. La modificacion de dicho tono se basa en una lista dada
+        en los parametros
+        Arguments
+        ---------
+          dirdata: str
+          step_list: list
+          outpath: str
+        Return
+        ---------
+          void
+        '''
+        for i, n_steps in enumerate(step_list):
+            y, sr = librosa.load(dirdata, duration=2.97)
+            y_changed_pitch = librosa.effects.pitch_shift(y, sr, n_steps=n_steps)
+            # outpath = LPATH_AUGMENTED + '/' + row['emotion']
+            if not os.path.exists(outpath):
+                os.makedirs(outpath)
+            filename = outpath + '/augmented_pitch_0' + str(i) + '_0' + str(index) + '.wav'
+            sf.write(filename, y_changed_pitch, sr)
+
+    def save_augmented_stretch(dirdata, rate_list, outpath, index, verbose=False):
+        '''
+        Modifica una pista de audio estirando el tiempo un rango fijado. Dicho rango
+        (o rangos) se especifica en una lista como parametro. Esta funcion
+        guarda las pistas generadas creando una carpeta con el nombre de la clase
+        a la que pertenece
+        Arguments
+        ---------
+          dirdata: str
+          step_list: list
+          outpath: str
+        Return
+        ---------
+          void
+
+        '''
+        for i, rate in enumerate(rate_list):
+            y, sr = librosa.load(dirdata, duration=2.97)
+            y_changed_shitf = librosa.effects.time_stretch(y, rate=rate)
+            # augmented_path = LPATH_AUGMENTED + '/' + row['emotion']
+            if not os.path.exists(outpath):
+                os.makedirs(outpath)
+            filename = outpath + '/augmented_stretch_0' + str(i) + '_0' + str(index) + '.wav'
+            sf.write(filename, y_changed_shitf, sr)
 
