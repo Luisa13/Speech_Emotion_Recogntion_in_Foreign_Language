@@ -8,7 +8,7 @@ from sklearn.utils import shuffle
 
 class SpeechFeatures():
     '''
-    Gestiona la estraccion de caracteristicas de MFCC y MEL a partir de un dataframe
+    Gestiona la estraccion de caracteristicas de MFCC.py y MEL a partir de un dataframe
     con la informacion de los archivos. Asume que la estructura del dataframe tiene
     las columnas emotion y path.
     '''
@@ -43,7 +43,7 @@ class SpeechFeatures():
     #
     # def get_features_single_file(self, pathfile):
     #     '''
-    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC
+    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
     #     a traves de librosa.
     #
     #     Aguments
@@ -64,7 +64,7 @@ class SpeechFeatures():
     #
     # def get_features_white_noise(self, pathfile):
     #     '''
-    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC
+    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
     #     a traves de librosa habiendoles aplicado ruido blanco.
     #
     #     Aguments
@@ -88,7 +88,7 @@ class SpeechFeatures():
     #
     # def get_features_shiftted(self, pathfile):
     #     '''
-    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC
+    #     Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
     #     a traves de librosa habiendo desplazado las frecuencias perviamente.
     #
     #     Aguments
@@ -113,7 +113,7 @@ class SpeechFeatures():
     # def get_features_pitch(self, pathfile):
     #     '''
     #     Aplica modulacion del tono en cada muestra y despues extrae las caracteristicas
-    #     usando el algoritmo MFCC
+    #     usando el algoritmo MFCC.py
     #
     #     Aguments
     #     ---------

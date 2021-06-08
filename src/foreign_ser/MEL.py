@@ -50,7 +50,7 @@ class MEL():
 
     def get_features_single_file(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa.
 
         Aguments
@@ -73,7 +73,7 @@ class MEL():
 
     def get_features_white_noise(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa habiendoles aplicado ruido blanco.
 
         Aguments
@@ -107,7 +107,7 @@ class MEL():
 
     def get_features_shiftted(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa habiendo desplazado las frecuencias perviamente.
 
         Aguments
@@ -143,7 +143,7 @@ class MEL():
     def get_features_pitch(self, pathfile):
         '''
         Aplica modulacion del tono en cada muestra y despues extrae las caracteristicas
-        usando el algoritmo MFCC
+        usando el algoritmo MFCC.py
 
         Aguments
         ---------

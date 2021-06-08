@@ -9,7 +9,7 @@ import os
 
 class MFCC():
     '''
-    Esta clase gestiona la generacion de las caracteristicas MFCC a traves de un dataframe en
+    Esta clase gestiona la generacion de las caracteristicas MFCC.py a traves de un dataframe en
     cuya estructura se asumen las columnas path y emotion.
 
     Notas
@@ -53,7 +53,7 @@ class MFCC():
 
     def get_features_single_file(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa.
 
         Aguments
@@ -74,7 +74,7 @@ class MFCC():
 
     def get_features_white_noise(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa habiendoles aplicado ruido blanco.
 
         Aguments
@@ -106,7 +106,7 @@ class MFCC():
 
     def get_features_shiftted(self, pathfile):
         '''
-        Extrae las caracteristicas  de una unica pista de audio usando MFCC
+        Extrae las caracteristicas  de una unica pista de audio usando MFCC.py
         a traves de librosa habiendo desplazado las frecuencias perviamente.
 
         Aguments
@@ -140,7 +140,7 @@ class MFCC():
     def get_features_pitch(self, pathfile):
         '''
         Aplica modulacion del tono en cada muestra y despues extrae las caracteristicas
-        usando el algoritmo MFCC
+        usando el algoritmo MFCC.py
 
         Aguments
         ---------
@@ -229,7 +229,7 @@ class MFCC():
 
     def save_mfccspectrograma(pathfile, emotionName, output_path, index):
         '''
-        Genera un espectograma MFCC como imagen a partir de un archivo, y lo guarda en una ruta especificada
+        Genera un espectograma MFCC.py como imagen a partir de un archivo, y lo guarda en una ruta especificada
         Aguments
         ---------
         pathfile: str
