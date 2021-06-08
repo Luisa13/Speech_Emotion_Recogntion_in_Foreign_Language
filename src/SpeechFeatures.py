@@ -1,12 +1,13 @@
 import librosa
 import numpy as np
 from tqdm import tqdm
+import pandas as pd
 
 class SpeechFeatures():
-    def __init__(self):
-        print()
+    def __init__(self, df):
+        self.df = df
 
-    def get_features(df, modifier):
+    def get_features(self, modifier):
         '''
         Extrae las caracteristicas de un conjunto de pistas de audio a
         partir de un dataframe usando librosa
@@ -24,15 +25,15 @@ class SpeechFeatures():
          Caracteristicas extraidas
 
         '''
-        bar_data_range = tqdm(range(len(df)))
+        bar_data_range = tqdm(range(len(self.df)))
         data = pd.DataFrame(columns=['data'])
         for index in bar_data_range:
-            data_features = modifier(df.path[index])
+            data_features = modifier(self.df.path[index])
             data.loc[index] = [data_features]
 
         return data
 
-    def get_features_single_file(pathfile):
+    def get_features_single_file(self, pathfile):
         '''
         Extrae las caracteristicas  de una unica pista de audio usando MFCC
         a traves de librosa.
@@ -53,7 +54,7 @@ class SpeechFeatures():
 
         return data_features
 
-    def get_features_white_noise(pathfile):
+    def get_features_white_noise(self, pathfile):
         '''
         Extrae las caracteristicas  de una unica pista de audio usando MFCC
         a traves de librosa habiendoles aplicado ruido blanco.
@@ -71,13 +72,13 @@ class SpeechFeatures():
         X, sample_rate = librosa.load(pathfile, res_type='kaiser_fast')
         # X = librosa.core.load(random_sample)[0]
 
-        x_data_wn = white_noise(X)
+        x_data_wn = self.white_noise(X)
         mfcc = librosa.feature.mfcc(y=x_data_wn, sr=sample_rate, n_mfcc=40)
         data_features = np.mean(mfcc.T, axis=0)
 
         return data_features
 
-    def get_features_shiftted(pathfile):
+    def get_features_shiftted(self, pathfile):
         '''
         Extrae las caracteristicas  de una unica pista de audio usando MFCC
         a traves de librosa habiendo desplazado las frecuencias perviamente.
@@ -95,7 +96,7 @@ class SpeechFeatures():
         X, sample_rate = librosa.load(pathfile, res_type='kaiser_fast')
         # X = librosa.core.load(random_sample)[0]
 
-        x_data_wn = shift_audio_sample(X)
+        x_data_wn = self.shift_audio_sample(X)
         mfcc = librosa.feature.mfcc(y=x_data_wn, sr=sample_rate, n_mfcc=40)
         data_features = np.mean(mfcc.T, axis=0)
 
@@ -135,7 +136,7 @@ class SpeechFeatures():
 
         return data_pitch
 
-    def white_noise(data):
+    def white_noise(self, data):
         '''
         Agrega ruido blanco a una pista de audio
         '''
@@ -143,7 +144,7 @@ class SpeechFeatures():
         data_wn = data + 0.005 * wn_spectrum
         return data_wn
 
-    def shift_audio_sample(data, f_low=-5, f_high=5, spec=1):
+    def shift_audio_sample(self, data, f_low=-5, f_high=5, spec=1):
         '''
         Desplaza una se;al acustica en un rango de frecuencia
         '''
