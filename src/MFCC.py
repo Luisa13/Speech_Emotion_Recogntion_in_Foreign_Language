@@ -19,11 +19,12 @@ class MFCC():
     de pasar en la funcion correspondiente
     '''
 
-    def __init__(self, df_data, outpath='', n_features=40):
+    def __init__(self, df_data, dataset_name, outpath='', n_features=40):
 
         self.df_data = df_data
         self.n_features = n_features
         self.outpath = outpath
+        self.dataset_name = str(dataset_name)
 
     def get_features(self, modifier):
         '''
@@ -178,33 +179,38 @@ class MFCC():
         # Leemos las caracteristicas estandar (sin data augmentation)
         features_standard = self.get_features(self.get_features_single_file)
         try:
-            pickle.dump(features_standard, open(self.outpath + 'featuresMFCC_standard_RAVDESS.pkl', 'wb'))
+            local_name = 'featuresMFCC_standard_' + self.dataset_name + '.pkl'
+            pickle.dump(features_standard, open(self.outpath + local_name, 'wb'))
         except Exception as ex:
             print(ex)
-        print("Standard features into file")
+        print("Caracteristicas estandar serializadas")
+
         # Leemos para Ruido Blanco
         features_wn = self.get_features(self.get_features_white_noise)
         try:
-            pickle.dump(features_wn, open(self.outpath + 'featuresMFCC_wn_RAVDESS.pkl', 'wb'))
+            local_name = 'featuresMFCC_wn_' + self.dataset_name + '.pkl'
+            pickle.dump(features_wn, open(self.outpath + local_name, 'wb'))
         except Exception as ex:
             print(ex)
-        print("White Noise features into file")
+        print("Caracteristicas aumentadas con Ruido Blanco serializadas")
 
         # Leemos para Desplazamiento del Sonido
         features_shiftted = self.get_features(self.get_features_shiftted)
         try:
-            pickle.dump(features_shiftted, open(self.outpath + 'featuresMFCC_shiftted_RAVDESS.pkl', 'wb'))
+            local_name = 'featuresMFCC_shiftted_' + self.dataset_name + '.pkl'
+            pickle.dump(features_shiftted, open(self.outpath + local_name, 'wb'))
         except Exception as ex:
             print(ex)
-        print("Shiftted into file")
+        print("Caracteristicas aumentadas con Desplazamiento serializadas")
 
         # Leemos para Modificacion del Tono
         features_pitch = self.get_features(self.get_features_pitch)
         try:
-            pickle.dump(features_pitch, open(self.outpath + 'featuresMFCC_pitch_RAVDESS.pkl', 'wb'))
+            local_name = 'featuresMFCC_pitch_' + self.dataset_name + '.pkl'
+            pickle.dump(features_pitch, open(self.outpath + local_name, 'wb'))
         except Exception as ex:
             print(ex)
-        print("Pitch Tunning features into file")
+        print("Caracteristicas aumentadas con Modulacion serializadas")
 
         return features_standard, features_wn, features_shiftted, features_pitch
 
@@ -227,7 +233,7 @@ class MFCC():
         for index in bar_data_range:
             self.save_mfccspectrograma(self.df.path[index], self.df.emotion[index], output_path, index)
 
-    def save_mfccspectrograma(pathfile, emotionName, output_path, index):
+    def save_mfccspectrograma(self, pathfile, emotionName, output_path, index):
         '''
         Genera un espectograma MFCC.py como imagen a partir de un archivo, y lo guarda en una ruta especificada
         Aguments
@@ -246,7 +252,7 @@ class MFCC():
         fig.add_axes(ax)
         librosa.display.specshow(features_mfccspectrogram, sr=sample_rate, x_axis='time', y_axis='mel')
 
-        filename = output_path + emotionName + "/ravdess_mfccspectrogram_" + str(index) + ".jpg"
+        filename = output_path + emotionName + "/" + self.dataset_name + "_mfccspectrogram_" + str(index) + ".jpg"
         if not os.path.exists(output_path + emotionName):
             os.makedirs(output_path + emotionName)
 
