@@ -4,6 +4,7 @@ from tqdm import tqdm
 import pandas as pd
 import soundfile as sf
 import os
+from sklearn.utils import shuffle
 
 class SpeechFeatures():
     def __init__(self, df):
@@ -153,6 +154,25 @@ class SpeechFeatures():
         data_shiftted = np.roll(data, d_range)
 
         return data_shiftted
+
+    def concat_features(self, *features):
+        '''
+        Devuelve un dataframe barajando con la combinacion de varios arraus de caracteristicas.
+        '''
+        features_list = []
+        for feature in features:
+            # Cada valor es una caracteristica
+            feature_df = pd.DataFrame(feature['data'].values.tolist())
+            # Concateno las columnas genero y emocion para poder dividirlo mas tarde
+            feature_spec = pd.concat((feature_df, self.df['gender'], self.df['emotion']), axis=1)
+            # Elimino filas vacias
+            feature_spec = feature_spec.fillna(0)
+            # Añado a la lista
+            features_list.append(feature_spec)
+
+        features_complete_df = pd.concat(features_list, ignore_index=True)
+        return shuffle(features_complete_df)
+
 
     def generate_ravdess_dataAugmentation(self, augmented_path='', pitch=True, stretch=True, step_list={1}, rate_list={1},
                                       verbose=False):
