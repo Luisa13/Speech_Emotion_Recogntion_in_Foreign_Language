@@ -7,7 +7,14 @@ import os
 
 class MEL():
     '''
-    Esta clase gestiona la generacion de las caracteristicas MEL
+    Esta clase gestiona la generacion de las caracteristicas MEL.
+
+    Notas
+    -------
+    La direccion de salida que se especifica, se refiere a donde se guardaran los
+    archivos serializables, no a la generacion de datos (imagenes), que se debera
+    de pasar en la funcion correspondiente.
+
     '''
 
     def __init__(self, df_data, outpath=''):
@@ -204,4 +211,53 @@ class MEL():
         print("Caracteristicas con modulacion del tono serializadas")
 
         return features_standard, features_wn, features_shiftted, features_pitch
+
+    def generate_spectrograms(self, output_path):
+        '''
+        Genera y almacena espectogramas unas caracteristicas espeficicas
+        Aguments
+        ---------
+        df: DataFrame
+          dataframe donde estan almacenados los datos
+
+        output_path: str
+          Ruta donde se almacenaran los archivos generados
+
+        '''
+
+        bar_data_range = tqdm(range(len(self.df)))
+        data = pd.DataFrame(columns=['data'])
+
+        for index in bar_data_range:
+            self.save_melspectrogram(self.df.path[index], self.df.emotion[index], output_path, index)
+
+
+    def save_melspectrogram(pathfile, emotionName, output_path, index):
+        '''
+        Genera un espectograma Mel como imagen a partir de un archivo, y lo guarda en una ruta especificada
+        Aguments
+        ---------
+        pathfile: str
+          Ruta donde se encuentra el archivo.
+
+        output_path: str
+          Ruta donde se guardara la imagen generada.
+        '''
+        X, sample_rate = librosa.load(pathfile, res_type='kaiser_fast')
+        features_melspectrogram = librosa.feature.melspectrogram(y=X, sr=sample_rate, n_mels=128, fmax=8000)
+        melspectrogram_data = librosa.power_to_db(features_melspectrogram)
+
+        # Definimos y convertimos a imagen
+        fig = plt.figure(figsize=(12, 4))
+        ax = plt.Axes(fig, [0., 0., 1., 1.])
+        ax.set_axis_off()
+        fig.add_axes(ax)
+        librosa.display.specshow(melspectrogram_data, sr=sample_rate, x_axis='time', y_axis='mel')
+
+        filename = output_path + emotionName + "/ravdess_mel_" + str(index) + ".jpg"
+        if not os.path.exists(output_path + emotionName):
+            os.makedirs(output_path + emotionName)
+
+        plt.savefig(filename, bbox_inches='tight', transparent=True, pad_inches=-0.05)
+        plt.close()
 
