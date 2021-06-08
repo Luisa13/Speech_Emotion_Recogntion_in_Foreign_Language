@@ -10,10 +10,17 @@ import os
 class MFCC():
     '''
     Esta clase gestiona la generacion de las caracteristicas MFCC a traves de un dataframe en
-    cuya estructura se asumen las columnas path y emotion
+    cuya estructura se asumen las columnas path y emotion.
+
+    Notas
+    -------
+    La direccion de salida que se especifica, se refiere a donde se guardaran los
+    archivos serializables, no a la generacion de datos (imagenes), que se debera
+    de pasar en la funcion correspondiente
     '''
 
     def __init__(self, df_data, outpath='', n_features=40):
+
         self.df_data = df_data
         self.n_features = n_features
         self.outpath = outpath

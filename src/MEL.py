@@ -4,6 +4,7 @@ from tqdm import tqdm
 import pandas as pd
 import pickle
 import os
+import matplotlib.pyplot as plt
 
 class MEL():
     '''
