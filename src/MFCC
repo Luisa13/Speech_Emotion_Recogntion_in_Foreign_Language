@@ -198,8 +198,7 @@ class MFCC():
 
         return features_standard, features_wn, features_shiftted, features_pitch
 
-
-    def get_spectrograms(self, output_path):
+    def generate_spectrograms(self, output_path):
         '''
         Genera y almacena espectogramas unas caracteristicas espeficicas
         Aguments
@@ -217,8 +216,6 @@ class MFCC():
 
         for index in bar_data_range:
             self.save_mfccspectrograma(self.df.path[index], self.df.emotion[index], output_path, index)
-
-
 
     def save_mfccspectrograma(pathfile, emotionName, output_path, index):
         '''
