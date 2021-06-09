@@ -231,11 +231,12 @@ class MFCC():
         data = pd.DataFrame(columns=['data'])
 
         for index in bar_data_range:
-            self.save_mfccspectrograma(self.df.path[index], self.df.emotion[index], output_path, index)
+            self.__save_mfccspectrograma(self.df.path[index], self.df.emotion[index], output_path, index)
 
-    def save_mfccspectrograma(self, pathfile, emotionName, output_path, index):
+    def __save_mfccspectrograma(self, pathfile, emotionName, output_path, index):
         '''
-        Genera un espectograma MFCC.py como imagen a partir de un archivo, y lo guarda en una ruta especificada
+        Genera un espectograma MFCC.py como imagen a partir de un archivo, y lo guarda en una ruta especificada.
+        Esta clase es privada
         Aguments
         ---------
         pathfile: str

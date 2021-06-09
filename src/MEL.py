@@ -230,10 +230,10 @@ class MEL():
         data = pd.DataFrame(columns=['data'])
 
         for index in bar_data_range:
-            self.save_melspectrogram(self.df.path[index], self.df.emotion[index], output_path, index)
+            self.__save_melspectrogram(self.df.path[index], self.df.emotion[index], output_path, index)
 
 
-    def save_melspectrogram(pathfile, emotionName, output_path, index):
+    def __save_melspectrogram(pathfile, emotionName, output_path, index):
         '''
         Genera un espectograma Mel como imagen a partir de un archivo, y lo guarda en una ruta especificada
         Aguments
