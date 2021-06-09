@@ -5,6 +5,8 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 import os
+from PIL import Image
+import cv2
 
 
 class MFCC():
@@ -213,6 +215,43 @@ class MFCC():
         print("Caracteristicas aumentadas con Modulacion serializadas")
 
         return features_standard, features_wn, features_shiftted, features_pitch
+
+
+
+    def load_images(self, path, dimensions, verbose=True):
+
+        '''
+        Lee las imágenes (spectogramas)que se cargarán desde un determinado directorio
+        Arguments:
+        ----------
+          path: str
+            Directorio donde se encuentran las imagenes
+        dimensions: tuple
+          verbose: boolean
+            Especifica si se activan los mensajes mientras se leen las imagenes
+
+        Returns:
+        ----------
+        '''
+        list_images = []
+        labels = []
+        for index, emotion in os.listdir(path):
+            emodir = os.path.join(path, emotion)
+            files = os.listdir(emodir)
+            images = [file for file in files if file.endswith("jpg")]
+            if verbose:
+                print("Leídas {} espectogramas pertenecientes a {}".format(len(images), emotion))
+            for image_name in images:
+                image = cv2.imread(os.path.join(emodir, image_name))
+                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                img_arr = Image.fromarray(image, 'RGB')
+                resized_img = img_arr.resize((dimensions[0], dimensions[1]))
+
+                list_images.append(np.array(resized_img))
+                labels.append(index)
+
+        return list_images, labels
+
 
     def generate_spectrograms(self, output_path):
         '''
