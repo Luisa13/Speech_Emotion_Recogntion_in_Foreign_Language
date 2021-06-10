@@ -266,11 +266,11 @@ class MFCC():
 
         '''
 
-        bar_data_range = tqdm(range(len(self.df)))
+        bar_data_range = tqdm(range(len(self.df_data)))
         data = pd.DataFrame(columns=['data'])
 
         for index in bar_data_range:
-            self.__save_mfccspectrograma(self.df.path[index], self.df.emotion[index], output_path, index)
+            self.__save_mfccspectrograma(self.df_data.path[index], self.df_data.emotion[index], output_path, index)
 
     def __save_mfccspectrograma(self, pathfile, emotionName, output_path, index):
         '''
