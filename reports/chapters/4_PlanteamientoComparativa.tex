@@ -1,6 +1,14 @@
 \documentclass[11pt,a4paper,spanish]{book}
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
+
+% Para el formato del titulo
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+
 % Imagenes
 \usepackage{graphicx, wrapfig, hyperref}
 \graphicspath{ {./.images/} }
@@ -152,10 +160,8 @@
 	En la figura \ref{fig:comp_emociones_genero} podemos ver la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
 	
 	
-	%\subsection{Conversión de la señal a imagen}
-	% quiza no sea necesario
-	
-	%\subsection{Normalización de los datos}
+	\subsection{Normalización y estandarización de los datos}
+	Este proceso se aplicará a todas las pruebas
 	\begin{comment}
 		# Now because we are mixing up a few different data sources, it would be wise to normalise the data. 
 		# This is proven to improve the accuracy and speed up the training process. Prior to the discovery of this solution in the embrionic years of neural network, 
@@ -252,36 +258,71 @@
 	
 	%Los trabajos como los de \cite{AbdulQayyum2019}, \cite{Anvarjon2020} utilizan CNN en sus trabajos. 
 	%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \cite{AbdulQayyum2019}, la cual consta de:
-	\subsubsection{Modelo1 CNN}
-	En un principio, se optó por una línea de trabajo inspirada en el estudio de \cite{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
-	
-	\begin{itemize}
-		\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
-		En las dos capas convolucionales se usa regularización de tipo L2 para aplicar una penalización a las capas del kernel con un valor de 0.01 y corregir así el overfitting.
+	\subsection{Arquitectura principal}
+		\subsubsection{Modelo 3 CNN 2D}
+		% TODO Describir inicio, inspiracion etc
+		Esta arquitectura consiste en:
+		\begin{itemize}
+			\item 3 capas convolucionales bidimensionales con 32 filtros y un tamaño del kernel de 4 x 10. Como función de activación se usa Relu y pading establecido a 'same'.
+			
+			\item A las todas las capas convolucionales, les sigue una capa Max Pooling con tamaño para la \emph{pool} de 3, que posteriormente se aplica un Dropout del 20\%
+			
+			\item Una capa Flatten, seguida de la capa densa de salida con 7 nodos y activación Softmax.
+		\end{itemize}
 		
-		\item La primera capa convolucional está seguida de una capa Dropout del 0.5 y una capa \emph{max pooling} con un tamaño 8.
+		La estrategia de entrenamiento que se siguió fue un optimizador Adam con los parámetros por defecto que ofrece Keras y la entropía cruzada categórica (\emph{categorical crossentropy}) como función de pérdida.
 		
-		\item A la segunda capa convolucional se sigue otra capa de Dropout con un valor de 0.25 y una capa \emph{Flatten}.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.35]{no-photo.jpg} 
+			\caption{Arquitectura propuesta}
+			\label{fig:lstm-cnn}
+		\end{figure}
+	
+	
+	\subsection{Otras arquitecturas}
+	A pesar de que la arquitectura citada en la sección anterior, será con la que se lleven a cabo los principales experimentos y con los resultados más interesantes, consideramos que la mención de otras arquitecturas que han formado parte de los experimentos de este trabajo, ayudará al lector a entender la progresión de los mismos, por lo que se ha visto conveniente incluirlas.
+	
+		\subsubsection{Modelo1 CNN}
+		En un principio, se optó por una línea de trabajo inspirada en el estudio de \cite{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
 		
-		\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación 'softmax'.
-	\end{itemize}
-	% Hablar de las bondades las redes con 1 dimension
-	% En que ayudan
-	En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió.La función de pérdida utilizada para este propósito es entropía cruzada categórica (categorical crossentropy).\\
+		\begin{itemize}
+			\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
+			En las dos capas convolucionales se usa regularización de tipo L2 para aplicar una penalización a las capas del kernel con un valor de 0.01 y corregir así el overfitting.
+			
+			\item La primera capa convolucional está seguida de una capa Dropout del 0.5 y una capa Max Pooling con un tamaño 8.
+			
+			\item A la segunda capa convolucional se sigue otra capa de Dropout con un valor del 25\% y una capa Flatten.
+			
+			\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación Softmax.
+		\end{itemize}
+		% Hablar de las bondades las redes con 1 dimension
+		% En que ayudan
+		En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió, mientras que la función de pérdida utilizada para este propósito es entropía cruzada categórica (\emph{categorical crossentropy}).\\
+		
+		Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
+		Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
+		
+		
+		
+		% TODO:
+		\subsubsection{Modelo2 CNN}
+		
 	
-	Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
-	Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
-	
-	El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
-	
-	% TODO:
-	\subsubsection{Modelo2 CNN}
-	
-	\subsubsection{Modelo3 CNN 2D}
-	Esta arquitectura consiste en:
-	
-	
-	\subsubsection{Modelo1 CNN-LSTM}
+		\subsubsection{Modelo1 CNN-LSTM}
+		% TODO Describir inicio, inspiracion etc
+		\begin{itemize}
+			\item 3 capas convolucionales unidimensionales con 64 filtros de 3 x 3 y activación Relu, seguidas de una capa Max Pooling con tamaño 2 para la pool.
+			
+			\item Una capa Flatten con un Dropout del 25\%
+			
+			\item 2 capas LSTM unidimensionales con 50 y 20 unidades respectivamente y un Dropout del 50\%. Sólo permitiremos a la primera capa LSTM devolver el estado oculto de salida por cada entrada de tiempo. Ya que a este nivel se cambia a redes unidimensionales, deberemos redimensionar la entrada a 1 x 960.
+			
+			\item Capa de salida densa de 7 nodos y función Softmax.
+			
+		\end{itemize}
+
+
 	
 	\section{Criterios de éxito}
 	El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.\\
@@ -329,44 +370,62 @@
 	%TODO intro
 	% Ahora se detallaran los experimentos blablableble
 	%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
-	\subsubsection[]{\large Prueba 1\\ {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
+	\subsubsection[]{\Large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		\paragraph{Datos y preprocesado}
+		Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género. 
+		
+		De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como es descrito en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
+		
+		\paragraph{Entrenamiento}
+		Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{sec:arquitectura_cap4}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+	\end{minipage}
+	
 
-	RAVDESS con división de los datos por género en una red convolucional unidimensional.
-	Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género. 
-	De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como es descrito en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
-	Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{sec:arquitectura_cap4}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
-
-
-	\subsubsection[]{\large Prueba 1.B\\ {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
+	\subsubsection[]{\Large Prueba 1.B {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
 	Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
 
 
-	\subsubsection[]{\large Prueba 2\\ {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
-	Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
-	\begin{itemize}
-		\item Ruido blanco.
-		\item Desplazamiento del sonido.
-		\item Modulación del tono.
-	\end{itemize}
-	Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}
-	Para el entrenamiento se usará el modelo Modelo2 CNN descrito previamente en la sección \ref{sec:arquitectura_cap4}.
+	\subsubsection[]{\Large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado}Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
+		\begin{itemize}
+			\item Ruido blanco.
+			\item Desplazamiento del sonido.
+			\item Modulación del tono.
+		\end{itemize}
+		Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}.
+		\paragraph{Entrenamiento}Para el entrenamiento se usará el modelo Modelo2 CNN descrito previamente en la sección \ref{sec:arquitectura_cap4}.
+		
+	\end{minipage}
 	
 	
-	\subsubsection[]{\large Prueba 2.B\\ {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
-	Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
-	\begin{itemize}
-		\item Ruido blanco y desplazamiento del sonido.
-		\item Ruido blanco, desplazamiento del sonido y modulación del tono.
-	\end{itemize}
+	\subsubsection[]{\Large Prueba 2.B {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		\paragraph{Datos y preprocesado}Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
+		\begin{itemize}
+			\item Ruido blanco y desplazamiento del sonido.
+			\item Ruido blanco, desplazamiento del sonido y modulación del tono.
+		\end{itemize}
+		\paragraph{Entrenamiento}
+	\end{minipage}
 
-	\subsubsection[]{\large Prueba 3\\ {\normalsize \textcolor{Gray}{Combinación de datasets}}}
-	Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y RAVDESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
-	Se usará el modelo Modelo2 CNN. Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
-	\begin{itemize}
-		\item RAVDESS y TESS.
-		\item SAVEE y TESS.
-		\item RAVDESS, SAVEE y TESS
-	\end{itemize}
+	\subsubsection[]{\Large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y TESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
+		Se usará el modelo Modelo2 CNN. Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
+		\begin{itemize}
+			\item RAVDESS y TESS.
+			\item SAVEE y TESS.
+			\item RAVDESS, SAVEE y TESS
+		\end{itemize}
+	
+		\paragraph{Entrenamiento}
+	\end{minipage}
 
 % TODO: explicar estos de abajo y detallar mas lo de arriba (conjunto de datos y entrenamiento??, estrategias de entrenamiento blabla bleble...)
 	\subsubsection[]{\large Prueba 3.B\\ {\normalsize \textcolor{Gray}{Combinación de datasets con aumento de datos}}}
@@ -374,9 +433,19 @@
 	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos.
 	
 	\subsubsection[]{\large Prueba 4\\ {\normalsize \textcolor{Gray}{Red CNN con spectrogramas}}}
-	Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen
-	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen
+		\paragraph{Entrenamiento}
+		
+	\end{minipage}
 	\subsubsection[]{\large Prueba 5\\ {\normalsize \textcolor{Gray}{Red LSTM-CNN con spectrogramas}}}
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} 
+		\paragraph{Entrenamiento}
+		
+	\end{minipage}
 	
 	
 	
