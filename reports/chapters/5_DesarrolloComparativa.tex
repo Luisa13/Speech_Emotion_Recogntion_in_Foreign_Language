@@ -40,7 +40,7 @@
 		\end{table}
 	
 
-	\section{Pruebas 2 y 2.B}
+	\section{Pruebas 2 y 2.B} %Data Augmentation
 	Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de aumentar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
 	
 	\begin{table}[H]
@@ -78,9 +78,51 @@
 		\end{center}
 	\end{table}
 	
-	\section{Pruebas 3 y 3.B}
+	\section{Pruebas 3 y 3.B} %Ensamblado de datasets
 	A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \cite{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
-	En estas pruebas se explora un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
+	El objetivo de esta prueba es experimentar un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | c | c | c | c | c |}
+				\hline
+				RAVDESS y TESS & TESS y SAVEE & RAVDESS, TESS y SAVEE \\ 
+				\hline
+				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\hline
+				
+				??\% accuracy & ??\%  accuracy & ??\% accuracy \\
+				\hline	
+			\end{tabular}
+			\caption{Resultados tras ensamblar distintos datasets}
+			%\label{}
+		\end{center}
+	\end{table}
+	
+	\section{Pruebas 4 y 5}
+	El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \cite{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.
+	En la Prueba 4
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\caption{Comparativa de los extractos de voz por género en RAVDESS}
+		\label{fig:cnn2d}
+	\end{figure}
+	
+	En la Prueba 5
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\caption{Comparativa de los extractos de voz por género en RAVDESS}
+		\label{fig:lstm-cnn}
+	\end{figure}
+	
+	
+
 		
 		
 		
