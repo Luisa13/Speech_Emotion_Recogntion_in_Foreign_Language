@@ -7,6 +7,7 @@
 \usepackage{float}
 \usepackage{comment}
 \usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
 \addbibresource{./bibLib/mycol_arte.bib}
 
 
@@ -128,6 +129,8 @@
 	
 	\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \cite{librosa082}. Esta librería ha sido esencial para la extracción de características MFCC así como algunas técnicas de aumento de datos.
 	
+	\paragraph{OpenCV 3.4.2} OpenCV es una librería de código abierto desarrollada por INTEL en 1999, cuyo principal objetivo es la provisión de funciones y recursos para visión computacional, cubriendo áreas como la reconstrucción 3D, detección de movimiento o reconocimiento de objetos, etc. Si bien en este proyecto no se necesitarán sus recursos más avanzados, será útil en la lectura de espectrogramas como imagen. 
+	
 	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto originalmente creada por Google que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
 	
 	\paragraph{Python 3} Python es un lenguaje interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en python 3.
@@ -137,6 +140,7 @@
 	Será necesario, antes del entrenamiento, un previo procesado de los datos.
 	
 	\subsection{División de los datos por género}
+	\label{cap4:division}
 	En un primer análisis exploratorio de los datos, se han estudiado las diferencias entre la voz masculina y la voz femenina en las emociones, observando lo siguiente:
 	
 	\begin{figure}[H]
@@ -222,8 +226,14 @@
 	
 	\subsection{Espectrogramas}
 	%Como ya se había explicado en la sección \ref{label}, los espectrogramas son la representación visual de un espectro de frecuencias de una señal que varía con el tiempo \cite{wikipedia2021}
-	Como vimos en el capítulo 2, y siguiendo los pasos de los trabajos \cite{Anvarjon2020} y \cite{Mustaqeem2020}, el uso de espectogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto para este trabajo, se hará uso de los espectrogramas de las características MFCC de la señal. Para generar estos espectrogramas, se hará con la ayuda del paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; Una vez generados, se guardan recortando el padding 0.05 inches y en formato jpg.
-	Finalmente, todas las imágenes que alimentarán la red son redimensionadas con un tamaño de 40 x 30 píxeles.
+	Como vimos en el capítulo 2, y siguiendo los pasos de los trabajos \cite{Anvarjon2020} y \cite{Mustaqeem2020}, el uso de espectogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto para este trabajo, se hará uso de los espectrogramas de las características MFCC de la señal, cuyo proceso constará de dos partes: 
+	\begin{enumerate}
+		\item Generación de espectogramas como imágen
+		\item Lectura y procesado de las imágenes que alimentarán la red
+	\end{enumerate}
+
+	Para generar estos espectrogramas, se hará con la ayuda del paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; Una vez generadas, se guardan en disco recortando el padding 0.05 inches y en formato jpg.
+	Finalmente, las imágenes generadas son leídas con la ayuda de OpenCV donde se transforma su canal de color a RGB y son redimensionadas con un tamaño de 40 x 30 píxeles.
 	
 	\begin{figure}[H]
 		\centering
@@ -268,6 +278,8 @@
 	\subsubsection{Modelo2 CNN}
 	
 	\subsubsection{Modelo3 CNN 2D}
+	Esta arquitectura consiste en:
+	
 	
 	\subsubsection{Modelo1 CNN-LSTM}
 	
@@ -317,20 +329,19 @@
 	%TODO intro
 	% Ahora se detallaran los experimentos blablableble
 	%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
-	\subsubsection{Prueba 1}
+	\subsubsection[]{\large Prueba 1\\ {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
+
 	RAVDESS con división de los datos por género en una red convolucional unidimensional.
 	Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género. 
 	De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como es descrito en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
 	Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{sec:arquitectura_cap4}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
 
-	
-	\subsubsection{Prueba 1.B}
-	RAVDESS en una red convolucional unidimensional.
+
+	\subsubsection[]{\large Prueba 1.B\\ {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
 	Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
 
-	
-	\subsubsection{Prueba 2}
-	RAVDESS con técnicas de aumento de datos.
+
+	\subsubsection[]{\large Prueba 2\\ {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
 	Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
 	\begin{itemize}
 		\item Ruido blanco.
@@ -340,15 +351,15 @@
 	Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}
 	Para el entrenamiento se usará el modelo Modelo2 CNN descrito previamente en la sección \ref{sec:arquitectura_cap4}.
 	
-	\subsubsection{Prueba 2.B}
-	Combinación de las técnicas de aumento de datos en RAVDESS
+	
+	\subsubsection[]{\large Prueba 2.B\\ {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
 	Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
 	\begin{itemize}
 		\item Ruido blanco y desplazamiento del sonido.
 		\item Ruido blanco, desplazamiento del sonido y modulación del tono.
 	\end{itemize}
 
-	\subsubsection{Prueba 3}
+	\subsubsection[]{\large Prueba 3\\ {\normalsize \textcolor{Gray}{Combinación de datasets}}}
 	Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y RAVDESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
 	Se usará el modelo Modelo2 CNN. Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
 	\begin{itemize}
@@ -358,14 +369,14 @@
 	\end{itemize}
 
 % TODO: explicar estos de abajo y detallar mas lo de arriba (conjunto de datos y entrenamiento??, estrategias de entrenamiento blabla bleble...)
-	\subsubsection{Prueba 3.B}
+	\subsubsection[]{\large Prueba 3.B\\ {\normalsize \textcolor{Gray}{Combinación de datasets con aumento de datos}}}
 	% basandonos en las pruebas anteriores, se aplicara esta tecnica o esta otra
 	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos.
 	
-	\subsubsection{Prueba 4}
+	\subsubsection[]{\large Prueba 4\\ {\normalsize \textcolor{Gray}{Red CNN con spectrogramas}}}
 	Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen
 	
-	\subsubsection{Prueba 5}
+	\subsubsection[]{\large Prueba 5\\ {\normalsize \textcolor{Gray}{Red LSTM-CNN con spectrogramas}}}
 	
 	
 	
