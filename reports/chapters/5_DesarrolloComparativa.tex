@@ -1,6 +1,12 @@
 \documentclass[11pt,a4paper,spanish]{book}
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
+% Para el formato del titulo
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+	
 % Imagenes
 \usepackage{graphicx, wrapfig, hyperref}
 \graphicspath{ {./.images/} }
@@ -11,62 +17,78 @@
 
 \begin{document}
 	\chapter{Desarrollo de la comparativa}
-		\section{Prueba 1: }
-		\subsection{title}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			
-			\begin{table}[H]
-			\centering
-			\begin{center}
-				\begin{tabular}{| c | c | c | c | c | c |}
-					\hline
-					Ruido Blanco & Desplazamiento & Modulación \\ 
-					\hline
-					 \includegraphics[scale=0.15]{results/white_noise1.png} & \includegraphics[scale=0.15]{results/shiftting_1.png} & \includegraphics[scale=0.15]{results/pitch.png}\\
-					
-					%& & & &
-					\hline	
-				\end{tabular}
-				\caption{Resultados obtenidos tras aplicar cada uno de los métodos de aumento de datos}
-				\label{tab:augmentationData_1}
-			\end{center}
-		\end{table}
+	Las primeras dos pruebas no son muy interesantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y la progresión de las pruebas, por eso se omite la estructura que si se muestra en las pruebas posteriores.
 	
-		A pesar de que dividir los datos por género parecía una buena idea, se ha comprobado que la variación en el tono provocado por el género no afecta de manera negativa al rendimiento del modelo.
-		
+	%TODO: hablar de cifras, poner las graficas etc etc
+		\section{Pruebas 1 y 1.B}
+		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{blabla} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. El entrenamiento se realizó durante 100 épocas y se quedaba estancado pasado el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados en las pruebas podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir, por lo que se decidió probar con técnicas de aumento de datos.
 		\begin{table}[H]
 			\centering
 			\begin{center}
 				\begin{tabular}{| c | c | c | c | c | c |}
 					\hline
-					Ruido Blanco & Desplazamiento & Modulación \\ 
+					Género Femeninio & Género Masculino & RAVDESS completo \\ 
 					\hline
-					\includegraphics[scale=0.15]{results/white_noise2.png} & \includegraphics[scale=0.15]{results/shiftting_2.png} & \includegraphics[scale=0.15]{results/pitch_2.png}\\
-					
-					%& & & &
+					\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+					\hline
+					50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
 					\hline	
 				\end{tabular}
-				\caption{Resultados obtenidos tras aplicar cada uno de los métodos de aumento de datos}
-				\label{tab:augmentationData_2}
+				\caption{Resultados obtenidos de la Prueba 1}
+				%\label{}
 			\end{center}
 		\end{table}
 	
+
+	\section{Pruebas 2 y 2.B}
+	Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de aumentar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | c | c | c | c | c |}
+				\hline
+				Ruido blanco & Desplazamiento & Modulación del tono \\ 
+				\hline
+				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\hline
+				??\% accuracy  & ??\%  accuracy & ??\% accuracy \\
+				\hline	
+			\end{tabular}
+			\caption{Resultados obtenidos tras aplicar aumento de datos}
+			%\label{}
+		\end{center}
+	\end{table}
+	En la Prueba 2.B, se procedió entonces a combinar los diferentes métodos de aumento de datos. El modelo usado para estas pruebas se entreno durante 1000 épocas con un tamaño del batch de 16
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | c | c | c | c | c |}
+				\hline
+				Ruido blanco y Desplazamiento& Desplazamiento y Modulación & Ruido blanco, Desplazamiento y Modulación del tono \\ 
+				\hline
+				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\hline
+				??\% accuracy & ??\%  accuracy & ??\% accuracy \\
+				\hline	
+			\end{tabular}
+			\caption{Resultados obtenidos tras aplicar aumento de datos}
+			%\label{}
+		\end{center}
+	\end{table}
+	
+	\section{Pruebas 3 y 3.B}
+	A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \cite{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
+	En estas pruebas se explora un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
+		
+		
+		
+		
+		
+		
+		
+
 	\printbibliography
 	
 \end{document}
