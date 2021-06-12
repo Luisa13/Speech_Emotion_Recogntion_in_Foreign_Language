@@ -6,6 +6,7 @@
 \graphicspath{ {./.images/} }
 \usepackage{float}
 \usepackage{comment}
+\usepackage{multicol}
 \addbibresource{./bibLib/mycol_arte.bib}
 
 
@@ -21,9 +22,11 @@
 	\label{lb_c4_datos}
 	Los datos en un proyecto de inteligencia artificial son clave de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
 	
-	\paragraph{Idioma de referencia: Inglés} El idioma de referencia será el cuál aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
+	\subsection{Idioma de referencia: Inglés} El idioma de referencia será el que aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
+	Las bases de datos a las que se ha tenido acceso son limitadas, y no presentan un gran número de muestras, por lo que en previsión de un rendimiento pobre en el modelo, nos hemos decantado por escoger varias del mismo idioma de cara a un entrenamiento más completo.
 	
-	El conjunto de datos que se usará para el idioma de referencia, será La Base de Datos Audiovisual del Discurso y Canción Emocional RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), el cual contiene 7356 archivos en total, entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
+	\paragraph{RAVDESS}
+	Como ya se hizo ver en la sección \ref{lb:cap_baseDatos}, RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), contiene 7356 archivos en total, entre los cuales podemos encontrar 3 modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene 24 actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
 	
 	Cada uno de estos archivos están nombrados de manera única mediante 7 números a modo de descripción de las características del audio. Éste respeta la siguiente convención:
 	\begin{itemize}
@@ -40,14 +43,40 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.35]{ravdess_distribucion.png} 
-		\caption{Distribución de las emociones en RAVDESS}
+		\caption{Distribución de las emociones en RAVDESS en la modalidad sólo audio (1440 archivos)}
 		\label{fig:emociones_ravdess}
 	\end{figure}
 	
-	Como se puede apreciar en la figura \ref{fig:emociones_ravdess} las emociones están regularmente distribuidas, sin embargo, a pesar de que en este dataset hay 7356 muestras, para este proyecto sólo podremos usar los que presentan una modalidad de sólo audio, lo que nos deja con un total de 1440 muestras. 
+	A pesar de que este dataset hay 7356 muestras para este proyecto únicamente se usarán aquellas que presentan una modalidad de sólo audio, lo que nos deja con un total de 1440 muestras, sin embargo como se puede apreciar en la figura \ref{fig:emociones_ravdess} las emociones están bien distribuidas.
+	
+	\paragraph{SAVEE} (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}), cuenta con 480 archivos de audio en formato wav muestreados a 44.1 kHz, donde 4 actores anglosajones (inglés británico) de 27 a 31 años, modulan 7 emociones con frases específicas a cada una.
+	Cada archivo ha sido etiquetado de manera que el primer carácter (o caracteres, antes de un dígito) corresponde a la emoción que representa. Así las letras 'a', 'd', 'f', 'h', 'n', 'sa' y 'su', corresponden a enfado (\emph{angry}), asco (\emph{disgust}), miedo (\emph{fear}), felicidad (\emph{happiness}), neutral (\emph{neutral}), tristeza (\emph{sadness}), sorpresa (\emph{surprise}). El número que le sigue a continuación, se refiere a la frase pronunciada. Por ejemplo, el archivo d03.wav hace referencia a la tercera frase de la emoción asco.
+	%QUESTION Deberia incluir algunas de las frases?
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\caption{Distribución de las emociones en SAVEE}
+		\label{fig:emociones_savee}
+	\end{figure}
+	
+	A pesar de que sólo presenta 480 audios, el hecho de que se use una frase distinta para cada emoción, lo convierte en un conjunto de datos muy completo para el entrenamiento. La figura \ref{fig:emociones_savee} muestra la distribución de las emociones, observando que están bien balanceadas.
+
+	\paragraph{TESS}
+	Este dataset lo conforman 2800 archivos de audio en formato wav donde dos actrices angloparlantes de 26 y 64 años vocalizan 200 palabras insertadas en la frase \emph{Say the word\_\_\_} donde se interpretan 7 emociones a enfado, asco, miedo, felicidad, neutral, tristeza y sorpresa. Los archivos están organizados en carpetas atendiendo a la actriz y a la emoción que representa, y nombrados mediante 3 cadenas de caracteres separadas por un guión bajo donde la primera indica la actriz, la segunda la palabra que se pronuncia, y el tercero la emoción.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\caption{Distribución de las emociones en TESS}
+		\label{fig:emociones_tess}
+	\end{figure}
+
+	En la figura \ref{fig:emociones_tess} vemos la distribución de las emociones en la base de datos TESS.
+
 
 	
-	\paragraph{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
+	\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
 	
 	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 	\begin{itemize}
@@ -64,15 +93,16 @@
 
 
 	
-	\paragraph{Idioma con raíces fonéticas distintas} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
+	\subsection{Idioma con raíces fonéticas distintas} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
 	
 	
 	\section{Extracción de características}
+	\label{sec:extraccion_cap4}
 	Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
 	\subsubsection{Coeficientes Cepstrales en la escala de Mel}
 	Como ya hemos mencionado, MFCC es uno de los mejores algoritmos para capturar características de la señal de audio debido a su similitud a como el sistema auditivo humano procesa el sonido y las frecuencias, así mismo, su efectividad se ha visto reportada y discutida a lo largo de otros estudios.
 	La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo del propio archivo de audio.
-
+	
 	\begin{comment}
 	Razon por el numero de características:
 	https://dsp.stackexchange.com/questions/28898/mfcc-significance-of-number-of-features
@@ -135,22 +165,84 @@
 	% VER: https://medium.com/@keur.plkar/audio-data-augmentation-in-python-a91600613e47
 	
 		\subsubsection{Ruido Blanco}
-		Añadir ruido blanco a la pista de audio, implica la inyección de valores aleatorios distribuidos de manera irregular con una media de 0 y una desviación de estándar de 1. Para implementar este método se usará el paquete numpy
+		Añadir ruido blanco a la pista de audio, implica la inyección de valores aleatorios distribuidos de manera irregular con una media de 0 y una desviación de estándar de 1. Para implementar este método se usará el paquete numpy.
 		
-		
+		\begin{figure}[!htb]
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}
+				\caption{Muestra original}
+				\label{ref:audio_original_1}
+			\end{minipage}\hfill 
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}\hfill
+				\caption{Misma muestra con ruido blanco}
+				\label{ref:audio_wn}
+			\end{minipage}
+		\end{figure}
+				
+				
 		\subsubsection{Desplazamiento del sonido}
 		Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos. Por ejemplo, si el sonido ha sido desplazado hacia delante (izquierda) x segundos, los x primeros segundos se marcan con 0. Si por el contrario han sido desplazados hacia detrás (derecha), los últimos x segundos se marcarán con 0.
+		
+		\begin{figure}[!htb]
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}
+				\caption{Muestra original}
+				\label{ref:audio_original_2}
+			\end{minipage}\hfill 
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}\hfill
+				\caption{Misma muestra con desplazamiento del sonido}
+				\label{ref:audio_shiftting}
+			\end{minipage}
+		\end{figure}
 		
 		\subsubsection{Cambio de tono}
 		Se refiere al proceso de cambiar el tono a un sonido sin variar su velocidad. Para implementar este método se usará la librería Librosa que ofrece un método específico.
 		
+		\begin{figure}[!htb]
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}
+				\caption{Muestra original}
+				\label{ref:audio_original_3}
+			\end{minipage}\hfill 
+			\begin{minipage}{0.45\textwidth}
+				\centering
+				\includegraphics[width=.6\textwidth]{no-photo.jpg}\hfill
+				\caption{Misma muestra con cambio del tono}
+				\label{ref:audio_tunning}
+			\end{minipage}
+		\end{figure}
+	
+	
+	\subsection{Espectrogramas}
+	%Como ya se había explicado en la sección \ref{label}, los espectrogramas son la representación visual de un espectro de frecuencias de una señal que varía con el tiempo \cite{wikipedia2021}
+	Como vimos en el capítulo 2, y siguiendo los pasos de los trabajos \cite{Anvarjon2020} y \cite{Mustaqeem2020}, el uso de espectogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto para este trabajo, se hará uso de los espectrogramas de las características MFCC de la señal. Para generar estos espectrogramas, se hará con la ayuda del paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; Una vez generados, se guardan recortando el padding 0.05 inches y en formato jpg.
+	Finalmente, todas las imágenes que alimentarán la red son redimensionadas con un tamaño de 40 x 30 píxeles.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\caption{Epectrograma MFCC de una onda de audio. Fuente propia}
+		\label{fig:mfcc_sample}
+	\end{figure}
+	
+	
 	\section{Arquitectura}
+	\label{sec:arquitectura_cap4}
 	Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
+	
 	%Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados.
 	%blabla...
 	
 	%Los trabajos como los de \cite{AbdulQayyum2019}, \cite{Anvarjon2020} utilizan CNN en sus trabajos. 
 	%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \cite{AbdulQayyum2019}, la cual consta de:
+	\subsubsection{Modelo1 CNN}
 	En un principio, se optó por una línea de trabajo inspirada en el estudio de \cite{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
 	
 	\begin{itemize}
@@ -171,6 +263,13 @@
 	Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
 	
 	El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+	
+	% TODO:
+	\subsubsection{Modelo2 CNN}
+	
+	\subsubsection{Modelo3 CNN 2D}
+	
+	\subsubsection{Modelo1 CNN-LSTM}
 	
 	\section{Criterios de éxito}
 	El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.\\
@@ -214,24 +313,70 @@
 	Para ver ese poder predictivo por lo tanto, es aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión, y la matriz de confusión que nos permitirá observar como se comporta un modelo especifico preidiciendo las clases.
 	
 	
-	\section{Diseño de experimentos}
+	\section{Diseño de los experimentos}
+	%TODO intro
+	% Ahora se detallaran los experimentos blablableble
+	%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
+	\subsubsection{Prueba 1}
+	RAVDESS con división de los datos por género en una red convolucional unidimensional.
+	Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género. 
+	De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como es descrito en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
+	Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{sec:arquitectura_cap4}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+
 	
-		\paragraph{Prueba 1}  %RAVDESS-1DCNN
-		Conjunto de datos: RAVDESS con técnicas de aumento de datos
-		Método: MFCC + Red convolucional unidimensional 
-		
-		\paragraph{Prueba 1.A} %RAVDESS+TESS - 1DCNN
-		Conjunto de datos: RAVDESS + TESS con técnicas de aumento de datos
-		Método: MFCC + Red convolucional unidimensional 
-		
-		\paragraph{Prueba 1.B}  
-		Conjunto de datos: RAVDESS + TESS con técnicas de aumento de datos
-		Método: MFCC + Red convolucional bidimensional 
-		
-		%\paragraph{Prueba 1.C}  %RAVDESS-2DCNN
+	\subsubsection{Prueba 1.B}
+	RAVDESS en una red convolucional unidimensional.
+	Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
+
+	
+	\subsubsection{Prueba 2}
+	RAVDESS con técnicas de aumento de datos.
+	Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
+	\begin{itemize}
+		\item Ruido blanco.
+		\item Desplazamiento del sonido.
+		\item Modulación del tono.
+	\end{itemize}
+	Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}
+	Para el entrenamiento se usará el modelo Modelo2 CNN descrito previamente en la sección \ref{sec:arquitectura_cap4}.
+	
+	\subsubsection{Prueba 2.B}
+	Combinación de las técnicas de aumento de datos en RAVDESS
+	Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
+	\begin{itemize}
+		\item Ruido blanco y desplazamiento del sonido.
+		\item Ruido blanco, desplazamiento del sonido y modulación del tono.
+	\end{itemize}
+
+	\subsubsection{Prueba 3}
+	Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y RAVDESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
+	Se usará el modelo Modelo2 CNN. Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
+	\begin{itemize}
+		\item RAVDESS y TESS.
+		\item SAVEE y TESS.
+		\item RAVDESS, SAVEE y TESS
+	\end{itemize}
+
+% TODO: explicar estos de abajo y detallar mas lo de arriba (conjunto de datos y entrenamiento??, estrategias de entrenamiento blabla bleble...)
+	\subsubsection{Prueba 3.B}
+	% basandonos en las pruebas anteriores, se aplicara esta tecnica o esta otra
+	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos.
+	
+	\subsubsection{Prueba 4}
+	Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen
+	
+	\subsubsection{Prueba 5}
 	
 	
+	
+	
+	
+
 		
+		
+		
+
+	
 	
 	
 		\printbibliography

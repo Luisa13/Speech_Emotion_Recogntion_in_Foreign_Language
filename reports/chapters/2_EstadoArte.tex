@@ -99,6 +99,7 @@
 	\end{comment}
 
 	\subsubsection{Procesamiento de la señal como imagen}
+	\label{cap2:spectrograms}
 	\begin{comment}
 		TODO
 		- En algunos trabajos hemos visto que blablabla y esto lleva a blablabla
@@ -209,14 +210,17 @@
 	La tendencia de los modelos basados en redes neuronales densas en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las Redes Neuronales Convolucionales (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \cite{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \cite{AbdulQayyum2019} y \cite{Anvarjon2020}.  %\cite{Farooq2020}.
 	
 	\subsubsection{Bases de datos}
+	\label{lb:cap_baseDatos}
 	Aquí se recogen las bases de datos sobre el reconocimiento de emociones más usadas en los estudios comentados anteriormente.
 	
 	\begin{itemize}
-		\item SAVEE (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}) es un conjunto de datos aplicado al reconocimiento de emociones que consiste en grabaciones de 480 frases en inglés británico ejecutadas por 4 actores profesionales masculinos modulando 7 emociones distintas (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). El estudio \cite{SAVEEdataset} explora y detalla esta base de datos que data del 2011, desgraciadamente su acceso está restringido.
+		\item SAVEE (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}) es un conjunto de datos aplicado al reconocimiento de emociones que consiste en grabaciones de 480 frases en total en inglés británico ejecutadas por 4 actores profesionales masculinos modulando 7 emociones distintas (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). El estudio \cite{SAVEEdataset} explora y detalla esta base de datos que data del 2011, y es de acceso público para propósitos de investigación.
 		
 		\item IEMOCAP (por sus siglas en ingles, \emph{Interactive Emotional Dyadic Motion Capture}) es una base de datos multimodal privada utilizada para el reconocimiento y análisis de emociones. Consiste en 12 horas de contenido audiovisual donde 10 actores (5 hombres y 5 mujeres) mantienen diálogos en ingles previamente transcritos en los que se interpretan 5 emociones distintas (enfado, tristeza, alegría, frustración y neutral).
 		
 		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde 24 actores profesionales vocalizan frases en inglés norteamericano modulando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Cuenta con una completa documentacion \cite{Livingstone2018} y es de acceso público.
+		
+		\item TESS (por sus siglas en inglés, \emph{Toronto Emotional Speech Set data}) es un conjunto de datos compuesto por 2800 archivos de audio donde dos actrices de 26 y 64 años cuya lengua materna es el inglés americano, articulan 200 frases cada una modulándolas en 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa, y neutral). Este proyecto fue realizado por la universidad de Toronto \cite{SP2/E8H2MF_2020} y es de acceso público.
 		
 		\item EMO-DB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
 		
