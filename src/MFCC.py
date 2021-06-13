@@ -11,7 +11,7 @@ import cv2
 
 class MFCC():
     '''
-    Esta clase gestiona la generacion de las caracteristicas MFCC.py a traves de un dataframe en
+    Esta clase gestiona la generacion de las caracteristicas MFCC a traves de un dataframe en
     cuya estructura se asumen las columnas path y emotion.
 
     Notas
