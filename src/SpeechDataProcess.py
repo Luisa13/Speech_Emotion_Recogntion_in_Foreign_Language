@@ -21,7 +21,7 @@ class SpeechDataProcess():
         Devuelve en un dataframe con la estructura [emotion, path] la base de datos.
         :return: DataFrame
         '''
-        if self.database_name not in self.DATABASE:
+        if self.database_name not in self.DATABASES:
             print("Error: Esa base de datos no esta soportada :(\n")
             return pd.DataFrame()
 
@@ -36,7 +36,7 @@ class SpeechDataProcess():
     def __read_RAVDESS(self):
         '''
 
-        :return:
+        :return: dataframe
         '''
         emotion = []
         path = []
@@ -59,7 +59,7 @@ class SpeechDataProcess():
     def __read_SAVEE(self):
         '''
 
-        :return:
+        :return: dataframe
         '''
         emotion = []
         path = []
@@ -111,3 +111,23 @@ class SpeechDataProcess():
         df['emotion'] = emotion
         df['path'] = path
         return df
+
+    def __read_EMODB(self):
+        '''
+
+        :return:
+        '''
+        emotion = []
+        path = []
+        EMOTION_EMODB_MAP = {'L': 'boredom', 'F': 'happy', 'T': 'sad', 'W': 'angry', 'A': 'fear', 'E': 'disgust',
+                             'N': 'neutral'}
+        for filename in os.listdir(self.path):
+            str_path = self.path + dir + '/' + str(filename)
+            emo_capital = filename[5]
+            if emo_capital in EMOTION_EMODB_MAP:
+                emotion.append(EMOTION_EMODB_MAP[emo_capital])
+                path.append(str_path)
+
+        df = pd.DataFrame(columns=['emotion', 'path'])
+        df['emotion'] = emotion
+        df['path'] = path
