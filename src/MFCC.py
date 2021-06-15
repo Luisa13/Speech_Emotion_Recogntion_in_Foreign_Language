@@ -222,17 +222,21 @@ class MFCC():
 
         return features_standard, features_wn, features_shiftted, features_pitch
 
-
-
-    def load_images(self, path, dimensions, verbose=True):
-
+    def load_spectograms_dataset(self, path, dimensions, verbose=True):
         '''
-        Lee las imágenes (spectogramas)que se cargarán desde un determinado directorio
+        Devuelve un dataframe con las imágenes generadas que se usarán tanto en el entrenamiento
+        como en test. Asume que en el path especificado existen esos archivos.
+
         Arguments:
         ----------
           path: str
             Directorio donde se encuentran las imagenes
-        dimensions: tuple
+          mfcc: boolean
+            Especifica si se añaden los espectogramas MFCC al dataset
+          mel: boolean
+            Especifica si se añaden los espectogramas de MEL al dataset
+          classes: dictionary
+            Categorias a las que pertenecen las imagenes
           verbose: boolean
             Especifica si se activan los mensajes mientras se leen las imagenes
 
@@ -241,7 +245,32 @@ class MFCC():
         '''
         list_images = []
         labels = []
-        for index, emotion in os.listdir(path):
+
+        mfcc_img, mfcc_lb = self.__load_images(path, dimensions, os.listdir(path))
+        list_images.extend(mfcc_img)
+        labels.extend(mfcc_lb)
+
+        return list_images, labels
+
+    def __load_images(self, path, dimensions, classes, verbose=True):
+
+        '''
+        Lee las imágenes que se cargarán desde un determinado directorio
+        Arguments:
+        ----------
+          path: str
+            Directorio donde se encuentran las imagenes
+          classes: dictionary
+            Categorias a las que pertenecen las imagenes
+          verbose: boolean
+            Especifica si se activan los mensajes mientras se leen las imagenes
+
+        Returns:
+        ----------
+        '''
+        list_images = []
+        labels = []
+        for index, emotion in enumerate(classes):
             emodir = os.path.join(path, emotion)
             files = os.listdir(emodir)
             images = [file for file in files if file.endswith("jpg")]
