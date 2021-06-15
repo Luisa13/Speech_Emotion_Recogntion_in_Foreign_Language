@@ -51,7 +51,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{ravdess_distribucion.png} 
+		\includegraphics[scale=0.25]{ravdess_distribucion.png} 
 		\caption{Distribución de las emociones en RAVDESS en la modalidad sólo audio (1440 archivos)}
 		\label{fig:emociones_ravdess}
 	\end{figure}
@@ -64,7 +64,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\includegraphics[scale=0.25]{no-photo.jpg} 
 		\caption{Distribución de las emociones en SAVEE}
 		\label{fig:emociones_savee}
 	\end{figure}
@@ -99,6 +99,14 @@
 	
 	La documentación del corpus también nos ofrece información sobre el género y edad de los actores, lo cual se ha determinado irrelevante, y las distintas frases que pueden aparecer en los archivos.
 	Las emociones que clasifica son enfado (W), aburrimiento (L), asco (E), miedo o ansiedad (A), felicidad (F), tristeza (T) y neutral (N) codificadas en el nombre del archivo por su inicial en alemán (especificada entre paréntesis).
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{distribucion_emo.JPG} 
+		\caption{Distribución de las emociones en EMODB}
+		\label{fig:emociones_emodb}
+	\end{figure}
+	
 
 
 	
@@ -243,7 +251,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\includegraphics[scale=0.35]{mfcc_espectrogram.jpg} 
 		\caption{Epectrograma MFCC de una onda de audio. Fuente propia}
 		\label{fig:mfcc_sample}
 	\end{figure}
@@ -370,6 +378,11 @@
 	%TODO intro
 	% Ahora se detallaran los experimentos blablableble
 	%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
+	En esta sección se expondrán los diseños de los experimentos para cumplir nuestro cometido. Ya hablábamos en el capítulo 3, que nuestro propósito general, era doble: por un lado conseguir un modelo que fuera capaz de clasificar satisfactoriamente en el propio idioma con el que se entrena, y por otro, evaluar este modelo en otras lenguas distintas. Por ello, se divide la presente en dos subsecciones, con la intención de que el lector le resulte más fácil seguir la narrativa de este proyecto.
+	
+	\subsection{Búsqueda de un  modelo óptimo}
+	Estos experimentos giran en torno a la búsqueda del modelo en el que se testearán los lenguajes extranjeros.
+	
 	\subsubsection[]{\Large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
@@ -383,11 +396,11 @@
 	\end{minipage}
 	
 
-	\subsubsection[]{\Large Prueba 1.B {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
+	\subsubsection[]{\large Prueba 1.B {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
 	Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
 
 
-	\subsubsection[]{\Large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
+	\subsubsection[]{\large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado}Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
@@ -402,7 +415,7 @@
 	\end{minipage}
 	
 	
-	\subsubsection[]{\Large Prueba 2.B {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
+	\subsubsection[]{\large Prueba 2.B {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		\paragraph{Datos y preprocesado}Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
@@ -413,7 +426,8 @@
 		\paragraph{Entrenamiento}
 	\end{minipage}
 
-	\subsubsection[]{\Large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
+	\subsubsection[]{\large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
+	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado} Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y TESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
@@ -424,7 +438,7 @@
 			\item RAVDESS, SAVEE y TESS
 		\end{itemize}
 	
-		\paragraph{Entrenamiento}
+		\paragraph{Entrenamiento} blablbalba
 	\end{minipage}
 
 % TODO: explicar estos de abajo y detallar mas lo de arriba (conjunto de datos y entrenamiento??, estrategias de entrenamiento blabla bleble...)
@@ -446,6 +460,8 @@
 		\paragraph{Entrenamiento}
 		
 	\end{minipage}
+
+	\subsection{Pruebas con lenguajes extranjeros}
 	
 	
 	

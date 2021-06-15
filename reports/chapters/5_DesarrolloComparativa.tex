@@ -18,16 +18,16 @@
 \begin{document}
 	\chapter{Desarrollo de la comparativa}
 	Las primeras dos pruebas no son muy interesantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y la progresión de las pruebas, por eso se omite la estructura que si se muestra en las pruebas posteriores.
-	
+	\section{Búsqueda de un  modelo óptimo}
 	%TODO: hablar de cifras, poner las graficas etc etc
-		\section{Pruebas 1 y 1.B}
+		\subsection{Pruebas 1 y 1.B}
 		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{blabla} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. El entrenamiento se realizó durante 100 épocas y se quedaba estancado pasado el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados en las pruebas podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir, por lo que se decidió probar con técnicas de aumento de datos.
 		\begin{table}[H]
 			\centering
 			\begin{center}
 				\begin{tabular}{| c | c | c | c | c | c |}
 					\hline
-					Género Femeninio & Género Masculino & RAVDESS completo \\ 
+					Género Femenino & Género Masculino & RAVDESS completo \\ 
 					\hline
 					\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
 					\hline
@@ -40,7 +40,7 @@
 		\end{table}
 	
 
-	\section{Pruebas 2 y 2.B} %Data Augmentation
+	\subsection{Pruebas 2 y 2.B} %Data Augmentation
 	Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de aumentar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
 	
 	\begin{table}[H]
@@ -78,9 +78,34 @@
 		\end{center}
 	\end{table}
 	
-	\section{Pruebas 3 y 3.B} %Ensamblado de datasets
+	\subsection{Pruebas 3 y 3.B} %Ensamblado de datasets
 	A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \cite{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
 	El objetivo de esta prueba es experimentar un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
+	\paragraph{Datos y preprocesado} En las tres versiones de la prueba 3, se procedió a crear diferentes combinaciones de los datasets, una vez se extrajeron las características MFCC: En un primer lugar se juntaron RAVDESS y TESS dejando un total de 4240 muestras, por otro lado TESS y SAVEE con 3280, y finalmente la combinación de los tres RAVDESS, TESS y SAVEE con 4720 características. La figura \ref{ref:balanceTest3} nos muestra el balance de la distribución de las clases en cada uno de los conjuntos contruidos, y como podemos ver, están bien balanceados.
+	\begin{table}[H]
+		\centering
+		\begin{center}
+				\begin{tabular}{ c  c | c  c |c  c }
+					RAVDESS y &TESS & TESS y &SAVEE & RAVDESS, &TESS y SAVEE \\
+					\hline
+					asco 		& 592 & asco 		& 460 & asco 		& 652\\
+					felicidad 	& 592 & felicidad 	& 460 & felicidad 	& 652\\
+					sorpresa 	& 592 & sorpresa 	& 460 & sorpresa 	& 652\\
+					tristeza 	& 592 & tristeza 	& 460 & tristeza 	& 652\\
+					miedo 		& 592 & miedo 		& 460 & miedo 		& 652\\
+					enfado 		& 592 & enfado 		& 460 & enfado 		& 652\\
+					neutral 	& 496 & neutral 	& 520 & neutral 	& 616\\
+					\hline
+				\end{tabular}
+				
+			\caption{Balance entre las clases de las diferentes combinaciones (sin data augmentation)}
+			\label{ref:balanceTest3}
+		\end{center}
+	\end{table}
+
+	\paragraph{Entrenamiento}
+	El entrenamiento de los tres modelos los diferentes conjuntos (tanto en la Prueba 3 como en la 3.B), siguió la misma estrategia, ya que el objetivo era obtener mayor accuracy mediante el incremento de muestras. Se consiguió una notable mejoría en comparación a las pruebas anteriores, alcanzando niveles similares a los que reporta la literatura.
+	Paradójicamente, el que peores resultados logró fue la combinación con mayor número de características RAVEE, TESS y SAVEE con 4720 como vemos en la figura \ref{fig:accuTest3_A}.
 	
 	\begin{table}[H]
 		\centering
@@ -89,20 +114,88 @@
 				\hline
 				RAVDESS y TESS & TESS y SAVEE & RAVDESS, TESS y SAVEE \\ 
 				\hline
-				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\includegraphics[scale=0.15]{tests3/ravdess_tess.png} & \includegraphics[scale=0.15]{tests3/tess_savee_1cnn.png} & \includegraphics[scale=0.15]{tests3/ravdess_tess_savee.png}\\
 				\hline
 				
-				??\% accuracy & ??\%  accuracy & ??\% accuracy \\
+				73.22\% accuracy & 84.39\%  accuracy & 66.96\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados tras ensamblar distintos datasets}
-			%\label{}
+			\caption{Resultados tras ensamblar distintos datasets sin aumento de datos}
+			\label{fig:accuTest3_A}
 		\end{center}
 	\end{table}
 	
-	\section{Pruebas 4 y 5}
-	El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \cite{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.
-	En la Prueba 4
+	El uso de la técnica de aumento de datos, no arrojó una mejoría significativa como podemos comparar en la figura \ref{fig:accuTest3_B} (si acaso, una levísima reducción del overfitting).
+
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | c | c | c | c | c |}
+				\hline
+				RAVDESS y TESS & TESS y SAVEE & RAVDESS, TESS y SAVEE \\ 
+				\hline
+				\includegraphics[scale=0.15]{tests3/ravdess_tessTest3_A.png} & 
+				\includegraphics[scale=0.15]{tests3/savee_tessTest3_A.png} & 
+				\includegraphics[scale=0.15]{no-photo.jpg}\\
+				\hline
+				
+				73.07\% accuracy & 84.32\%  accuracy & 66.96\% accuracy \\
+				\hline	
+			\end{tabular}
+			\caption{Resultados tras ensamblar distintos datasets con aumento de datos}
+			\label{fig:accuTest3_B}
+		\end{center}
+	\end{table}
+
+	\paragraph{Evaluación}
+	Aunque hay margen de mejora, cabe resaltar el avance con respecto a las otras pruebas, y los resultados sugieren que la diversidad de datos es lo que conlleva un mejor rendimiento del modelo. En la prueba 3 (ya que los resultados de las tres opciones fueron proporcionales, en esta descripción se usa como referencia la subprueba con TESS y SAVEE, y a continuación se provee una tabla con los resultados de cada una de las combinaciones de esta prueba):
+	
+	\begin{itemize}
+		\item En las tres opciones, se mantuvo que el enfado fue el más difícil de distiguir: En TESS y SAVEE, su precisión fue tan sólo de 38\% mientras que el F1 subió hasta 55\%.
+		
+		\item El asco, el miedo, la tristeza y la neutralidad, se mantuvieron en un 100\% de precisión, pero su F1 fue de 87\% 87\% 90\% y 85\% respectivamente.
+		
+		\item La felicidad llegó 99\% de precisión pero su F1 fue de 78\%.
+		
+		\item La sorpresa finalmente también llegó al 99\% de precisión como la felicidad, pero su F1 se quedó en el 79\%.
+	\end{itemize}
+
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c|| c c |  c c |  c c | }
+				\hline
+					\multicolumn{1}{|c||}{Emocion} & 
+					\multicolumn{2}{|c|}{RAVDES y SAVEE}&
+					\multicolumn{2}{|c|}{TESS y SAVEE} &
+					\multicolumn{2}{|c|}{RAVDES, TESS y SAVEE} \\
+				\hline
+				 	& 
+					 \multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+					 \multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+					 \multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+				\hline
+
+				asco 		& 1.00 & 0.68 & 1.00 & 0.87 & 1.00 & 0.59\\
+				felicidad 	& 1.00 & 0.67 & 0.99 & 0.78 & 1.00 & 0.62\\
+				sorpresa 	& 1.00 & 0.44 & 0.99 & 0.79 & 1.00 & 0.47\\
+				tristeza 	& 0.99 & 0.77 & 1.00 & 0.90 & 1.00 & 0.76\\
+				miedo 		& 0.99 & 0.81 & 1.00 & 0.87 & 0.98 & 0.70\\
+				enfado 		& 0.28 & 0.44 & 0.38 & 0.55 & 0.25 & 0.40\\
+				neutral 	& 1.00 & 0.88 & 1.00 & 0.85 & 1.00 & 0.76\\
+				\hline
+			\end{tabular}
+			
+			\caption{Resultado de la evaluación en cada una de las combinaciones de conjuntos de datos}
+			\label{result_Test3}
+		\end{center}
+	\end{table}
+	
+	
+	\subsection{Pruebas 4 y 5}
+	El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \cite{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.\\
+	\Large En la Prueba 4
 	
 	\begin{figure}[H]
 		\centering
@@ -111,7 +204,7 @@
 		\label{fig:cnn2d}
 	\end{figure}
 	
-	En la Prueba 5
+	\Large En la Prueba 5
 	
 	
 	\begin{figure}[H]
@@ -121,7 +214,7 @@
 		\label{fig:lstm-cnn}
 	\end{figure}
 	
-	
+	\section{Evaluación con otros Lenguages}
 
 		
 		
