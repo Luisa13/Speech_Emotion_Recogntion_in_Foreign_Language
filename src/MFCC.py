@@ -173,46 +173,52 @@ class MFCC():
                                                  bins_per_octave=bins_per_octave)
         return data_pitch
 
-    def read_features_dataAugmentation(self):
+    def read_features_dataAugmentation(self, standard=True, data_augmentation=False):
         '''
         Devuelve y guarda en formato pkl de manera independiente las caracteristicas
         con tecnicas de aumento de datos
         '''
+        features_wn = pd.DataFrame(columns=['data'])
+        features_shiftted = pd.DataFrame(columns=['data'])
+        features_pitch = pd.DataFrame(columns=['data'])
+
         # Leemos las caracteristicas estandar (sin data augmentation)
-        features_standard = self.get_features(self.get_features_single_file)
-        try:
-            local_name = 'featuresMFCC_standard_' + self.dataset_name + '.pkl'
-            pickle.dump(features_standard, open(self.outpath + local_name, 'wb'))
-        except Exception as ex:
-            print(ex)
-        print("Caracteristicas estandar serializadas")
+        if standard:
+            features_standard = self.get_features(self.get_features_single_file)
+            try:
+                local_name = 'featuresMFCC_standard_' + self.dataset_name + '.pkl'
+                pickle.dump(features_standard, open(self.outpath + local_name, 'wb'))
+            except Exception as ex:
+                print(ex)
+            print("Caracteristicas estandar serializadas")
 
-        # Leemos para Ruido Blanco
-        features_wn = self.get_features(self.get_features_white_noise)
-        try:
-            local_name = 'featuresMFCC_wn_' + self.dataset_name + '.pkl'
-            pickle.dump(features_wn, open(self.outpath + local_name, 'wb'))
-        except Exception as ex:
-            print(ex)
-        print("Caracteristicas aumentadas con Ruido Blanco serializadas")
+        if data_augmentation:
+            # Leemos para Ruido Blanco
+            features_wn = self.get_features(self.get_features_white_noise)
+            try:
+                local_name = 'featuresMFCC_wn_' + self.dataset_name + '.pkl'
+                pickle.dump(features_wn, open(self.outpath + local_name, 'wb'))
+            except Exception as ex:
+                print(ex)
+            print("Caracteristicas aumentadas con Ruido Blanco serializadas")
 
-        # Leemos para Desplazamiento del Sonido
-        features_shiftted = self.get_features(self.get_features_shiftted)
-        try:
-            local_name = 'featuresMFCC_shiftted_' + self.dataset_name + '.pkl'
-            pickle.dump(features_shiftted, open(self.outpath + local_name, 'wb'))
-        except Exception as ex:
-            print(ex)
-        print("Caracteristicas aumentadas con Desplazamiento serializadas")
+            # Leemos para Desplazamiento del Sonido
+            features_shiftted = self.get_features(self.get_features_shiftted)
+            try:
+                local_name = 'featuresMFCC_shiftted_' + self.dataset_name + '.pkl'
+                pickle.dump(features_shiftted, open(self.outpath + local_name, 'wb'))
+            except Exception as ex:
+                print(ex)
+            print("Caracteristicas aumentadas con Desplazamiento serializadas")
 
-        # Leemos para Modificacion del Tono
-        features_pitch = self.get_features(self.get_features_pitch)
-        try:
-            local_name = 'featuresMFCC_pitch_' + self.dataset_name + '.pkl'
-            pickle.dump(features_pitch, open(self.outpath + local_name, 'wb'))
-        except Exception as ex:
-            print(ex)
-        print("Caracteristicas aumentadas con Modulacion serializadas")
+            # Leemos para Modificacion del Tono
+            features_pitch = self.get_features(self.get_features_pitch)
+            try:
+                local_name = 'featuresMFCC_pitch_' + self.dataset_name + '.pkl'
+                pickle.dump(features_pitch, open(self.outpath + local_name, 'wb'))
+            except Exception as ex:
+                print(ex)
+            print("Caracteristicas aumentadas con Modulacion serializadas")
 
         return features_standard, features_wn, features_shiftted, features_pitch
 
@@ -255,7 +261,8 @@ class MFCC():
 
     def generate_spectrograms(self, output_path):
         '''
-        Genera y almacena espectogramas unas caracteristicas espeficicas
+        Genera y almacena espectogramas unas caracteristicas espeficicas.
+        Si la ruta donde se guarda el archivo no existe, la crea.
         Aguments
         ---------
         df: DataFrame
@@ -275,7 +282,7 @@ class MFCC():
     def __save_mfccspectrograma(self, pathfile, emotionName, output_path, index):
         '''
         Genera un espectograma MFCC.py como imagen a partir de un archivo, y lo guarda en una ruta especificada.
-        Esta clase es privada
+        Si la ruta donde se guarda el archivo no existe, la crea.
         Aguments
         ---------
         pathfile: str

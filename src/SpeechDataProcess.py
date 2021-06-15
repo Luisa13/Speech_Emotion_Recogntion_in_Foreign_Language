@@ -29,7 +29,7 @@ class SpeechDataProcess():
             return self.__read_RAVDESS()
         elif self.database_name == self.DATABASES[1]:
             return self.__read_SAVEE()
-        elif self.database_name == self.DATABASE[2]:
+        elif self.database_name == self.DATABASES[2]:
             return self.__read_TESS()
 
 
