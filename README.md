@@ -1,8 +1,6 @@
 # Speech Emotion Recognition in a Foreign Language
 Classify and recognize emotions through voice signal in a foreign language
 
-### Installation
-
 ### Requirements
 * Python 3.6 or higher
 * Librosa 0.8.1
