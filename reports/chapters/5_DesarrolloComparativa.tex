@@ -81,10 +81,11 @@
 	\subsection{Pruebas 3 y 3.B} %Ensamblado de datasets
 	A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \cite{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
 	El objetivo de esta prueba es experimentar un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
-	\paragraph{Datos y preprocesado} En las tres versiones de la prueba 3, se procedió a crear diferentes combinaciones de los datasets, una vez se extrajeron las características MFCC: En un primer lugar se juntaron RAVDESS y TESS dejando un total de 4240 muestras, por otro lado TESS y SAVEE con 3280, y finalmente la combinación de los tres RAVDESS, TESS y SAVEE con 4720 características. La figura \ref{ref:balanceTest3} nos muestra el balance de la distribución de las clases en cada uno de los conjuntos contruidos, y como podemos ver, están bien balanceados.
+	\paragraph{Datos y preprocesado} En las tres versiones de la prueba 3, se procedió a crear diferentes combinaciones de los datasets, una vez se extrajeron las características MFCC: En un primer lugar se juntaron RAVDESS y TESS dejando un total de 4240 muestras, por otro lado TESS y SAVEE con 3284, y finalmente la combinación de los tres RAVDESS, TESS y SAVEE con 4720 características. La figura \ref{ref:balanceTest3} nos muestra el balance de la distribución de las clases en cada uno de los conjuntos contruidos, y como podemos ver, están bien balanceados.
 	\begin{table}[H]
 		\centering
 		\begin{center}
+			
 				\begin{tabular}{ c  c | c  c |c  c }
 					RAVDESS y &TESS & TESS y &SAVEE & RAVDESS, &TESS y SAVEE \\
 					\hline
@@ -94,7 +95,7 @@
 					tristeza 	& 592 & tristeza 	& 460 & tristeza 	& 652\\
 					miedo 		& 592 & miedo 		& 460 & miedo 		& 652\\
 					enfado 		& 592 & enfado 		& 460 & enfado 		& 652\\
-					neutral 	& 496 & neutral 	& 520 & neutral 	& 616\\
+					neutral 	& 496 & neutral 	& 524 & neutral 	& 616\\
 					\hline
 				\end{tabular}
 				
@@ -120,7 +121,7 @@
 				73.22\% accuracy & 84.39\%  accuracy & 66.96\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados tras ensamblar distintos datasets sin aumento de datos}
+			\caption{Prueba 3: Resultados tras ensamblar distintos datasets sin aumento de datos}
 			\label{fig:accuTest3_A}
 		\end{center}
 	\end{table}
@@ -142,13 +143,13 @@
 				73.07\% accuracy & 84.32\%  accuracy & 66.96\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados tras ensamblar distintos datasets con aumento de datos}
+			\caption{Prueba 3.B: Resultados tras ensamblar distintos datasets con aumento de datos}
 			\label{fig:accuTest3_B}
 		\end{center}
 	\end{table}
 
 	\paragraph{Evaluación}
-	Aunque hay margen de mejora, cabe resaltar el avance con respecto a las otras pruebas, y los resultados sugieren que la diversidad de datos es lo que conlleva un mejor rendimiento del modelo. En la prueba 3 (ya que los resultados de las tres opciones fueron proporcionales, en esta descripción se usa como referencia la subprueba con TESS y SAVEE, y a continuación se provee una tabla con los resultados de cada una de las combinaciones de esta prueba):
+	Aunque hay margen de mejora, cabe resaltar el avance con respecto a las otras pruebas, y los resultados sugieren que la diversidad de datos es lo que conlleva un mejor rendimiento del modelo. En la prueba 3 (ya que los resultados de las tres opciones fueron proporcionales, en esta descripción se usa como referencia la subprueba con TESS y SAVEE, y a continuación se provee la tabla \ref{result_Test3} con los resultados de cada una de las combinaciones de esta prueba):
 	
 	\begin{itemize}
 		\item En las tres opciones, se mantuvo que el enfado fue el más difícil de distiguir: En TESS y SAVEE, su precisión fue tan sólo de 38\% mientras que el F1 subió hasta 55\%.
@@ -194,27 +195,140 @@
 	
 	
 	\subsection{Pruebas 4 y 5}
-	El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \cite{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.\\
-	\Large En la Prueba 4
+	El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \cite{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.
+	%TODO: corregir y asegurarte de las dimensiones
+	\paragraph{Datos y preprocesado}
+	Este paso fue el mismo en ambas pruebas, la extracción de características  se llevó a cabo con el paquete Librosa, y después se procedió a generar los espectogramas. Se leyeron un total de 3284 imágenes, las cuales se recortaron con unas dimensiones de 30 x 40 píxeles.
 	
+	\subsubsection{Prueba 4}
+	\paragraph{Entrenamiento}
+	El modelo escogido para esta prueba (una red convolucional bidimensional) se entrenó durante 100 épocas con un batch de tamaño 32, llegando a un 91.10\% de precisión como vemos en la figura \ref{fig:cnn2d}. 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{no-photo.jpg} 
-		\caption{Comparativa de los extractos de voz por género en RAVDESS}
+		\includegraphics[scale=0.35]{test4_5/savee_tess_cnn2d.png} 
+		\caption{Rendimiento del modelo CNN usando los datos de SAVEE y TESS}
 		\label{fig:cnn2d}
 	\end{figure}
+
+	Vemos que el modelo alcanza valores altos en una época temprana (en la \emph{epoch} 3  pasa de un 66\% de precisión en test a un 80\%), y se estabiliza en torno a la época 50 (90\% ~ 91\%).
 	
-	\Large En la Prueba 5
+	\paragraph{Evaluación}
+	Esta prueba supuso una sólida mejora en comparación a las pruebas anteriores, ya que los resultados fueron bastante satisfactorios. En la tabla \ref{result_Test4} podemos ver la capacidad del modelo para reconocer cada clase, observando que en concordancia con los resultados obtenidos hasta ahora, el enfado es la que menos puntúa, mientras que la tristeza la que es más fácil de reconocer.
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c|| c c | }
+				\hline
+				\multicolumn{1}{|c||}{Emocion} & 
+				\multicolumn{2}{|c|}{TESS y SAVEE} \\
+				\hline
+				& 
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+				\hline
+				asco 		&  0.96 &  0.91 \\
+				felicidad 	&  0.94 &  0.91 \\
+				sorpresa 	&  0.96 &  0.94 \\
+				tristeza 	&  0.99 &  0.94 \\
+				miedo 		&  0.95 &  0.92 \\
+				enfado 		&  0.75 &  0.85 \\
+				neutral 	&  0.89 &  0.93 \\
+				\hline
+			\end{tabular}
+			
+			\caption{Prueba 4: Resultados del modelo CNN entrenado con espectogramas MFCC exrtaídos de la combinación de los conjuntos de datos TESS y SAVEE}
+			\label{result_Test4}
+		\end{center}
+	\end{table}
 	
-	
+	\subsubsection{Prueba 5}
+	\paragraph{Entrenamiento}
+	En esta prueba el modelo escogido (red CNN bidimensional con salida LSTM) fue entrenada durante 100 épocas con batch de tamaño 32 llegando a un 90.37\% de precisión. 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{no-photo.jpg} 
-		\caption{Comparativa de los extractos de voz por género en RAVDESS}
+		\includegraphics[scale=0.35]{test4_5/savee_tess_lstmcnn2d.png} 
+		\caption{Rendimiento del modelo CNN - LSTM usando los datos de SAVEE y TESS}
 		\label{fig:lstm-cnn}
 	\end{figure}
+
+	Si observamos la figura \ref{fig:lstm-cnn}, al igual que en la prueba 4, en el entrenamiento se alcanzaron valores altos en una época temprana (en la \emph{epoch} 5  pasa de un 78\% a un 80\% de precisión en test), y se estabiliza en torno a la época 65 (90\% ~ 91\%).
+
+	\paragraph{Evaluación}
+	Junto con la prueba 4, estas fueron las que mejores resultados reportaron, despejando cualquier duda sobre la eficacia de trabajar con espectrogramas. En la tabla \ref{result_Test5} observamos ciertas curiosidades.
+	\begin{itemize}
+		\item Se mantiene que el enfado es el que más cuesta reconocer, pero sin embargo es la única emoción cuya F1 es más alta que su precisión. Esto también ocurre en las pruebas anteriores.
+		
+		\item Esta vez, la que puntúa más alto es la felicidad y la sorpresa, y no la tristeza como venía pasando hasta ahora.
+		
+		\item El miedo y el estado neutral, mantienen unos valores muy estables entre la precisión y F1.
+	\end{itemize}
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c|| c c | }
+				\hline
+				\multicolumn{1}{|c||}{Emocion} & 
+				\multicolumn{2}{|c|}{TESS y SAVEE} \\
+				\hline
+				& 
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+				\hline
+				asco 		& 1.00 & 0.95 \\
+				felicidad 	& 0.98 & 0.93 \\
+				sorpresa 	& 0.99 & 0.93 \\
+				tristeza 	& 0.96 & 0.90 \\
+				miedo 		& 0.92 & 0.92\\
+				enfado 		& 0.69  & 0.81 \\
+				neutral 	& 0.88 & 0.89\\
+				\hline
+			\end{tabular}
+			
+			\caption{Prueba 5: Resultados del modelo CNN-LSTM entrenado con espectogramas MFCC extradídos de la combinación de los conjuntos de datos TESS y SAVEE}
+			\label{result_Test5}
+		\end{center}
+	\end{table}
 	
 	\section{Evaluación con otros Lenguages}
+	
+	\subsection{Pruebas 6, 7 y 8}
+	\paragraph{Datos y preprocesado}
+	\paragraph{Entrenamiento}
+	\paragraph{Evaluación}
+	En la tabla \ref{results_TestGerman} se muestran los resultados conseguidos tras haber evaluado los modelos anteriores con el idioma alemán.
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c|| c c |  c c |  c c | }
+				\hline
+				\multicolumn{1}{|c||}{Emocion} & 
+				\multicolumn{2}{|c|}{RAVDES y SAVEE}&
+				\multicolumn{2}{|c|}{TESS y SAVEE} &
+				\multicolumn{2}{|c|}{RAVDES, TESS y SAVEE} \\
+				
+				\hline
+				& 
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+				\hline
+				
+				asco 		& 0.25 & 0.20 &  &  &  & \\
+				felicidad 	& 0.57 & 0.56 &  &  &  & \\
+				tristeza 	& 0.49 & 0.32 &  &  &  & \\
+				enfado 		& 0.16 & 0.23 &  &  &  & \\
+				neutral 	& 0.27 & 0.16 &  &  &  & \\
+				\hline
+			\end{tabular}
+			
+			\caption{Resultados al testear los mejores modelos con el idioma alemán}
+			\label{results_TestGerman}
+		\end{center}
+	\end{table}
+	
+	\subsection{Prueba 9, 10 y 11}
+	\paragraph{Datos y preprocesado}
+	\paragraph{Entrenamiento}
+	\paragraph{Evaluación}
 
 		
 		
