@@ -167,7 +167,7 @@
 		\begin{center}
 			\begin{tabular}{| c|| c c |  c c |  c c | }
 				\hline
-					\multicolumn{1}{|c||}{Emocion} & 
+					\multicolumn{1}{|c||}{Emoción} & 
 					\multicolumn{2}{|c|}{RAVDES y SAVEE}&
 					\multicolumn{2}{|c|}{TESS y SAVEE} &
 					\multicolumn{2}{|c|}{RAVDES, TESS y SAVEE} \\
@@ -210,7 +210,7 @@
 		\label{fig:cnn2d}
 	\end{figure}
 
-	Vemos que el modelo alcanza valores altos en una época temprana (en la \emph{epoch} 3  pasa de un 66\% de precisión en test a un 80\%), y se estabiliza en torno a la época 50 (90\% ~ 91\%).
+	Vemos que el modelo alcanza valores altos en una época temprana (en la \emph{epoch} 3  pasa de un 66\% de precisión en test a un 80\%), y se estabiliza en torno a la época 50 (90\% - 91\%).
 	
 	\paragraph{Evaluación}
 	Esta prueba supuso una sólida mejora en comparación a las pruebas anteriores, ya que los resultados fueron bastante satisfactorios. En la tabla \ref{result_Test4} podemos ver la capacidad del modelo para reconocer cada clase, observando que en concordancia con los resultados obtenidos hasta ahora, el enfado es la que menos puntúa, mientras que la tristeza la que es más fácil de reconocer.
@@ -219,7 +219,7 @@
 		\begin{center}
 			\begin{tabular}{| c|| c c | }
 				\hline
-				\multicolumn{1}{|c||}{Emocion} & 
+				\multicolumn{1}{|c||}{Emoción} & 
 				\multicolumn{2}{|c|}{TESS y SAVEE} \\
 				\hline
 				& 
@@ -257,7 +257,7 @@
 	\begin{itemize}
 		\item Se mantiene que el enfado es el que más cuesta reconocer, pero sin embargo es la única emoción cuya F1 es más alta que su precisión. Esto también ocurre en las pruebas anteriores.
 		
-		\item Esta vez, la que puntúa más alto es la felicidad y la sorpresa, y no la tristeza como venía pasando hasta ahora.
+		\item La que puntúa más alto, es el asco, en lugar de la tristeza como ocurren en las pruebas anteriores, sin embargo podemos ver que tristeza, asco, sorpresa, felicidad y miedo son las que más fácilmente reconoce. 
 		
 		\item El miedo y el estado neutral, mantienen unos valores muy estables entre la precisión y F1.
 	\end{itemize}
@@ -267,7 +267,7 @@
 		\begin{center}
 			\begin{tabular}{| c|| c c | }
 				\hline
-				\multicolumn{1}{|c||}{Emocion} & 
+				\multicolumn{1}{|c||}{Emoción} & 
 				\multicolumn{2}{|c|}{TESS y SAVEE} \\
 				\hline
 				& 
@@ -291,19 +291,53 @@
 	\section{Evaluación con otros Lenguages}
 	
 	\subsection{Pruebas 6, 7 y 8}
+	Las pruebas 6, 7 y 8 evaluarán un sistema que es capaz de clasificar en inglés, con la expresión de emociones en alemán usando la base de datos EMO-DB. Aunque la prueba principal era evaluar el mejor modelo resultante de las pruebas anteriores, hemos decidido que sería interesante evaluarlo en aquellos modelos que no dieron tan buen resultado (por encima del 80\% de exactitud como se dijo en el capítulo 3, de otro modo esos resultados podrían ser demasiado aleatorios).
+	 
 	\paragraph{Datos y preprocesado}
+	Los datos de entrenamiento se preprocesaron exactamente igual que en las pruebas donde sus correspondientes modelos formaron parte (el modelo CNN 1D en la sección\ref{}, el modelo CNN 2D en la sección \ref{} y el modelo CNN-LSTM 2D en la sección \ref{} ) por lo que carece de interés repetir aquí la misma información. Si hablaremos en cambio, del preprocesamiento referente a los datos de validación con el conjunto de datos EMO-DB, en alemán. \\
+	
+	Ya que los datos de validación procedían de un corpus diferente al de entrenamiento, se eliminaron las emociones "miedo" y "sorpresa" para que los datos fuesen coherentes y las clases se correspondieran entre sí. Por lo que disponíamos de 2364 datos para el entrenamiento y 455 para la validación.\\
+	Además EMO-DB presentaba una distribución de los datos bastante irregular, por lo que se procedió a balancearlos:
+	\begin{enumerate}
+		\item En primer lugar se aplicó aumento de datos (sólo con desplazamiento del sonido), para que en el segundo paso no quedase demasiado reducido.
+		\item Después se eliminaron muestras de las clases más numerosas hasta equipararlos.
+	\end{enumerate}
+	Este balanceo se hizo en la extracción de características en la prueba 6, y en la generación de datos en las pruebas 7 y 8. Tras normalizarlos y dividir los datos y las clases, la distribución de las mismas quedó como muestra la tabla \ref{ref:balanceTest678}.
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{ c  c | c  c |c  c }
+				\multicolumn{2}{c|}{Prueba 6} &
+				\multicolumn{2}{|c|}{Prueba 7} &
+				\multicolumn{2}{|c}{Prueba 8} \\
+				\hline
+				asco 		& 90 & asco 	& 90 & asco 	  & 90\\
+				felicidad 	& 91 & felicidad & 91 & felicidad & 91\\
+				tristeza 	& 92 & tristeza & 92 & tristeza   & 92\\
+				enfado 		& 91 & enfado 	& 91 & enfado 	  & 91\\
+				neutral 	& 91 & neutral 	& 91 & neutral 	  & 91\\
+				\hline
+			\end{tabular}
+			
+			\caption{Balance entre las clases pertenecientes a EMOD-DB, tras preprocesarlo para usarlo en las correspondientes pruebas.}
+			\label{ref:balanceTest678}
+		\end{center}
+	\end{table}
+	
 	\paragraph{Entrenamiento}
 	\paragraph{Evaluación}
+	Los resultados en general, fueron bastante pésimos consiguiendo un 27\%, 22\% y 28\% de precisión respectivamente.
 	En la tabla \ref{results_TestGerman} se muestran los resultados conseguidos tras haber evaluado los modelos anteriores con el idioma alemán.
 	\begin{table}[H]
 		\centering
 		\begin{center}
 			\begin{tabular}{| c|| c c |  c c |  c c | }
 				\hline
-				\multicolumn{1}{|c||}{Emocion} & 
-				\multicolumn{2}{|c|}{RAVDES y SAVEE}&
-				\multicolumn{2}{|c|}{TESS y SAVEE} &
-				\multicolumn{2}{|c|}{RAVDES, TESS y SAVEE} \\
+				\multicolumn{1}{|c||}{Emoción} & 
+				\multicolumn{2}{|c|}{Modelo CNN 1D}&
+				\multicolumn{2}{|c|}{Modelo CNN 2D} &
+				\multicolumn{2}{|c|}{Modelo CNN-LSTM} \\
 				
 				\hline
 				& 
@@ -312,23 +346,80 @@
 				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
 				\hline
 				
-				asco 		& 0.25 & 0.20 &  &  &  & \\
-				felicidad 	& 0.57 & 0.56 &  &  &  & \\
-				tristeza 	& 0.49 & 0.32 &  &  &  & \\
-				enfado 		& 0.16 & 0.23 &  &  &  & \\
-				neutral 	& 0.27 & 0.16 &  &  &  & \\
+				asco 		& 0.25 & 0.20 & 0.17 & 0.10 & 0.17 & 0.19 \\
+				felicidad 	& 0.57 & 0.56 & 0.32 & 0.11 & 0.49 & 0.28 \\
+				tristeza 	& 0.49 & 0.32 & 0.07 & 0.08 & 0.27 & 0.23 \\
+				enfado 		& 0.16 & 0.23 & 0.18 & 0.14 & 0.30 & 0.26\\
+				neutral 	& 0.27 & 0.16 & 0.32 & 0.46 & 0.31 & 0.40\\
 				\hline
 			\end{tabular}
 			
-			\caption{Resultados al testear los mejores modelos con el idioma alemán}
+			\caption{Resultados al evaluar los mejores modelos con el idioma alemán}
 			\label{results_TestGerman}
 		\end{center}
 	\end{table}
 	
 	\subsection{Prueba 9, 10 y 11}
+	
 	\paragraph{Datos y preprocesado}
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{ c  c | c  c |c  c }
+				\multicolumn{2}{c|}{Prueba 9} &
+				\multicolumn{2}{|c|}{Prueba 10} &
+				\multicolumn{2}{|c}{Prueba 11} \\
+				\hline
+				asco 		& 107 & asco 		& 90 & asco 	  & 90	\\
+				felicidad 	& 107 & felicidad 	& 91 & felicidad  & 91	\\
+				tristeza 	& 107 & tristeza 	& 92 & tristeza   & 92	\\
+				enfado 		& 107 & enfado 		& 91 & enfado 	  & 91	\\
+				neutral 	& 107 & neutral 	& 91 & neutral 	  & 91	\\
+				sorpresa 	& 106 & sorpresa 	& 0. & sorpresa   & 0. 	\\
+				miedo 		& 107 & miedo		& 0. & miedo 	  & 0. 	\\
+				\hline
+			\end{tabular}
+			
+			\caption{Balance entre las clases pertenecientes a CAFFE, tras preprocesarlo para usarlo en las correspondientes pruebas.}
+			\label{ref:balanceTest91011}
+		\end{center}
+	\end{table}
+	
 	\paragraph{Entrenamiento}
 	\paragraph{Evaluación}
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c|| c c |  c c |  c c | }
+				\hline
+				\multicolumn{1}{|c||}{Emoción} & 
+				\multicolumn{2}{|c|}{Modelo CNN 1D}&
+				\multicolumn{2}{|c|}{Modelo CNN 2D} &
+				\multicolumn{2}{|c|}{Modelo CNN-LSTM} \\
+				
+				\hline
+				& 
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+				\hline
+				
+				asco 		& 0.00 & 0.00 & 0.15 & 0.20 & 0.15 & 0.20 \\
+				felicidad 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.17 & 0.20 \\
+				tristeza 	& 0.28 & 0.18 & 0.23 & 0.10 & 0.23 & 0.10 \\
+				enfado 		& 0.14 & 0.23 & 0.19 & 0.22 & 0.19 & 0.22 \\
+				neutral 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.17 & 0.20 \\
+				sorpresa 	& 0.00 & 0.00 & 0.11 & 0.03 & 0.11 & 0.03 \\
+				miedo 		& 0.09 & 0.07 & 0.20 & 0.09 & 0.20 & 0.09 \\
+				\hline
+			\end{tabular}
+			
+			\caption{Resultados al evaluar los mejores modelos con el idioma francés}
+			\label{results_TestFrench}
+		\end{center}
+	\end{table}
 
 		
 		
