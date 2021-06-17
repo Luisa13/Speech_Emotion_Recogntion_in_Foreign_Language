@@ -11,8 +11,6 @@ Classify and recognize emotions through voice signal in a foreign language
 ```
 Project
 |_______data
-|       |_______external
-|       |_______interim
 |       |_______processed
 |       |_______raw
 |_______models
