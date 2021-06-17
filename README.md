@@ -23,7 +23,7 @@ Project
 ```
 
 ### Author and License
-Luisa Sanchez Avivar 2021
+Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE)
 
 REFERENCES:
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
