@@ -1,8 +1,6 @@
 # Speech Emotion Recognition in a Foreign Language
 Classify and recognize emotions through voice signal in a foreign language
 
-### Installation
-
 ### Requirements
 * Python 3.6 or higher
 * Librosa 0.8.1
@@ -13,8 +11,6 @@ Classify and recognize emotions through voice signal in a foreign language
 ```
 Project
 |_______data
-|       |_______external
-|       |_______interim
 |       |_______processed
 |       |_______raw
 |_______models
@@ -27,7 +23,7 @@ Project
 ```
 
 ### Author and License
-Luisa Sanchez Avivar 2021
+Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE)
 
 REFERENCES:
 * [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
