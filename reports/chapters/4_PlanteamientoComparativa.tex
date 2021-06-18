@@ -16,6 +16,7 @@
 
 % Tablas
 \usepackage{multicol, multirow}
+\usepackage{changepage}
 \usepackage[dvipsnames]{xcolor}
 \addbibresource{./bibLib/mycol_arte.bib}
 
@@ -384,12 +385,12 @@
 	%TODO intro
 	% Ahora se detallaran los experimentos blablableble
 	%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
-	En esta sección se expondrán los diseños de los experimentos para cumplir nuestro cometido. Ya hablábamos en el capítulo 3, que nuestro propósito general, era doble: por un lado conseguir un modelo que fuera capaz de clasificar satisfactoriamente en el propio idioma con el que se entrena, y por otro, evaluar este modelo en otras lenguas distintas. Por ello, se divide la presente en dos subsecciones, con la intención de que el lector le resulte más fácil seguir la narrativa de este proyecto.
+	En la presente sección se expondrán los diseños de los experimentos para cumplir nuestro cometido. Ya hablábamos en el capítulo 3, que nuestro propósito general, era doble: por un lado conseguir un modelo que fuera capaz de clasificar satisfactoriamente en el propio idioma con el que se entrena, y por otro, evaluar este modelo en otras lenguas distintas. Por ello, se divide la presente en dos subsecciones, con la intención de que el lector le resulte más fácil seguir la narrativa de este proyecto.
 	
 	\subsection{Búsqueda de un  modelo óptimo}
-	Estos experimentos giran en torno a la búsqueda del modelo en el que más tarde, se validarán los lenguajes extranjeros.
+	Estos experimentos giran en torno a la búsqueda del modelo en el que más tarde, se validarán los lenguajes extranjeros. Como resumen se ofrece al final, la tabla \ref{tab:resumenTests1} que resume las características más diferenciadoras de cada uno de estas pruebas.
 	
-	\subsubsection[]{\Large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
+	\subsubsection[]{\large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		\paragraph{Datos y preprocesado}
@@ -443,7 +444,7 @@
 	\subsubsection[]{\large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
-		
+
 		\paragraph{Datos y preprocesado} Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y TESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
 		Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
 		\begin{itemize}
@@ -462,25 +463,27 @@
 	
 	%PRUEBA 3 - NOTEBOOK 2_CROSSCORPUS
 	\subsubsection{\large Prueba 4 {\normalsize \textcolor{Gray}{Red CNN bidimensional con espectrogramas}}}
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
-		
-		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.\\
-		
-		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 3 basado en una arquitectura CNN bidimensional compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo3}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
-	\end{minipage}
-
-
-	\subsubsection[]{\large Prueba 5 {\normalsize \textcolor{Gray}{Red LSTM-CNN con espectrogramas}}}
 	
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
-		
-		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.\\
-		
+	\setlength{\leftskip}{1cm}
+	%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.
+
+		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 3 basado en una arquitectura CNN bidimensional compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo3}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+	%\end{minipage}
+	%\setlength{\leftskip}{0cm}
+
+
+	\subsubsection{\large Prueba 5 {\normalsize \textcolor{Gray}{Red LSTM-CNN con espectrogramas}}}
+	
+	%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	\setlength{\leftskip}{1cm}
+		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.
 		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 4 basado en una arquitectura dual CNN-LSTM compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo4}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+	\setlength{\leftskip}{0cm}	
 		
-	\end{minipage}
+	%\end{minipage}
 
-
+	Como se menciona en el inicio de esta sección, la tabla \ref{tab:resumenTests1} muestra el resumen con los datos que creemos más característicos de cada una de las pruebas. Así pues, en la columna 'Datos Entr.' se refiere al conjunto de datos que se usarán en el entrenamiento, especificando la naturaleza de estos datos en 'Tipo Dato' (espectrogramas como imagen, o características directamente extraídas de la muestra de audio) mientras que en 'Arquitectura', con qué modelo se llevará a cabo la prueba. En la columna Aumento Datos, se muestra qué técnica de aumento de datos se ha utilizado (en tal caso), donde 'R.B.' corresponde a ruido blanco, 'Desp.' a desplazamiento del sonido y 'Mod.' a modulación del tono.
 
 	\begin{table}[H]
 	\centering
@@ -520,46 +523,80 @@
 		\end{tabular}
 		
 		\caption{Resumen de las pruebas para la obtención de un modelo óptimo en la propia lengua (inglés)}
-		\label{}
-	\end{center}
-\end{table}
-
-
-
+		\label{tab:resumenTests1}
+		\end{center}
+	\end{table}
 
 
 	\subsection{Pruebas con lenguajes extranjeros}
 	
-	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 1D validada en alemán}}}
+	\subsubsection{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 1D validada en alemán}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
-		\paragraph{Datos y preprocesado} 
-		\paragraph{Entrenamiento}
+		\paragraph{Datos y preprocesado}  El conjunto de datos usado para el entrenamiento será la combinación SAVEE y TESS, sin embargo para que las clases del conjunto de entrenamiento y las de validación coincidan, es necesario prescindir de dos clases: sorpresa y miedo.\\ 
+		Por otro lado, los datos de validación presentaban una distribución muy irregular, por lo que para que tuvieran una representación más equilibrada y una interpretación más justa en la validación, se han balanceado aumentando el dataset con aumento de datos (ruido blanco) y se han igualado el número de instancias de cada clase a aquella con una proporción menor.\\
+		A continuación se extraen 13 características MFCC y después de estandarizar los datos como se detalla en la sección \ref{cap:normalizacion}, se dividen en entrenamiento y test. Debido a que los datos que se usarán para la validación provienen de una fuente externa a la de entrenamiento el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test.\\
+		
+		\paragraph{Entrenamiento} Para el entrenamiento se utilizará el Modelo 1CNN compilándolo con el optimizador RMSProp como se describe en \ref{cap4:Modelo1}. Posteriormente es entrenado durante 100 épocas con un batch de tamaño 32.
 		
 	\end{minipage}
 
-	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 2D validada en alemán}}}
+	\subsubsection[]{\large Prueba 7 {\normalsize \textcolor{Gray}{Red CNN 2D validada en alemán}}}
+	
+	%\begin{adjustwidth}{1cm}{}
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		\paragraph{Datos y preprocesado} Al igual que en la prueba anterior, se reducirán de ambos conjuntos de datos el número de emociones a 5, eliminando de la ecuación 'miedo' y 'sorpresa'. Seguidamente, se procederá a la generación de imágenes donde:
+		\begin{enumerate}
+			\item En primer lugar se aplicará aumento de datos (sólo con ruido blanco).
+			\item Se leerán hasta un máximo de 92 para que quede balanceado.
+		\end{enumerate}
+		Una vez generadas las imágenes, se leerán con las dimensiones 30 x 40.
+		
+		Ya que que los datos que se usarán para la validación provienen de una fuente externa a la de entrenamiento el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test. 
+	
+		\paragraph{Entrenamiento} En esta prueba se usará el Modelo 3 basado en una red convolucional bidimensional, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+		
+	%\end{adjustwidth}
+	\end{minipage}
+
+	\subsubsection[]{\large Prueba 8 {\normalsize \textcolor{Gray}{Red CNN-LSTM validada en alemán}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
-		\paragraph{Datos y preprocesado} 
-		\paragraph{Entrenamiento}
+		\paragraph{Datos y preprocesado}  Este procedimiento, será exactamente igual que el de la prueba 7, tanto para los datos de entrenamiento como para los de validación.
 		
-	\end{minipage}
-
-	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN-LSTM validada en alemán}}}
-	
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
-		
-		\paragraph{Datos y preprocesado} 
-		\paragraph{Entrenamiento}
+		\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.
 		
 	\end{minipage}
 
 
 
-	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | c | c | c | c |}
+				\hline
+				\textbf{Prueba} &
+				\textbf{Emociones}& 
+				\textbf{Arquitectura} & 
+				\textbf{Datos Val.} & 
+				\textbf{Tipo Dato} \\ 
+				\hline\hline
+				6 & \multirow{3}{*}{5} & CNN 1D & \multirow{3}{*}{EMO-DB} & caract. MFCC\\ 
+				7 &  & CNN 2D &  & espetrog. MFCC\\ 
+				8 &  & CNN 2D - LSTM &  & espetrog. MFCC\\ \hline
+				9 & \multirow{3}{*}{6} & CNN 2D & \multirow{3}{*}{CAFFE} & caract. MFCC\\  
+				10 &  & CNN 2D &  & espetrog. MFCC\\ 
+				11 &  & CNN 2D - LSTM &  & espetrog. MFCC\\
+				\hline
+				
+			\end{tabular}
+			
+			\caption{Resumen de las pruebas en las que se aplican los mejores modelos a distintos lenguajes.}
+			\label{tab:resumenTests2}
+		\end{center}
+	\end{table}
 	
 	
 	
