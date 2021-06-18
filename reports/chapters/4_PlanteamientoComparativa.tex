@@ -8,6 +8,7 @@
 {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
+\usepackage{multirow}
 
 % Imagenes
 \usepackage{graphicx, wrapfig, hyperref}
@@ -85,7 +86,7 @@
 
 
 	
-	\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones.\\
+	\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones. Para este caso, propondremos el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \cite{wikipediaIngles2019}.\\
 	
 	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 	\begin{itemize}
@@ -169,6 +170,7 @@
 	
 	
 	\subsection{Normalización y estandarización de los datos}
+	\label{cap:normalizacion}
 	Este proceso se aplicará a todas las pruebas
 	\begin{comment}
 		# Now because we are mixing up a few different data sources, it would be wise to normalise the data. 
@@ -268,6 +270,7 @@
 	%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \cite{AbdulQayyum2019}, la cual consta de:
 	\subsection{Arquitectura principal}
 		\subsubsection{Modelo 3 CNN 2D}
+		\label{cap4:Modelo3}
 		% TODO Describir inicio, inspiracion etc
 		Esta arquitectura consiste en:
 		\begin{itemize}
@@ -291,7 +294,12 @@
 	\subsection{Otras arquitecturas}
 	A pesar de que la arquitectura citada en la sección anterior, será con la que se lleven a cabo los principales experimentos y con los resultados más interesantes, consideramos que la mención de otras arquitecturas que han formado parte de los experimentos de este trabajo, ayudará al lector a entender la progresión de los mismos, por lo que se ha visto conveniente incluirlas.
 	
+		% TODO:
 		\subsubsection{Modelo1 CNN}
+		\label{cap4:Modelo1}
+	
+		\subsubsection{Modelo2 CNN}
+		\label{cap4:Modelo2}
 		En un principio, se optó por una línea de trabajo inspirada en el estudio de \cite{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
 		
 		\begin{itemize}
@@ -304,20 +312,18 @@
 			
 			\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación Softmax.
 		\end{itemize}
+	
+	En cuanto al entrenamiento del modelo se usará un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió, mientras que la función de pérdida utilizada para este propósito será entropía cruzada categórica (\emph{categorical crossentropy}).\\
+	Se añaden además, para intentar afinar el modelo los callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitorizará la \emph{val loss} con el fin de minimizarla, y como configuración se empleará un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
+	Con respecto a EarlyStopping, la variable monitorizada será 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.\\
+	Este entrenamiento se llevará a cabo durante 1000 épocas cpn nun batch de tamaño 16.
 		% Hablar de las bondades las redes con 1 dimension
 		% En que ayudan
-		En cuanto al entrenamiento del modelo se usó un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió, mientras que la función de pérdida utilizada para este propósito es entropía cruzada categórica (\emph{categorical crossentropy}).\\
-		
-		Además para intentar afinar el modelo se añadieron como callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitoriza la \emph{val loss} con el fin de minimizarla, y como configuración se emplea un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
-		Con respecto a EarlyStopping, la variable monitorizada es 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.
-		
-		
-		
-		% TODO:
-		\subsubsection{Modelo2 CNN}
-		
+
+
 	
-		\subsubsection{Modelo1 CNN-LSTM}
+		\subsubsection{Modelo4 CNN-LSTM}
+		\label{cap4:Modelo4}
 		% TODO Describir inicio, inspiracion etc
 		\begin{itemize}
 			\item 3 capas convolucionales unidimensionales con 64 filtros de 3 x 3 y activación Relu, seguidas de una capa Max Pooling con tamaño 2 para la pool.
@@ -381,79 +387,152 @@
 	En esta sección se expondrán los diseños de los experimentos para cumplir nuestro cometido. Ya hablábamos en el capítulo 3, que nuestro propósito general, era doble: por un lado conseguir un modelo que fuera capaz de clasificar satisfactoriamente en el propio idioma con el que se entrena, y por otro, evaluar este modelo en otras lenguas distintas. Por ello, se divide la presente en dos subsecciones, con la intención de que el lector le resulte más fácil seguir la narrativa de este proyecto.
 	
 	\subsection{Búsqueda de un  modelo óptimo}
-	Estos experimentos giran en torno a la búsqueda del modelo en el que se testearán los lenguajes extranjeros.
+	Estos experimentos giran en torno a la búsqueda del modelo en el que más tarde, se validarán los lenguajes extranjeros.
 	
 	\subsubsection[]{\Large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		\paragraph{Datos y preprocesado}
-		Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género. 
+		Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género (720 muestras iniciales por cada uno). 
 		
-		De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como es descrito en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
+		De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como se especifica en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
+		Finalmente los datos son divididos en entrenamiento (70\%), y test(20\%) y validación(10\%).
 		
 		\paragraph{Entrenamiento}
-		Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{sec:arquitectura_cap4}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+		Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{cap4:Modelo1}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
 	\end{minipage}
 	
 
 	\subsubsection[]{\large Prueba 1.B {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
 	Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
 
+	%PRUEBA 2 - NOTEBOOK 3
+	\subsubsection{\large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
 
-	\subsubsection[]{\large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
-		
-		\paragraph{Datos y preprocesado}Para esta prueba se usará el conjunto de datos RAVDESS completo, haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera individual, a saber:
+	\hfill\begin{minipage}[t]{\dimexpr\textwidth-1cm}
+		\paragraph{Datos y preprocesado}Para esta prueba se usará el conjunto de datos RAVDESS completo (audio sólo, 1440 muestras iniciales), haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera independiente, a saber:
 		\begin{itemize}
-			\item Ruido blanco.
+			\item Ruido blanco
 			\item Desplazamiento del sonido.
 			\item Modulación del tono.
 		\end{itemize}
 		Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}.
-		\paragraph{Entrenamiento}Para el entrenamiento se usará el modelo Modelo2 CNN descrito previamente en la sección \ref{sec:arquitectura_cap4}.
 		
+		\paragraph{Entrenamiento}Para este entrenamiento se usará el modelo descrito en la subsección \ref{cap4:Modelo2}. el cual está basado en una red convolucional unidimensional de tres capas y reluzarización L2 en las dos primeras.
+		El modelo se compila con un optimizador RMSprop con un learning rate de 0.00005 y $\rho$ a 0.9, y finalmente se entrena durante 100 épocas con un batch de tamaño 16.\\
+
 	\end{minipage}
 	
-	
+	%PRUEBA 2.B - NOTEBOOK 5
 	\subsubsection[]{\large Prueba 2.B {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
 	
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	\hfill\begin{minipage}[t]{\dimexpr\textwidth-1cm}
 		\paragraph{Datos y preprocesado}Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
 		\begin{itemize}
-			\item Ruido blanco y desplazamiento del sonido.
-			\item Ruido blanco, desplazamiento del sonido y modulación del tono.
+			\item Ruido blanco y desplazamiento del sonido, con un total de 4320 características MFCC.
+			
+			\item Modulación del tono y desplazamiento, con un total de 4320 características MFCC.
+			
+			\item Ruido blanco, desplazamiento del sonido y modulación del tono con un total de 5760 características MFCC.
 		\end{itemize}
-		\paragraph{Entrenamiento}
+	
+	
+		\paragraph{Entrenamiento} Para el entrenamiento, se seguirán los mismos parámetros que en la prueba 2.
+		
 	\end{minipage}
 
+	%PRUEBA 3 - NOTEBOOK 1_CROSSCORPUS
 	\subsubsection[]{\large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado} Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y TESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
-		Se usará el modelo Modelo2 CNN. Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
+		Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
 		\begin{itemize}
-			\item RAVDESS y TESS.
-			\item SAVEE y TESS.
-			\item RAVDESS, SAVEE y TESS
+			\item RAVDESS y TESS, con un total de 4240 muestras.
+			\item SAVEE y TESS, con un total de 3280 características MFCC.
+			\item RAVDESS, SAVEE y TESS, con un total de 4720 características.
 		\end{itemize}
 	
-		\paragraph{Entrenamiento} blablbalba
+		\paragraph{Entrenamiento} Para el entrenamiento se usará el modelo Modelo2 CNN basado en una arquitectura CNN unidimensional, tal y como se detalla en la sección \ref{cap4:Modelo2}, entrenándolo durante 100 épocas con un batch de tamaño 32.
 	\end{minipage}
 
 % TODO: explicar estos de abajo y detallar mas lo de arriba (conjunto de datos y entrenamiento??, estrategias de entrenamiento blabla bleble...)
-	\subsubsection[]{\large Prueba 3.B\\ {\normalsize \textcolor{Gray}{Combinación de datasets con aumento de datos}}}
+	\subsubsection[]{\large Prueba 3.B {\normalsize \textcolor{Gray}{Combinación de datasets con aumento de datos}}}
 	% basandonos en las pruebas anteriores, se aplicara esta tecnica o esta otra
-	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos.
+	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos (en concreto se aplicará Ruido blanco, por ser la que mejor resultado reportó).
 	
-	\subsubsection[]{\large Prueba 4\\ {\normalsize \textcolor{Gray}{Red CNN con spectrogramas}}}
+	%PRUEBA 3 - NOTEBOOK 2_CROSSCORPUS
+	\subsubsection[]{\large Prueba 4 {\normalsize \textcolor{Gray}{Red CNN bidimensional con espectrogramas}}}
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
-		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen
-		\paragraph{Entrenamiento}
+		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.
+		
+		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 3 basado en una arquitectura CNN bidimensional compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo3}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+	\end{minipage}
+
+
+	\subsubsection[]{\large Prueba 5 {\normalsize \textcolor{Gray}{Red LSTM-CNN con espectrogramas}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.
+		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 4 basado en una arquitectura dual CNN-LSTM compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo4}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
 		
 	\end{minipage}
-	\subsubsection[]{\large Prueba 5\\ {\normalsize \textcolor{Gray}{Red LSTM-CNN con spectrogramas}}}
+
+
+
+	\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | p{3.5cm} | c | c c c |c |}
+			\hline
+			\multirow{2}{*}{\textbf{Prueba}} &\multirow{2}{*}{\textbf{Datos Entr.}}& \multirow{2}{*}{\textbf{Arquitectura}} & 
+			\multicolumn{3}{|c|}{\textbf{Aumento Datos}} & 
+			\multirow{2}{*}{\textbf{Tipo Dato}} \\ \cline{4-6}
+			& & & R.B. & Desp. & Mod. & \\ 
+			\hline \hline
+			
+			1 & RAVDESS por genero & CNN 1D simplificado & No &No &No & carac. MFCC	\\ \hline
+			1.B & RAVDESS & CNN 1D simplificado &No &No &No & Inglés	\\ \hline
+			\multirow{3}{*}{2} & \multirow{3}{*}{RAVDESS} & \multirow{3}{*}{CNN 1D} &Sí &No &No  & \multirow{3}{*}{carac. MFCC}\\
+			& & & No &Sí &No & 	\\
+			& & & No &No &Sí  & 	\\ \hline
+			
+			\multirow{3}{*}{2.B} & \multirow{3}{*}{RAVDESS} & \multirow{3}{*}{CNN 1D } & Sí &Sí &No & \multirow{3}{*}{carac. MFCC}\\
+			
+			& &  & No &Sí &Sí & \\
+			& &  & Sí &Sí &Sí& \\ \hline
+			
+			\multirow{3}{*}{3} & RAVDESS y TESS & \multirow{3}{*}{CNN 1D} &  No &No &No & \multirow{3}{*}{carac. MFCC}	\\ 
+			\cline{2-2}
+			& SAVEE y TESS &  &  No &No &No & 	\\
+			\cline{2-2}
+			& RAVDESS, SAVEE y TESS &  &  No &No &No & 	\\ \hline
+			
+			\multirow{3}{*}{3.B} & RAVDESS y TESS & \multirow{3}{*}{CNN 1D} & \multirow{3}{*}{ Sí}&\multirow{3}{*}{ No} & \multirow{3}{*}{ No} & \multirow{3}{*}{carac. MFCC}	\\
+			& SAVEE y TESS &  & &&  & 	\\
+			& RAVDESS, SAVEE y TESS &  & &&  & 	\\\hline
+			
+			4 & SAVEE y TESS & CNN 2D &Sí &No &No & espectrogramas MFCC\\ \hline
+			5 & SAVEE y TESS & CNN 2D - LSTM &Sí &No &No & espectrogramas MFCC\\ \hline
+			
+		\end{tabular}
+		
+		\caption{Resumen de las pruebas para la obtención de un modelo óptimo en la propia lengua (inglés)}
+		\label{}
+	\end{center}
+\end{table}
+
+
+
+
+
+	\subsection{Pruebas con lenguajes extranjeros}
+	
+	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 1D validada en alemán}}}
+	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado} 
@@ -461,7 +540,26 @@
 		
 	\end{minipage}
 
-	\subsection{Pruebas con lenguajes extranjeros}
+	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 2D validada en alemán}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} 
+		\paragraph{Entrenamiento}
+		
+	\end{minipage}
+
+	\subsubsection[]{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN-LSTM validada en alemán}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} 
+		\paragraph{Entrenamiento}
+		
+	\end{minipage}
+
+
+
 	
 	
 	
