@@ -2,20 +2,20 @@
 \usepackage{biblatex}
 \usepackage[utf8]{inputenc}
 
-% Para el formato del titulo
+% Para el formato del titulo: numero Nombre Capitulo
 \usepackage{titlesec}
 \titleformat{\chapter}[block]
 {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
-\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
-
-\usepackage{multirow}
+%\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
 % Imagenes
 \usepackage{graphicx, wrapfig, hyperref}
 \graphicspath{ {./.images/} }
 \usepackage{float}
 \usepackage{comment}
-\usepackage{multicol}
+
+% Tablas
+\usepackage{multicol, multirow}
 \usepackage[dvipsnames]{xcolor}
 \addbibresource{./bibLib/mycol_arte.bib}
 
@@ -396,7 +396,7 @@
 		Para esta prueba se usará el conjunto de datos RAVDESS diviendo previamente el conjunto de entrenamiento por género (720 muestras iniciales por cada uno). 
 		
 		De cada una de las divisiones, se extraerán las carácterísticas MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como se especifica en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
-		Finalmente los datos son divididos en entrenamiento (70\%), y test(20\%) y validación(10\%).
+		Finalmente los datos son divididos en entrenamiento (70\%), y test(20\%) y validación(10\%).\\
 		
 		\paragraph{Entrenamiento}
 		Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{cap4:Modelo1}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
@@ -435,10 +435,8 @@
 			
 			\item Ruido blanco, desplazamiento del sonido y modulación del tono con un total de 5760 características MFCC.
 		\end{itemize}
-	
-	
-		\paragraph{Entrenamiento} Para el entrenamiento, se seguirán los mismos parámetros que en la prueba 2.
-		
+
+		\paragraph{Entrenamiento} Para el entrenamiento, se seguirán los mismos parámetros que en la prueba 2.	
 	\end{minipage}
 
 	%PRUEBA 3 - NOTEBOOK 1_CROSSCORPUS
@@ -463,10 +461,10 @@
 	Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos (en concreto se aplicará Ruido blanco, por ser la que mejor resultado reportó).
 	
 	%PRUEBA 3 - NOTEBOOK 2_CROSSCORPUS
-	\subsubsection[]{\large Prueba 4 {\normalsize \textcolor{Gray}{Red CNN bidimensional con espectrogramas}}}
+	\subsubsection{\large Prueba 4 {\normalsize \textcolor{Gray}{Red CNN bidimensional con espectrogramas}}}
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
-		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.
+		\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.\\
 		
 		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 3 basado en una arquitectura CNN bidimensional compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo3}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
 	\end{minipage}
@@ -476,7 +474,8 @@
 	
 	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
-		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.
+		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.\\
+		
 		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 4 basado en una arquitectura dual CNN-LSTM compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo4}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
 		
 	\end{minipage}
@@ -486,7 +485,7 @@
 	\begin{table}[H]
 	\centering
 	\begin{center}
-		\begin{tabular}{| c | p{3.5cm} | c | c c c |c |}
+		\begin{tabular}{| c | p{3.5cm} | c | c c c | p{3.5cm} |}
 			\hline
 			\multirow{2}{*}{\textbf{Prueba}} &\multirow{2}{*}{\textbf{Datos Entr.}}& \multirow{2}{*}{\textbf{Arquitectura}} & 
 			\multicolumn{3}{|c|}{\textbf{Aumento Datos}} & 
@@ -495,7 +494,7 @@
 			\hline \hline
 			
 			1 & RAVDESS por genero & CNN 1D simplificado & No &No &No & carac. MFCC	\\ \hline
-			1.B & RAVDESS & CNN 1D simplificado &No &No &No & Inglés	\\ \hline
+			1.B & RAVDESS & CNN 1D simplificado &No &No &No & carac. MFCC\\ \hline
 			\multirow{3}{*}{2} & \multirow{3}{*}{RAVDESS} & \multirow{3}{*}{CNN 1D} &Sí &No &No  & \multirow{3}{*}{carac. MFCC}\\
 			& & & No &Sí &No & 	\\
 			& & & No &No &Sí  & 	\\ \hline
