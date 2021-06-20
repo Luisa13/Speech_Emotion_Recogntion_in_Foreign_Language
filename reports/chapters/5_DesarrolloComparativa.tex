@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 % Para el formato del titulo
 \usepackage{titlesec}
+
 \titleformat{\chapter}[block]
 {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
@@ -19,6 +20,7 @@
 	\chapter{Desarrollo de la comparativa}
 	Las primeras dos pruebas no son muy interesantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y la progresión de las pruebas, por eso se omite la estructura que si se muestra en las pruebas posteriores.
 	\section{Búsqueda de un  modelo óptimo}
+	\label{cap:4ModeloOptimo}
 	%TODO: hablar de cifras, poner las graficas etc etc
 		\subsection{Pruebas 1 y 1.B}
 		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{blabla} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. El entrenamiento se realizó durante 100 épocas y se quedaba estancado pasado el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados en las pruebas podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir, por lo que se decidió probar con técnicas de aumento de datos.
@@ -137,10 +139,10 @@
 				\hline
 				\includegraphics[scale=0.15]{tests3/ravdess_tessTest3_A.png} & 
 				\includegraphics[scale=0.15]{tests3/savee_tessTest3_A.png} & 
-				\includegraphics[scale=0.15]{no-photo.jpg}\\
+				\includegraphics[scale=0.15]{tests3/ravdess_tess_savee_Aug.png}\\
 				\hline
 				
-				73.07\% accuracy & 84.32\%  accuracy & 66.96\% accuracy \\
+				73.07\% accuracy & 84.32\%  accuracy & 81.52\% accuracy \\
 				\hline	
 			\end{tabular}
 			\caption{Prueba 3.B: Resultados tras ensamblar distintos datasets con aumento de datos}
@@ -289,20 +291,50 @@
 	\end{table}
 	
 	\section{Evaluación con otros Lenguages}
+	En esta segunda parte hablaremos del desarrollo de las pruebas donde los modelos más exitosos de las pruebas anteriores, son validados en idiomas extranjeros.
+	Hay que mencionar, que los datos de entrenamiento se preprocesaron exactamente igual que en las pruebas donde sus correspondientes modelos formaron parte (el modelo CNN 1D en la prueba 3.B, el modelo CNN 2D en la prueba 4 y el modelo CNN-LSTM 2D en la prueba 5 ) por lo que carece de interés repetir aquí la misma información. 
+	Por la misma razón tampoco se comentará el entrenamiento, que de poco se diferencia de las pruebas ya mencionadas.
 	
 	\subsection{Pruebas 6, 7 y 8}
 	Las pruebas 6, 7 y 8 evaluarán un sistema que es capaz de clasificar en inglés, con la expresión de emociones en alemán usando la base de datos EMO-DB. Aunque la prueba principal era evaluar el mejor modelo resultante de las pruebas anteriores, hemos decidido que sería interesante evaluarlo en aquellos modelos que no dieron tan buen resultado (por encima del 80\% de exactitud como se dijo en el capítulo 3, de otro modo esos resultados podrían ser demasiado aleatorios).
 	 
 	\paragraph{Datos y preprocesado}
-	Los datos de entrenamiento se preprocesaron exactamente igual que en las pruebas donde sus correspondientes modelos formaron parte (el modelo CNN 1D en la sección\ref{}, el modelo CNN 2D en la sección \ref{} y el modelo CNN-LSTM 2D en la sección \ref{} ) por lo que carece de interés repetir aquí la misma información. Si hablaremos en cambio, del preprocesamiento referente a los datos de validación con el conjunto de datos EMO-DB, en alemán. \\
+
+	Tras utilizar técnicas de aumento de datos en EMO-DB, y balancearlo, la distribución entre las clases quedó como se muestra en la tabla \ref{ref:balanceTest678}
+	La reducción de las emociones para que las bases de datos casaran, mermó el conjunto de validación a 455 características, y el de entrenamiento por consiguiente a 2364 características.
 	
-	Ya que los datos de validación procedían de un corpus diferente al de entrenamiento, se eliminaron las emociones "miedo" y "sorpresa" para que los datos fuesen coherentes y las clases se correspondieran entre sí. Por lo que disponíamos de 2364 datos para el entrenamiento y 455 para la validación.\\
-	Además EMO-DB presentaba una distribución de los datos bastante irregular, por lo que se procedió a balancearlos:
-	\begin{enumerate}
+
+	\begin{comment}
+		Ya que los datos de validación procedían de un corpus diferente al de entrenamiento, se eliminaron las emociones "miedo" y "sorpresa" para que los datos fuesen coherentes y las clases se correspondieran entre sí. Por lo que disponíamos de 2364 datos para el entrenamiento y 455 para la validación.\\
+		Además EMO-DB presentaba una distribución de los datos bastante irregular, por lo que se procedió a balancearlos:
+		\begin{enumerate}
 		\item En primer lugar se aplicó aumento de datos (sólo con desplazamiento del sonido), para que en el segundo paso no quedase demasiado reducido.
 		\item Después se eliminaron muestras de las clases más numerosas hasta equipararlos.
-	\end{enumerate}
-	Este balanceo se hizo en la extracción de características en la prueba 6, y en la generación de datos en las pruebas 7 y 8. Tras normalizarlos y dividir los datos y las clases, la distribución de las mismas quedó como muestra la tabla \ref{ref:balanceTest678}.
+		\end{enumerate}
+		Este balanceo se hizo en la extracción de características en la prueba 6, y en la generación de datos en las pruebas 7 y 8. Tras normalizarlos y dividir los datos y las clases, la distribución de las mismas quedó como muestra la tabla \ref{ref:balanceTest678}.
+		
+		Tras utilizar técnicas de aumento de datos en EMO-DB, y balancearlo, la distribución entre las clases quedó como se muestra en la tabla \ref{emoPostBal}
+		\begin{table}[H]
+		\centering
+		\begin{center}
+		\begin{tabular}{ c |  c |  c |  c }
+		Emoción & EMO-DB aum. & EMO-DB balan. \\
+		\hline
+		asco 		& 138 & 138 		\\
+		felicidad 	& 213 & 138 	\\
+		tristeza 	& 186 & 138 	\\
+		enfado 		& 381 & 138 		\\
+		neutral 	& 237 & 138	 	\\
+		\hline
+		\end{tabular}
+		
+		\caption{Balance entre las clases pertenecientes a EMOD-DB, usar aumento de datos y balancearlo.}
+		\label{emoPostBal}
+		\end{center}
+		\end{table}
+	\end{comment}
+	
+	
 	
 	\begin{table}[H]
 		\centering
@@ -325,7 +357,6 @@
 		\end{center}
 	\end{table}
 	
-	\paragraph{Entrenamiento}
 	\paragraph{Evaluación}
 	Los resultados en general, fueron bastante pésimos consiguiendo un 27\%, 22\% y 28\% de precisión respectivamente.
 	En la tabla \ref{results_TestGerman} se muestran los resultados conseguidos tras haber evaluado los modelos anteriores con el idioma alemán.
@@ -358,11 +389,14 @@
 			\label{results_TestGerman}
 		\end{center}
 	\end{table}
+
+	Desgraciadamente, no se pudo encontrar ninguna relación en el reconocimiento de emociones entre los modelos, así como en la sección anterior vimos que la emoción más difícil de distinguir era el asco, aquí difícilmente se ve un patrón.\\
+	En la prueba 6 con el Modelo CNN 1D, el más difícil de clasificar es el estado neutral, mientras que en el Modelo CNN 2D el que más le cuesta es la tristeza, y en el Modelo CNN-LSTM, el asco.
 	
 	\subsection{Prueba 9, 10 y 11}
-	
+	Este conjunto de pruebas están dedicadas a la evaluación de los modelos que puntuaron más alto en la sección \ref{cap:4ModeloOptimo}, en el idioma francés.
 	\paragraph{Datos y preprocesado}
-	
+	Una vez se preprocesaron los datos como se especifica en el capítulo 4, el balance del conjunto de entrenamiento quedó como se muestra en la tabla \ref{ref:balanceTest91011}.
 	\begin{table}[H]
 		\centering
 		\begin{center}
@@ -371,13 +405,13 @@
 				\multicolumn{2}{|c|}{Prueba 10} &
 				\multicolumn{2}{|c}{Prueba 11} \\
 				\hline
-				asco 		& 107 & asco 		& 90 & asco 	  & 90	\\
-				felicidad 	& 107 & felicidad 	& 91 & felicidad  & 91	\\
-				tristeza 	& 107 & tristeza 	& 92 & tristeza   & 92	\\
-				enfado 		& 107 & enfado 		& 91 & enfado 	  & 91	\\
-				neutral 	& 107 & neutral 	& 91 & neutral 	  & 91	\\
-				sorpresa 	& 106 & sorpresa 	& 0. & sorpresa   & 0. 	\\
-				miedo 		& 107 & miedo		& 0. & miedo 	  & 0. 	\\
+				asco 		& 107 & asco 		& 107 & asco 	  & 107	\\
+				felicidad 	& 107 & felicidad 	& 105 & felicidad & 105	\\
+				tristeza 	& 107 & tristeza 	& 108 & tristeza  & 108	\\
+				enfado 		& 107 & enfado 		& 108 & enfado 	  & 108	\\
+				neutral 	& 107 & neutral 	& 106 & neutral   & 106	\\
+				sorpresa 	& 106 & sorpresa 	& 108 & sorpresa  & 108 \\
+				miedo 		& 107 & miedo		& 106 & miedo 	  & 106 \\
 				\hline
 			\end{tabular}
 			
@@ -385,9 +419,10 @@
 			\label{ref:balanceTest91011}
 		\end{center}
 	\end{table}
+	En las tres pruebas se extrajeron 13 características MFCC, con la diferencia de que en las pruebas 10 y 11, se generaron los espectrogramas a partir de esas características.
 	
-	\paragraph{Entrenamiento}
 	\paragraph{Evaluación}
+	Los resultados de la clasificación de cada emoción por cada uno de los modelos se muestra en la tabla \ref{results_TestFrench}.
 	
 	\begin{table}[H]
 		\centering
@@ -406,13 +441,13 @@
 				\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
 				\hline
 				
-				asco 		& 0.00 & 0.00 & 0.15 & 0.20 & 0.15 & 0.20 \\
-				felicidad 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.17 & 0.20 \\
-				tristeza 	& 0.28 & 0.18 & 0.23 & 0.10 & 0.23 & 0.10 \\
-				enfado 		& 0.14 & 0.23 & 0.19 & 0.22 & 0.19 & 0.22 \\
-				neutral 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.17 & 0.20 \\
-				sorpresa 	& 0.00 & 0.00 & 0.11 & 0.03 & 0.11 & 0.03 \\
-				miedo 		& 0.09 & 0.07 & 0.20 & 0.09 & 0.20 & 0.09 \\
+				asco 		& 0.00 & 0.00 & 0.15 & 0.20 & 0.21 & 0.22\\
+				felicidad 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.18 & 0.25 \\
+				tristeza 	& 0.28 & 0.18 & 0.23 & 0.10 & 0.21 & 0.11 \\
+				enfado 		& 0.14 & 0.23 & 0.19 & 0.22 & 0.20 & 0.26 \\
+				neutral 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.35 & 0.11 \\
+				sorpresa 	& 0.00 & 0.00 & 0.11 & 0.03 & 0.36 & 0.24 \\
+				miedo 		& 0.09 & 0.07 & 0.20 & 0.09 & 0.11 & 0.10 \\
 				\hline
 			\end{tabular}
 			
@@ -420,6 +455,9 @@
 			\label{results_TestFrench}
 		\end{center}
 	\end{table}
+
+	Aunque los resultados son realmente pobres, encaja con las expectativas previas, en las que los modelos evaluados en este idioma tendrían un peor desempeño. Por otro lado vuelve a cumplirse, que el Modelo basado en redes convolucionales unidimensionales (Modelo CNN 1D) tiene una precisión más baja en general, en comparación con el enfoque que trabaja con espectrogramas (Modelo CNN 2D y Modelo CNN-LSTM). 
+
 
 		
 		
