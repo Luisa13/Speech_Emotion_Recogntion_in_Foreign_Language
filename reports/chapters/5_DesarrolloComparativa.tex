@@ -24,22 +24,25 @@
 	%TODO: hablar de cifras, poner las graficas etc etc
 		\subsection{Pruebas 1 y 1.B}
 		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{blabla} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. El entrenamiento se realizó durante 100 épocas y se quedaba estancado pasado el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados en las pruebas podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir, por lo que se decidió probar con técnicas de aumento de datos.
-		\begin{table}[H]
-			\centering
-			\begin{center}
-				\begin{tabular}{| c | c | c | c | c | c |}
-					\hline
-					Género Femenino & Género Masculino & RAVDESS completo \\ 
-					\hline
-					\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
-					\hline
-					50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
-					\hline	
-				\end{tabular}
-				\caption{Resultados obtenidos de la Prueba 1}
-				%\label{}
-			\end{center}
-		\end{table}
+	
+	%50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
+	
+	\begin{table}[H]
+		\centering
+		\begin{center}
+			\begin{tabular}{|p{4.75cm} |p{4.75cm} |p{4.75cm}|}
+				\hline
+				Ruido blanco & Desplazamiento & Modulación del tono \\ 
+				\hline
+				\includegraphics[scale=0.15]{tests1_2/female_plot.png} & \includegraphics[scale=0.15]{tests1_2/male_plot.png} & \includegraphics[scale=0.15]{tests1_2/all_data_plot.png}\\
+				\hline
+				50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
+				\hline	
+			\end{tabular}
+			\caption{Resultados obtenidos tras aplicar aumento de datos}
+			\label{cap5:genderplots}
+		\end{center}
+	\end{table}
 	
 
 	\subsection{Pruebas 2 y 2.B} %Data Augmentation
@@ -48,13 +51,13 @@
 	\begin{table}[H]
 		\centering
 		\begin{center}
-			\begin{tabular}{| c | c | c | c | c | c |}
+			\begin{tabular}{| c | c | c |}
 				\hline
 				Ruido blanco & Desplazamiento & Modulación del tono \\ 
 				\hline
-				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\includegraphics[scale=0.15]{tests1_2/whitenoise.png} & \includegraphics[scale=0.15]{tests1_2/desplazamiento.png} & \includegraphics[scale=0.15]{tests1_2/modulacion.png}\\
 				\hline
-				??\% accuracy  & ??\%  accuracy & ??\% accuracy \\
+				50\% accuracy  & 44\%  accuracy & 45\% accuracy \\
 				\hline	
 			\end{tabular}
 			\caption{Resultados obtenidos tras aplicar aumento de datos}
@@ -66,13 +69,13 @@
 	\begin{table}[H]
 		\centering
 		\begin{center}
-			\begin{tabular}{| c | c | c | c | c | c |}
+			\begin{tabular}{|p{4.75cm} |p{4.75cm} |p{4.75cm}|}
 				\hline
 				Ruido blanco y Desplazamiento& Desplazamiento y Modulación & Ruido blanco, Desplazamiento y Modulación del tono \\ 
 				\hline
-				\includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg} & \includegraphics[scale=0.15]{no-photo.jpg}\\
+				\includegraphics[scale=0.15]{tests1_2/wn_despl.png} & \includegraphics[scale=0.15]{tests1_2/mod_desp.png} & \includegraphics[scale=0.15]{tests1_2/todas.png}\\
 				\hline
-				??\% accuracy & ??\%  accuracy & ??\% accuracy \\
+				45.02\% accuracy & 39.76\%  accuracy & 40.03\% accuracy \\
 				\hline	
 			\end{tabular}
 			\caption{Resultados obtenidos tras aplicar aumento de datos}
