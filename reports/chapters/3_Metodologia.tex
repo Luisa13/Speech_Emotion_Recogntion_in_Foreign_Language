@@ -27,7 +27,7 @@
 		
 		\item  Conseguir al menos 3 datasets pertenecientes a 3 idiomas diferentes donde uno de ellos será usado como referencia, y además, deberán cumplir las siguientes condiciones: Uno de los conjuntos de datos restantes deberá tener raíces fonéticas distintas al corpus de referencia, y el otro tener raíces fonéticas similares.
 		
-		\item Diseñar una solución en la que el conjunto de datos de referencia tenga un porcentaje de acierto del 80\% en la clasificación de emociones.
+		\item Diseñar una solución en la que el conjunto de datos de referencia tenga un porcentaje de acierto superior al 80\% en la clasificación de emociones.
 		
 		\item Aplicar el modelo diseñado en el paso anterior a los otros conjuntos de datos.
 		
@@ -35,22 +35,33 @@
 		
 	\end{itemize}
 	\section{Metodología de trabajo}
-	Para este proyecto se plantea una metodología de desarrollo iterativa, en las que tras una fase inicial, el proyecto entra en un bucle donde el producto pasa por una serie de etapas que se repiten durante la vida del proyecto. En cada iteración se diseñan unas modificaciones y capacidades funcionales que son añadidas al producto.
+	Para este proyecto se plantea una metodología de desarrollo iterativa, en las que tras una fase inicial, el proyecto entra en un bucle donde el trabajo pasa por una serie de etapas que se repiten durante la vida del proyecto. En cada iteración se diseñan unas modificaciones y capacidades funcionales que son añadidas en función de la etapa anterior.\\
+	Este tipo de metodología es normalmente adoptada en desarrollo de producto \cite{Larman2003}, pero para esta comparación se ha modificado mediante la extracción de unos pasos iniciales del bucle que la caracteriza, adaptándola mejor a nuestras necesidades.
 	
 	\begin{enumerate}
-		\item Fase inicial: Identifica el alcance del proyecto y los requisitos de una manera general pero lo suficientemente en detalle para que el tiempo y esfuerzo pueda ser estimado. Este paso inicial tiene como objetivo crear una versión del producto en la que se pueda trabajar como base (o mostrar a un cliente si lo hubiera)
-		
+		\item Fase inicial: 
+		\begin{enumerate}
+			\item Revisión de la literatura sobre el reconocimiento de emociones en el habla, así como los métodos usados y los resultados obtenidos. Este paso permite una mayor comprensión del problema, así como su alcance.
+			
+			\item Análisis y recolección de posibles conjuntos de datos en diferentes idiomas, aptos para los experimentos que se quieren realizar.
+
+		\end{enumerate}
+	
 		\item Elaboración: Se llevan a cabo los experimentos y la implementación de los componentes mediante unos pasos iterativos, a saber:
 		
 			\begin{enumerate}
-				\item Planificación: Diseño del experimento o estudio que se quiere llevar a cabo teniendo en cuenta el tiempo disponible para ello, los posibles riesgos y el alcance deseado. Para ello se elabora una serie de tareas a implementar
 				
-				\item Implementación: Una vez identificadas las tareas en el paso anterior, se lleva a cabo la implementación del experimento.
+				\item Identificación y redacción de una serie de pruebas iniciales con los diferentes métodos y técnicas de la revisión de la literatura, aplicados según el análisis de las bases de datos.
+				
+				\item Implementación en Python de las pruebas diseñadas con las técnicas y arquitecturas identificadas.
+				
+				\item Ajuste de los parámetros así como el balance de los datos con el fin de conseguir un mejor resultado.
 				
 				\item Evaluación: Se evalúan los resultados obtenidos de la implementación antes de decidir la iteración por finalizada. En caso de que los resultados no sean los esperados hay dos posibilidades: Si los errores obtenidos no distan demasiado de las especificaciones parciales, se pueden realizar reajustes en el modelo. Si por el contrario, dichos resultados están demasiado lejos del objetivo, se creará una segunda versión con una estrategia diferente, añadiendo más iteaciones al proceso de elaboración.
 			\end{enumerate} 
 		
-		\item Despliegue: Es la etapa final, cuando el proyecto se da por finalizado.
+		\item Evaluación y comparación de los resultados.
+
 	\end{enumerate}
 
 
