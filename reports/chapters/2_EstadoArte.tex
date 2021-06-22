@@ -37,29 +37,31 @@
 	%---------------------------
 	\chapter{Estado del Arte}
 	\section{Contexto}
-	El reconocimiento de emociones en el habla es una disciplina en inteligencia artificial que trata de reconocer y clasificar emociones a través de la señal de voz. Este campo de estudio se ha hecho cada vez más popular, pero su origen se remonta a 1996, desde que se presentara el primer trabajo defendible sobre el tema "Reconociendo emociones en el habla" de la mano de F.Daellert \cite{Dellaert1996}.
-	Desde entonces, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo en su gran mayoría, se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. 
+	El reconocimiento de emociones en el habla es una disciplina en inteligencia artificial que trata de reconocer y clasificar emociones a través de la señal de voz. Este campo de estudio se ha hecho cada vez más popular, pero su origen se remonta a 1996, desde que se presentara el primer trabajo defendible sobre el tema "Reconociendo emociones en el habla" por F.Daellert \cite{Dellaert1996}.
+	Desde entonces, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo en su gran mayoría, se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. \\
+	
+	El presente capítulo está dividido en dos partes, en el primero se hablará de los conceptos inherentes a las características fonéticas en el discurso que es el tema en torno al que gira este trabajo, y por otro lado, cómo se puede orientar ese problema con técnicas de aprendizaje profundo haciendo una revisión de la literatura.
 	
 	
-	\subsection{Temas fonéticos}
+	\subsection{Características fonéticas en el habla}
 	El objetivo del reconocimiento de emociones en el habla es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
 	
-	La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas, las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono si no también el patrón lingüístico asociado \cite{Davletcharova2015}.
-	Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita) como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como se explica en \cite{Chen2017}.
-	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla. Esta observación puede llevar a que se pregunte si en lenguajes tan dispares, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
-	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en el caso que nos acontece, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
+	La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \cite{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono sino también el patrón lingüístico asociado \cite{Davletcharova2015}.
+	Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita), como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían ser un impacto en la decodificación de los matices en la señal vocal, tal y como se explica en \cite{Chen2017}.
+	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla. Esta observación puede llevar a que se pregunte si en lenguajes que son muy distintos fonéticamente, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
+	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en nuestro caso, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 	
 	\subsection{Reconocimiento del habla}
-	Atendiendo a la manera de como modelar las emociones, según la literatura, la clasificación de emociones se ha tratado desde dos enfoques principales:
+	Atendiendo a la manera de cómo modelar las emociones, según la literatura, la clasificación de emociones se ha tratado desde dos enfoques principales:
 	\begin{itemize}
 		\item Las emociones como categorías discretas
 		\item Las emociones vistas a través de un modelo dimensional
 	\end{itemize}
 
 	En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \cite{Ekman1992} quien estableció que estas eran 6: enfado, asco, miedo , felicidad, tristeza y sorpresa.
-	En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que de lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \cite{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro. \hfill \break
+	En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que dé lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \cite{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro. \hfill \break
 	
-	Sin embargo la mayoría de los estudios centrados en la clasificación de emociones se centran en las emociones vistas como categorías discretas.
+	Sin embargo, la mayoría de los estudios centrados en la clasificación de emociones se centran en las emociones vistas como categorías discretas.
 
 	\subsubsection{Extracción de Características}
 	La extracción de características es una de las secciones más importantes en el reconocimiento de emociones a través de la voz debido a la ambigüedad de las características y la variedad vocal. La extracción de características es el paso principal en el procesamiento del diálogo, y se lleva a cabo para centrarse en la información contenida en la señal y mejorar el grado de similitud y/o diferenciación entre las clases \cite{Hellbernd2016}. Hasta ahora, por lo general hay dos enfoques principales  con respecto al tipo de características usadas en el Reconocimiento de Emociones en el Discurso:\\
@@ -116,8 +118,8 @@
 	\end{figure}
 	
 	Esto que vemos es una representación digital de la onda, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
-	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello encontramos la respuesta en la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
-	Sin embargo el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
+	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello encontramos lo que nos lleva a la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
+	Sin embargo, el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
 	
 	\begin{figure}[H]
 		\centering
@@ -183,7 +185,7 @@
 
 	
 	\paragraph{Redes Neuronales Recurrentes}\hfill \break
-	Las Redes Neuronales Recurrentes (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente como se explica en \cite{Lim2017}. En \cite{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
+	Las Redes Neuronales Recurrentes (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente \cite{Lim2017}. En \cite{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
 	
 	\begin{figure}[H]
 		\centering
@@ -192,7 +194,7 @@
 		\label{fig:rnn_structure}
 	\end{figure}
 	
-	La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde podemos observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo. 
+	La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde podemos observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo (lo que se conoce como desvanecimiento de gradientes). 
 	
 	\paragraph{Redes LSTM}\hfill \break
 	Como podemos ver, los trabajos anteriormente mencionados que implementan este tipo de arquitectura RNN son relativamente antiguos (2017, y 2015 respectivamente) y en estudios más recientes , a destacar \cite{Wang2020} y \cite{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de Memoria a Largo Corto-Plazo (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.\\
@@ -223,7 +225,9 @@
 		
 		\item TESS (por sus siglas en inglés, \emph{Toronto Emotional Speech Set data}) es un conjunto de datos compuesto por 2800 archivos de audio donde dos actrices de 26 y 64 años cuya lengua materna es el inglés americano, articulan 200 frases cada una modulándolas en 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa, y neutral). Este proyecto fue realizado por la universidad de Toronto \cite{SP2/E8H2MF_2020} y es de acceso público.
 		
-		\item EMO-DB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 7 emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
+		\item EMO-DB (por sus siglas en inglés \emph{Berlin Database of EMOtional speech}) es una base de datos alemana cuyos detalles se recogen en \cite{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) matizando 6 emociones (enfado, asco, tristeza, alegría, miedo y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
+		
+		\item CaFE (por sus siglas en inglés \emph{Canadian French Emotional Speech Dataset}) es una base de datos candiense en idioma francés donde 6 hombres y 6 mujeres que pronuncian un total de 6 frases interpretando 7 emociones  (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral).
 		
 	\end{itemize}
 
@@ -273,43 +277,45 @@
 	 
 	 % TODO: quiza quieres revisar esa verborrea
 	 Finalmente, es obligatorio hablar del trabajo de \cite{Tamulevicius2020}, en una línea más cercana al objetivo de este proyecto, lleva a cabo un estudio del reconocimiento emocional empleando el cruce de 6 lenguas (lituano, inglés, serbio, español, alemán y polaco). Aunque sus resultados no son realmente señalables y acaban diseñando un clasificador que es entrenado con todas las lenguas para distinguir las emociones indistintamente, dicha clasificación se lleva a cabo mediante el uso de una red neuronal convolucional bidimensional de 3 capas, e insisten en la importancia del uso de características en 2 dimensiones, ya que proveen información temporal además de las características acústicas de las emociones. En el estudio exploran varias de estas características, siendo el uso de cocleogramas las que consiguen una mayor exactitud.
+	 
+	 
+	 Bajo estas líneas, podemos ver la tabla donde se resumen los estudios previamente comentados en la sección \ref{lb_estado_arte}.\\
+	 
+	 \begin{table}[H]
+	 	\centering
+	 	\begin{center}
+	 		\begin{tabular}{| c | c | c | c| c | c|}
+	 			\hline
+	 			Trabajo & Año & Método &  Datos usados  & Acierto \\ 
+	 			\hline
+	 			Atmaja & 2019 &   BLSTM + Att  & IEMOCAP (4 emociones) & 73.34\% 	\\
+	 			J.Wang & 2020 & LSTM dual + MFCC & IEMOCAP & 72.7\% \\
+	 			W.Lim & 2017 &   LSTM + CNN & EMO-DB &  88.01\%		\\ 
+	 			Harar & 2017 &  CNN & EMOD-DB (3 emociones) &  96.97\%			\\
+	 			Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
+	 			Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
+	 			Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\
+	 			Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
+	 			Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\  
+	 			Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\
+	 			%& & & &
+	 			\hline	
+	 		\end{tabular}
+	 		
+	 		\caption{Tabla comparativa y resumida de los trabajos mencionados}
+	 		\label{tab:metod_comp}
+	 	\end{center}
+	 \end{table}
+	 
+	 En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
+	 % WARNING No puedo acceder a la base de datos de Lithuanian para referenciarlo
+	 En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} en donde se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
 	
 	\section{Conclusiones parciales}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
 	
 	Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \cite{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\hfill \break
 	
-	Bajo estas líneas, podemos ver la tabla donde se resumen los estudios previamente comentados en la sección \ref{lb_estado_arte}.\\
-
-	\begin{table}[H]
-		\centering
-		\begin{center}
-			\begin{tabular}{| c | c | c | c| c | c|}
-				\hline
-					Trabajo & Año & Método &  Datos usados  & Acierto \\ 
-				\hline
-					Atmaja & 2019 &   BLSTM + Att  & IEMOCAP (4 emociones) & 73.34\% 	\\
-					J.Wang & 2020 & LSTM dual + MFCC & IEMOCAP & 72.7\% \\
-					W.Lim & 2017 &   LSTM + CNN & EMO-DB &  88.01\%		\\ 
-					Harar & 2017 &  CNN & EMOD-DB (3 emociones) &  96.97\%			\\
-					Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
-					Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
-					Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\
-					Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
-					Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\  
-					Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\
-					%& & & &
-				\hline	
-			\end{tabular}
-		
-			\caption{Tabla comparativa y resumida de los trabajos mencionados}
-			\label{tab:metod_comp}
-		\end{center}
-	\end{table}
-
-	En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
-	% WARNING No puedo acceder a la base de datos de Lithuanian para referenciarlo
-	En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} en donde se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
 	
 	Cabe destacar que la combinación de métodos, veáse algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
 	

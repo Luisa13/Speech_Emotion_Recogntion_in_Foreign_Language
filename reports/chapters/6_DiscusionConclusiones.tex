@@ -1,0 +1,70 @@
+\documentclass[11pt,a4paper,spanish]{book}
+\usepackage{biblatex}
+\usepackage[utf8]{inputenc}
+% Para el formato del titulo
+\usepackage{titlesec}
+
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+%\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+	
+% Imagenes
+\usepackage{graphicx, wrapfig, hyperref}
+\graphicspath{ {./.images/} }
+\usepackage{float}
+\usepackage{comment}
+\addbibresource{./bibLib/mycol_arte.bib}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+	\chapter{Discusión y análisis de los resultados}
+	
+	El objetivo de los dos primeros bloques (pruebas 1, 1.B, 2 y 2.B) fue ver el comportamiento del método elegido para el desarrollo inicial de las pruebas con el conjunto de datos RAVDESS. Aunque la observación de los datos llevó a la conclusión de que una separación por género tendría sentido, los datos no fueron consistentes, dando las dos divisiones, porcentajes de exactitud muy diferentes además de un enorme desajuste. Tras aplicar distintas técnicas de aumento de datos se pudo apreciar una sólida reducción del overfitting, por lo que las siguientes pruebas se orientaron a la combinación de dichas técnicas con el objetivo de aumentar el accuracy, incrementando el número de muestras pero esta relación no era lineal. La combinación de las tres técnicas (ruido blanco, desplazamiento y modulación) con un total de 5760 muestras, no sobresalió demasiado en comparación con el uso de una sola técnica. 
+	Cabe destacar que, el modelo debió ser profundamente simplificado con el fin de reducir el overfitting, y que al contrario de \cite{Mustaqeem2020} no se planteó la disminución del número de emociones, de cara a los futuros idiomas con los que se evaluaría (por ejemplo, para poder cuadrar el máximo número de emociones posible).
+	
+	Dados los resultados de las pruebas anteriores, y teniendo en cuenta que una vez conseguido un modelo suficientemente preciso, se evaluaría con otros idiomas, se decidió apostar por una estrategia para el aumento de datos distinta. El ensamblado de diferentes conjuntos aportó la variabilidad en los datos de la que carecía RAVDESS en un primer momento, y apuntó la dirección hacia la que se debía trabajar.
+	Cabe destacar los sorprendentes resultados que se obtuvieron en comparación a los anteriores: TESS y SAVEE con 3284 muestras, consiguieron un 84.39\% frente al 40.30\%  que se ganó con la combinación de las tres técnicas propuestas de aumento de datos (con 5760 muestras). La aplicación de aumento de datos en este bloque no arrojó resultados demasiado diferentes salvo en el caso de la combinación RAVDESS, TESS y SAVEE:
+	\begin{itemize}
+		\item RAVDESS y SAVEE pasaron de 4240 muestras con un 73.22\% de precisión, a 8096 instancias con 73.07\% en su versión aumentada.
+		
+		\item TESS y SAVEE pasaron de sólo 3280 muestras con un 84.39\% de precisión, a 6560 instancias con un 84.32\%.
+		
+		\item RAVDESS, TESS y SAVEE, sin embargo, pasaron de un 66.96\% con 4720 muestras a un 81.52\% con 13696 instancias.
+	\end{itemize}
+	
+	Por lo que como conclusión en esta parte, pudimos comprobar la importancia de la variabilidad en los datos, donde a la hora de incrementar la accuracy, apostar por esta característica es más eficiente que técnicas más tradicionales de aumento de datos.
+	
+	Las pruebas 4 y 5 exploraron el uso de espectrogramas con características MFCC como estrategia. El uso de imágenes consiguió los mejores resultados hasta el momento, con un 91\% en CNN y y 90\% en CNN-LSTM en una clasificación de 7 emociones en inglés. 
+	% debido a los avances con CNN blablabla
+	En todas las pruebas que se hicieron en este idioma, pudimos observar que en enfado era la emoción más complicada de distinguir sugiriendo así un patrón para este lenguaje.
+	No obstante, en las pruebas donde el mismo modelo entrenado en inglés se evaluaba con otros idiomas, este patrón no se pudo encontrar de manera tan clara.
+	Tal y como predijimos, obtuvimos un porcentaje de accuracy un poco mayor en la evaluación con alemán (lengua con raíces fonéticas más próximas al idioma que se usó en el entrenamiento), que en la evaluación con francés (lengua con raíces fonéticas más lejanas al idioma que se usó en el entrenamiento). La reducción del número de emociones en las pruebas hechas con alemán, no elevaron las posibilidades de una mejor clasificación en cada categoría, donde la felicidad fue la emoción donde se consiguió un porcentaje de acierto más alto con un 57\% en un modelo CNN unidimensional, y 32\% y 49\% trabajando con espectrogramas en los modelos CNN y LSTM-CNN respectivamente.
+	Por otro lado, las pruebas donde se evaluaba el francés, fueron aún más pobres. Los distintos modelos fueron incapaces de reconocer ciertas emociones (entre ellas, la felicidad), lo cual contrasta con las observaciones que habíamos hecho con la evaluación en alemán.
+	Por lo que respecta a los experimentos hechos evaluando una lengua extranjera, llegamos a las mismas conclusiones que Tamulevicius \cite{Tamulevicius2020} donde tras hacer diversas pruebas con diferentes idiomas, únicamente puede reconocer aquellos con los que entrena su modelo. 
+	La estrategia que se planteó donde las lenguas extranjeras se dividían según su similitud fonética parece no ser muy relevante coincidiendo con \cite{Pell2008} donde afirma que para reconocer el estado emocional en una lengua no aprendida, se necesita mayor exposición a esta.//
+	%[...]
+	Queda claro la superioridad de una arquitectura bidimensional frente a una unidimensional en tareas de clasificación en la propia lengua, pero llama la atención que el modelo no fuera capaz de abstraer la información extraída de las características para clasificar emociones en otras lenguas (incluso reduciendo el número de categorías). Haciendo una revisión de lo aprendido en este trabajo, hacemos algunas observaciones sobre por qué, usando espectrogramas que han resultado ser tan exitosos, no se comportan de la misma manera en otros lenguajes:
+	
+	\begin{itemize}
+		\item Los objetos visuales y los sonidos no se agrupan en una imagen de la misma manera. Cuando nos encontramos un píxel de un determinado color en una imagen se puede asumir que pertenece a un determinado objeto. Por el contrario, los cambios instantáneos en las características del sonido como el tono o la intensidad, no se separan en capas distinguibles en un espectograma. Esto quiere decir que no se puede asumir que una determinada frecuencia representada en un espectrograma pertenezca a un determinado tipo de sonido (por ejemplo, podría estar producida por la interacción de varias ondas). En definitiva, esto hace que separar sonidos simultáneos en espectrogramas tal y como lo hacemos con objetos opacos en imágenes, sea especialmente difícil \cite{Wyse2017}. %https://towardsdatascience.com/whats-wrong-with-spectrograms-and-cnns-for-audio-processing-311377d7ccd
+		
+		\item Los ejes x e y de una imagen no tienen el mismo significado que en un espectrograma. Por ejemplo, un perro seguiría siendo un perro independientemente si se mueve horizontal o verticalmente en la imagen. Sin embargo esto no ocurre de la misma manera en un espectrograma donde estas dos dimensiones representan unidades distintas (frecuencia y tiempo)\cite{spectrograms2021}.
+		
+		\item La forma en la que procesamos esas señales no es comparable. A la hora de localizar un objeto de manera visual en nuestro entorno, escaneamos lo que nos rodea varias veces, ya que los objetos que lo conforman son estáticos. 
+		Por otro lado, un sonido toma la forma física de la presión manifestada en la onda, y desde el punto de vista de quien la percibe, esa determinada onda con un determinado estado sólo existe en un momento específico. Dicho de otro modo, la información que contiene una onda de audio está dispuesta de manera secuencial.
+		\cite{JHui2019}.
+		
+	\end{itemize} 
+	
+
+	
+	%Ya que el modelo resultante del primer grupo de pruebas se evaluaría con otros conjuntos (en otros idiomas), se quiso explotar la capacidad de RAVDESS 
+	
+	
+	
+	
+	
+	
+	\printbibliography
+	
+\end{document}
