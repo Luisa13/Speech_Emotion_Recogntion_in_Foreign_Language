@@ -18,12 +18,14 @@
 
 \begin{document}
 	\chapter{Desarrollo de la comparativa}
-	Las primeras dos pruebas no son muy interesantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y la progresión de las pruebas, por eso se omite la estructura que si se muestra en las pruebas posteriores.
+	A continuación se detallan todas las pruebas presentadas en el capítulo anterior.
+	Las primeras dos pruebas pueden parecer irrelevantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y su progresión, por eso se omite la estructura que sí se muestra en las pruebas posteriores.
+	
 	\section{Búsqueda de un  modelo óptimo}
 	\label{cap:4ModeloOptimo}
-	%TODO: hablar de cifras, poner las graficas etc etc
+
 		\subsection{Pruebas 1 y 1.B}
-		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{blabla} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. El entrenamiento se realizó durante 100 épocas y se quedaba estancado pasado el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados en las pruebas podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir, por lo que se decidió probar con técnicas de aumento de datos.
+		Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \cite{Mustaqeem2020} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. 
 	
 	%50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
 	
@@ -32,21 +34,22 @@
 		\begin{center}
 			\begin{tabular}{|p{4.75cm} |p{4.75cm} |p{4.75cm}|}
 				\hline
-				Ruido blanco & Desplazamiento & Modulación del tono \\ 
+				G.Femenino & G.Masculino & RAVDESS completo\\ 
 				\hline
 				\includegraphics[scale=0.15]{tests1_2/female_plot.png} & \includegraphics[scale=0.15]{tests1_2/male_plot.png} & \includegraphics[scale=0.15]{tests1_2/all_data_plot.png}\\
 				\hline
 				50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados obtenidos tras aplicar aumento de datos}
+			\caption{Resultados comparando la división por género.}
 			\label{cap5:genderplots}
 		\end{center}
 	\end{table}
-	
+
+	El entrenamiento se realizó durante 100 épocas quedando estancado cuando pasaba el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir.
 
 	\subsection{Pruebas 2 y 2.B} %Data Augmentation
-	Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de aumentar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
+	Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de incrementar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
 	
 	\begin{table}[H]
 		\centering
@@ -57,14 +60,14 @@
 				\hline
 				\includegraphics[scale=0.15]{tests1_2/whitenoise.png} & \includegraphics[scale=0.15]{tests1_2/desplazamiento.png} & \includegraphics[scale=0.15]{tests1_2/modulacion.png}\\
 				\hline
-				50\% accuracy  & 44\%  accuracy & 45\% accuracy \\
+				38.38\% accuracy  & 44\%  accuracy & 40\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados obtenidos tras aplicar aumento de datos}
+			\caption{Resultados obtenidos tras aplicar aumento de datos.}
 			%\label{}
 		\end{center}
 	\end{table}
-	En la Prueba 2.B, se procedió entonces a combinar los diferentes métodos de aumento de datos. El modelo usado para estas pruebas se entreno durante 1000 épocas con un tamaño del batch de 16
+	En la Prueba 2.B, se procedió entonces a combinar los diferentes métodos de aumento de datos. Los resultados de esta prueba se recogen en la tabla \ref{cap4:tabDA2}
 	
 	\begin{table}[H]
 		\centering
@@ -75,13 +78,15 @@
 				\hline
 				\includegraphics[scale=0.15]{tests1_2/wn_despl.png} & \includegraphics[scale=0.15]{tests1_2/mod_desp.png} & \includegraphics[scale=0.15]{tests1_2/todas.png}\\
 				\hline
-				45.02\% accuracy & 39.76\%  accuracy & 40.03\% accuracy \\
+				36.02\% accuracy & 45.58\%  accuracy & 40.03\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Resultados obtenidos tras aplicar aumento de datos}
-			%\label{}
+			\caption{Resultados obtenidos tras aplicar aumento de datos.}
+			\label{cap4:tabDA2}
 		\end{center}
 	\end{table}
+
+	Los resultados de estas dos últimas pruebas han sido lo suficientemente bajos para descartar mostrar las métricas de éxito.
 	
 	\subsection{Pruebas 3 y 3.B} %Ensamblado de datasets
 	A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \cite{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
@@ -126,7 +131,7 @@
 				73.22\% accuracy & 84.39\%  accuracy & 66.96\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Prueba 3: Resultados tras ensamblar distintos datasets sin aumento de datos}
+			\caption{Prueba 3: Resultados tras ensamblar distintos datasets sin aumento de datos.}
 			\label{fig:accuTest3_A}
 		\end{center}
 	\end{table}
@@ -148,7 +153,7 @@
 				73.07\% accuracy & 84.32\%  accuracy & 81.52\% accuracy \\
 				\hline	
 			\end{tabular}
-			\caption{Prueba 3.B: Resultados tras ensamblar distintos datasets con aumento de datos}
+			\caption{Prueba 3.B: Resultados tras ensamblar distintos datasets con aumento de datos.}
 			\label{fig:accuTest3_B}
 		\end{center}
 	\end{table}
@@ -193,7 +198,7 @@
 				\hline
 			\end{tabular}
 			
-			\caption{Resultado de la evaluación en cada una de las combinaciones de conjuntos de datos}
+			\caption{Resultado de la evaluación en cada una de las combinaciones de conjuntos de datos.}
 			\label{result_Test3}
 		\end{center}
 	\end{table}
@@ -240,7 +245,7 @@
 				\hline
 			\end{tabular}
 			
-			\caption{Prueba 4: Resultados del modelo CNN entrenado con espectogramas MFCC exrtaídos de la combinación de los conjuntos de datos TESS y SAVEE}
+			\caption{Prueba 4: Resultados del modelo CNN entrenado con espectogramas MFCC exrtaídos de la combinación de los conjuntos de datos TESS y SAVEE.}
 			\label{result_Test4}
 		\end{center}
 	\end{table}
@@ -288,7 +293,7 @@
 				\hline
 			\end{tabular}
 			
-			\caption{Prueba 5: Resultados del modelo CNN-LSTM entrenado con espectogramas MFCC extradídos de la combinación de los conjuntos de datos TESS y SAVEE}
+			\caption{Prueba 5: Resultados del modelo CNN-LSTM entrenado con espectogramas MFCC extradídos de la combinación de los conjuntos de datos TESS y SAVEE.}
 			\label{result_Test5}
 		\end{center}
 	\end{table}
@@ -388,7 +393,7 @@
 				\hline
 			\end{tabular}
 			
-			\caption{Resultados al evaluar los mejores modelos con el idioma alemán}
+			\caption{Resultados al evaluar los mejores modelos con el idioma alemán.}
 			\label{results_TestGerman}
 		\end{center}
 	\end{table}
@@ -454,7 +459,7 @@
 				\hline
 			\end{tabular}
 			
-			\caption{Resultados al evaluar los mejores modelos con el idioma francés}
+			\caption{Resultados al evaluar los mejores modelos con el idioma francés.}
 			\label{results_TestFrench}
 		\end{center}
 	\end{table}
