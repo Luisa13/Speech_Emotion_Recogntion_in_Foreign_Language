@@ -48,6 +48,13 @@
 	\begin{itemize}
 		\item Los objetos visuales y los sonidos no se agrupan en una imagen de la misma manera. Cuando nos encontramos un píxel de un determinado color en una imagen se puede asumir que pertenece a un determinado objeto. Por el contrario, los cambios instantáneos en las características del sonido como el tono o la intensidad, no se separan en capas distinguibles en un espectograma. Esto quiere decir que no se puede asumir que una determinada frecuencia representada en un espectrograma pertenezca a un determinado tipo de sonido (por ejemplo, podría estar producida por la interacción de varias ondas). En definitiva, esto hace que separar sonidos simultáneos en espectrogramas tal y como lo hacemos con objetos opacos en imágenes, sea especialmente difícil \cite{Wyse2017}. %https://towardsdatascience.com/whats-wrong-with-spectrograms-and-cnns-for-audio-processing-311377d7ccd
 		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.9]{spectrogramsEmotions.JPG} 
+			\caption{Espectrogramas de tres emociones en tres bases de datos distintas.}
+			\label{fig:spectroEmo}
+		\end{figure}
+		
 		\item Los ejes x e y de una imagen no tienen el mismo significado que en un espectrograma. Por ejemplo, un perro seguiría siendo un perro independientemente si se mueve horizontal o verticalmente en la imagen. Sin embargo esto no ocurre de la misma manera en un espectrograma donde estas dos dimensiones representan unidades distintas (frecuencia y tiempo)\cite{spectrograms2021}.
 		
 		\item La forma en la que procesamos esas señales no es comparable. A la hora de localizar un objeto de manera visual en nuestro entorno, escaneamos lo que nos rodea varias veces, ya que los objetos que lo conforman son estáticos. 
