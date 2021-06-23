@@ -15,7 +15,7 @@
 \usepackage{comment}
 
 % Tablas
-\usepackage{multicol, multirow}
+\usepackage{multicol, multirow, adjustbox}
 \usepackage{changepage}
 \usepackage[dvipsnames]{xcolor}
 \addbibresource{./bibLib/mycol_arte.bib}
@@ -66,7 +66,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.25]{no-photo.jpg} 
+		\includegraphics[scale=0.25]{savee_distribucion.png} 
 		\caption{Distribución de las emociones en SAVEE}
 		\label{fig:emociones_savee}
 	\end{figure}
@@ -78,7 +78,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.35]{no-photo.jpg} 
+		\includegraphics[scale=0.25]{tess_distribucion.png} 
 		\caption{Distribución de las emociones en TESS}
 		\label{fig:emociones_tess}
 	\end{figure}
@@ -87,7 +87,7 @@
 
 
 	
-	\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera a priori que se puedan reconocer la mayoría de las emociones. Para este caso, propondremos el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \cite{wikipediaIngles2019}.\\
+	\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera al menos haya un porcentaje mayor de reconocimiento que en el segundo conjunto de datos de validación. Para este caso, propondremos el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \cite{wikipediaIngles2019}.\\
 	
 	Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 	\begin{itemize}
@@ -110,9 +110,19 @@
 	\end{figure}
 	
 
-
-	
 	\subsection{Idioma con raíces fonéticas distintas} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
+	Con este conjunto se espera que haya una diferencia notable con respecto al idioma con raíces fonéticas similares, reportando un menor procentaje de reconocimiento. Para este caso, se propone el idioma francés (que es una lengua romance), utilizando para ello el conjunto de datos en francés canadiense para el reconocimiento de emociones, CaFE, el cual contiene 6 frases diferentes pronunciadas por 6 hombres y 6 mujeres en 6 emociones básicas además de 'neutral', grabadas cada una en dos intensidades distintas. Este conjunto fue grabado a alta resolución en formato aiff con una frecuencia de muestreo de 192 kHz  y 24 bits por muestra.
+	Los archivos están organizados en una jerarquía de carpetas, de manera que no es necesario escanear el archivo para saber el genero del actor, la intensidad, o la emoción representada en el audio, si no que basta irse a la carpeta correspondiente.
+	Las emociones que se incluyen aquí son enfado (\emph{colere}), asco (\emph{degout}), alegría (\emph{joie}), tristeza(\emph{tristesse}), miedo (\emph{peur}), sorpresa (\emph{surprise}) y neutro (\emph{neutre}). En la tabla \ref{fig:emociones_cafe}, podemos ver la distribución de las mismas.
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{cafe_distribucion.png} 
+		\caption{Distribución de las emociones en CaFE}
+		\label{fig:emociones_cafe}
+	\end{figure}
+	
 	
 	
 	\section{Extracción de características}
@@ -151,7 +161,7 @@
 	
 	\paragraph{Tensorflow 2.0} Es una plataforma de código abierto originalmente creada por Google que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
 	
-	\paragraph{Python 3} Python es un lenguaje interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en python 3.
+	\paragraph{Python 3} Python es un lenguaje interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en Python 3.
 	
 	\section{Pre-procesado de los datos}
 	Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
@@ -170,9 +180,18 @@
 	En la figura \ref{fig:comp_emociones_genero} podemos ver la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
 	
 	
-	\subsection{Normalización y estandarización de los datos}
+	\subsection{Normalización, estandarización y balanceado de los datos}
 	\label{cap:normalizacion}
-	Este proceso se aplicará a todas las pruebas
+	Este proceso se aplicará a todas las pruebas:
+	\begin{itemize}
+		\item El proceso de estandarización consistirá en el cociente entre la media artimética de los valores de los datos de entrenamiento, y la desviación normal de los de test. En esta técnica los valores son centrados con respecto a su media con una desviación estándar, consiguiendo una mejora en la estabilidad numérica del modelo. Ya que a lo largo de las pruebas, usaremos combinaciones de aumentos de datos e incluso mezclas entre distintos datasets, es recomendable aplicar este paso.
+		%https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/
+		
+		\item  La categorización cambia el formato de los datos para su uso en el modelo con keras en el modelo. En nuestro caso utilizaremos la codificación One Hot que representa los enteros en secuencias de bits. Esto se hace con el fin de evitar que los números enteros no confundan al modelo asignándole una peso proporcional al índice asociado a una clase (categoría).
+		
+		\item La división de los datos en entrenamiento y test, se hará con el algoritmo \emph{StratifiedShuffleSplit} de la librería de Python \emph{sklearn} que además se encarga de barajar de manera aleatoria los datos previamente.
+		
+	\end{itemize}
 	\begin{comment}
 		# Now because we are mixing up a few different data sources, it would be wise to normalise the data. 
 		# This is proven to improve the accuracy and speed up the training process. Prior to the discovery of this solution in the embrionic years of neural network, 
@@ -180,7 +199,7 @@
 	\end{comment}
 	
 	
-	\subsection{Ténicas de aumento de datos}
+	\subsection{Técnicas de aumento de datos}
 	Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
 	Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, sabemos que el sonido tiene las siguientes características: tono, duración, timbre e intensidad. Por lo que debemos modificar levemente nuestros datos alrededor de esas características de manera que sólo difieran en pequeños factores de la muestra original.
 	% VER: https://medium.com/@keur.plkar/audio-data-augmentation-in-python-a91600613e47
@@ -365,6 +384,7 @@
 			F1 Score = \frac{2 * (Precision * Recall)}{Precision + Recall}
 		\]
 		\hfill \break
+		\begin{comment}
 		
 		\item \textbf{Matriz de confusión} Permite una rápida visualización del resultado de la ejecución del algoritmo. Muestra el nivel de predicción por cada clase. En la figura \ref{fig:confusionMatrix} podemos ver una representación de esta.
 		
@@ -374,6 +394,8 @@
 			\caption{Representación de la matriz de confusión. Fuente: \href{https://rpubs.com/chzelada/275494}{Rpubs}}
 			\label{fig:confusionMatrix}
 		\end{figure}
+		
+		\end{comment}
 	
 	\end{itemize}
 
@@ -478,11 +500,13 @@
 	%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 	\setlength{\leftskip}{1cm}
 		\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.
+		
 		\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 4 basado en una arquitectura dual CNN-LSTM compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo4}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
-	\setlength{\leftskip}{0cm}	
 		
 	%\end{minipage}
-
+	
+	
+    \setlength{\leftskip}{0cm}
 	Como se menciona en el inicio de esta sección, la tabla \ref{tab:resumenTests1} muestra el resumen con los datos que creemos más característicos de cada una de las pruebas. Así pues, en la columna 'Datos Entr.' se refiere al conjunto de datos que se usarán en el entrenamiento, especificando la naturaleza de estos datos en 'Tipo Dato' (espectrogramas como imagen, o características directamente extraídas de la muestra de audio) mientras que en 'Arquitectura', con qué modelo se llevará a cabo la prueba. En la columna Aumento Datos, se muestra qué técnica de aumento de datos se ha utilizado (en tal caso), donde 'R.B.' corresponde a ruido blanco, 'Desp.' a desplazamiento del sonido y 'Mod.' a modulación del tono.
 
 	\begin{table}[H]
@@ -529,10 +553,11 @@
 
 
 	\subsection{Pruebas con lenguajes extranjeros}
+	En estas pruebas se evaluarán los mejores modelos de la sección anterior, con lenguajes que no han sido vistos en su entrenamiento. Al final de este bloque se presenta la tabla \ref{tab:resumenTests2} que resume los puntos mas característicos de las pruebas.
 	
 	\subsubsection{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 1D validada en alemán}}}
 	
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	\hfill \begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado}  El conjunto de datos usado para el entrenamiento será la combinación SAVEE y TESS, sin embargo para que las clases del conjunto de entrenamiento y las de validación coincidan, es necesario prescindir de dos clases: sorpresa y miedo.\\ 
 		Por otro lado, los datos de validación presentaban una distribución muy irregular, por lo que para que tuvieran una representación más equilibrada y una interpretación más justa en la validación, se han balanceado aumentando el dataset con aumento de datos (ruido blanco) y se han igualado el número de instancias de cada clase a aquella con una proporción menor.\\
@@ -561,12 +586,52 @@
 	\end{minipage}
 
 	\subsubsection[]{\large Prueba 8 {\normalsize \textcolor{Gray}{Red CNN-LSTM validada en alemán}}}
-	
-	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	\setlength{\leftskip}{1cm}
+	%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
 		
 		\paragraph{Datos y preprocesado}  Este procedimiento, será exactamente igual que el de la prueba 7, tanto para los datos de entrenamiento como para los de validación.
 		
-		\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+		\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.	
+	%\end{minipage}
+
+
+
+
+	\subsubsection{\large Prueba 9 {\normalsize \textcolor{Gray}{Red CNN 1D validada en francés}}}
+	
+	%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	\setlength{\leftskip}{1cm}	
+		\paragraph{Datos y preprocesado} El dataset usado para la validación en esta prueba está bien balanceado y además las emociones que contempla coinciden con las del conjunto de entrenamiento, pero presenta pocos datos, por lo que se ha recurrirá al aumento de datos (ruido blanco) para paliar este problema.\\
+		A continuación se extraen 13 características MFCC y después de estandarizar los datos como se detalla en la sección \ref{cap:normalizacion}, se dividirán en entrenamiento y test. Como ha sido común en esta sección, el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test.\\
+		
+		\paragraph{Entrenamiento}  Para el entrenamiento se utilizará el Modelo 1CNN compilándolo con el optimizador RMSProp como se describe en \ref{cap4:Modelo1}. Posteriormente es entrenado durante 100 épocas con un batch de tamaño 32.
+		
+	%\end{minipage}
+
+	\subsubsection{\large Prueba 10 {\normalsize \textcolor{Gray}{Red CNN 2D validada en francés}}}
+
+\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+	
+	\paragraph{Datos y preprocesado} Respecto al tratamiento de los datos de entrenamiento, no será diferente del que se hizo en la Prueba 5.
+	Para los datos de validación con la base de datos CaFE, en cambio, se procederá a lo siguiente:
+	\begin{enumerate}
+		\item Generar las imágenes de los espectrogramas con Librosa y guardarlas.
+		\item Leer las imágenes y sus etiquetas(nombre de la emoción) previamente generadas en el mismo orden que fueron leídas para el conjunto de entrenamiento para que coincidan cuando se categoricen.
+		\item Normalizar y categorizar el conjunto.
+		\item Barajar imágenes y etiquetas de la misma manera.
+	\end{enumerate}
+	
+	\paragraph{Entrenamiento}   Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+	
+\end{minipage}
+
+	\subsubsection{\large Prueba 11 {\normalsize \textcolor{Gray}{Red CNN 1D validada en francés}}}
+	
+	\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+		
+		\paragraph{Datos y preprocesado} Este procedimiento, será exactamente igual que el de la prueba 10, tanto para los datos de entrenamiento como para los de validación.\\
+		
+		\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.\\
 		
 	\end{minipage}
 
@@ -586,7 +651,7 @@
 				6 & \multirow{3}{*}{5} & CNN 1D & \multirow{3}{*}{EMO-DB} & caract. MFCC\\ 
 				7 &  & CNN 2D &  & espetrog. MFCC\\ 
 				8 &  & CNN 2D - LSTM &  & espetrog. MFCC\\ \hline
-				9 & \multirow{3}{*}{6} & CNN 2D & \multirow{3}{*}{CAFFE} & caract. MFCC\\  
+				9 & \multirow{3}{*}{6} & CNN 2D & \multirow{3}{*}{CaFE} & caract. MFCC\\  
 				10 &  & CNN 2D &  & espetrog. MFCC\\ 
 				11 &  & CNN 2D - LSTM &  & espetrog. MFCC\\
 				\hline
@@ -597,16 +662,8 @@
 			\label{tab:resumenTests2}
 		\end{center}
 	\end{table}
-	
-	
-	
-	
 
-		
-		
-		
 
-	
 	
 	
 		\printbibliography
