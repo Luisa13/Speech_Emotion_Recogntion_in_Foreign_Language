@@ -5,6 +5,10 @@
 \addbibresource{./bibLib/introLib.bib}
 \usepackage{comment}
 
+\usepackage{graphicx, wrapfig, hyperref}
+\graphicspath{ {./.images/} }
+\usepackage{float}
+
 
 
 \begin{document}
@@ -31,26 +35,44 @@
 	
 	
 	\section{Motivación}
-	\begin{comment}
-		Affective computing opens a new area of research in computer science with the aim to improve the way how humans and machines interact. Recognition of human emotions by machines is becoming a significant focus in recent research in different disciplines related to information sciences and Human-Computer Interaction (HCI)
-		Humans verbally communicate by speech and
-		language. This enables faster sharing of messages, conveying of ideas and spreading of inventions. Communication between humans is actually not just what humans say, but also how they say it. Furthermore, facial expressions, as a part of non-verbal communication, are responsible for about 55%, voice intonation for about 38% and actual words for 7% of the message perception [1]
-		S.Lugovic
-	\end{comment}	
-	Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri (Apple) o Alexa (Amazon), que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos.
-	En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo 16 palabras y dígitos, hasta la aparición de Google Home en 2017, ente tipo de asistentes han ido mejorando su alcance y capacidades.\\
 	
-	El uso de estos asistentes no sólo se limita al ámbito doméstico, por ejemplo, la industria del videojuego creció un 23\% durante la pandemia del Covid-19 en 2020 más que en el año anterior, 2019. La tendencia en el uso de este dominio empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica. 
-%	La necesidad del desarrollo de estos sistemas ha disparado la investigación en distintas áreas como la salud o la automoción.
-	Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. Por ejemplo, Facebook usa inteligencia emocional para monitorizar signos de depresión en los usuarios.
+	
+	El espectro emocional que una persona esconde en su discurso es un factor esencial de la comunicación humana y ofrece información adicional sin alterar el contenido lingüístico. Las tecnologías orientadas a convertir la voz en texto (\emph{speech to text}) no tienen una forma segura de medir la calidad del diálogo de su interlocutor, impactando en negocios que hacen uso de estos avances (por ejemplo, centros de atención al cliente donde miden su grado de satisfacción).
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{dimensionThankYou.JPG} 
+		\caption{Dimensiones acústicas en la forma de decir "Thank you". Fuente: \href{https://otosystemsinc.medium.com/introducing-oto-99199a9b2c1b}{OTO}}
+		\label{fig:emociones_tess}
+	\end{figure}
+	
+	Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri (Apple) \cite{Siri} o Alexa (Amazon) \cite{amazonAlexa} , que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos \cite{OTOPersonalAssistance}.
+	En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo 16 palabras y dígitos\cite{IBMser}, hasta la aparición de Google Home en 2017 \cite{GHome2017}, este tipo de asistentes han ido mejorando su alcance y capacidades.\\
+	
+	El uso de estos asistentes no sólo se limita al ámbito doméstico, ya que esta tendencia empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica. 
+	%	La necesidad del desarrollo de estos sistemas ha disparado la investigación en distintas áreas como la salud o la automoción.
+	Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. 
 	
 	Cabe pensar que en este tipo de tecnología haya un potencial interés para la asistencia sanitaria, o incluso, para la industria automovilística. Visualicemos por ejemplo, un conductor tratando de resolver una incidencia mientras conduce. Esta incidencia puede variar desde buscar una ruta alternativa a un hospital o servicio de emergencia, y el estado emocional en el que se encuentre, puede afectar limitando su habilidad para resolver el problema. 
 	
 	De la misma manera el reconocimiento de emociones puede ocupar un lugar en los asistentes virtuales de cualquier servicio al integrarlo con técnicas del procesamiento del lenguaje natural, permitiendo mayor eficiencia del procesamiento de la conversación al detectar -por ejemplo-  irritabilidad o frustración en el usuario. 
+	SRI Ventures (una central estadounidense centrada en técnicas de procesamiento de la voz para el desarrollo de aplicaciones principalmente en el ámbito de la salud  \cite{nuanceCom}), desarrolla tecnología para analizar síntomas relacionados con enfermedades respiratorias, así como la aplicación de inteligencia artificial para evaluar por voz los sentimientos del cliente con el fin de mejorar el servicio.
 	
-	El espectro emocional que una persona esconde en su discurso es un factor esencial de la comunicación humana y ofrece información sin necesidad de alterar el contenido lingüístico. Es aquí donde reside el potencial de este área y por lo que cabe preguntarse si ese reconocimiento emocional a través de la voz, está fuertemente ligado al idioma y la cultura, o hay emociones que podemos detectar independientemente de este. Por ejemplo, hay áreas con una diversidad cultura y lingüística muy diversa, sólo en Zimbabwe hay 16 lenguas oficiales, o 4 en Suiza. Yace aquí la necesidad de desvincular esta dependencia, lo que podría crear un impulso en el desarrollo de estos sistemas sin la necesidad de un corpus específico, y al mismo tiempo ayudarnos a entender la relación entre la expresión de emociones y la lengua.
-	La idea de este proyecto nació por la motivación de crear un sistema capaz de crear una respuesta, no sólo coherente en el plano semántico, si no también sensible al estado emocional del usuario. Dado el alcance ambicioso con el que se partía, y teniendo en cuenta lo anterior, hemos preferido centrarnos en el estudio del reconocimiento de esas emociones, aplicándolo a la lengua extranjera.
- 
+	Otro equipo de SRI liderado por Elizabeth Shriberg \cite{Shriberg2003} decidieron combinar un sistema para entender la expresión oral con el análisis de emociones en la voz, dando como resultado una tecnología capaz de modelar computacionalmente la entonación de la voz del interlocutor derivando el significado sentimental más allá de las palabras usadas.
+	
+    \begin{comment}
+    	Por ejemplo, hay áreas con una diversidad cultural y lingüística muy amplia, sólo en Zimbabwe hay 16 lenguas oficiales, o 4 en Suiza. Yace aquí la necesidad de desvincular esta dependencia, lo que podría crear un impulso en el desarrollo de estos sistemas sin la necesidad de un corpus específico, y al mismo tiempo ayudarnos a entender la relación entre la expresión de emociones y la lengua. Es aquí donde reside el potencial de este área y por lo que cabe preguntarse si ese reconocimiento emocional a través de la voz, está fuertemente ligado al idioma y la cultura, o hay emociones que podemos detectar independientemente de este.\\
+    \end{comment}
+	
+
+	Estos ejemplos, impulsan la motivación de crear un sistema capaz de crear una respuesta, no sólo coherente en el plano semántico, si no también sensible al estado emocional del usuario.
+	
+ \begin{comment}
+ Affective computing opens a new area of research in computer science with the aim to improve the way how humans and machines interact. Recognition of human emotions by machines is becoming a significant focus in recent research in different disciplines related to information sciences and Human-Computer Interaction (HCI)
+ Humans verbally communicate by speech and
+ language. This enables faster sharing of messages, conveying of ideas and spreading of inventions. Communication between humans is actually not just what humans say, but also how they say it. Furthermore, facial expressions, as a part of non-verbal communication, are responsible for about 55%, voice intonation for about 38% and actual words for 7% of the message perception [1]
+ S.Lugovic
+ \end{comment}
 
 	\begin{comment}
 	
@@ -112,10 +134,45 @@
 		Finalmente, obtener datos necesarios de la extracción de características es un problema porque apenas cubre el amplio espectro emocional que hoy conocemos. C.Bakir y M.Yuzkat \cite{BAKIR2018} proponen un modelo híbrido para clasificar cinco emociones básicas en el lenguaje turco donde combinan SVM y GMM y aplicando antes MFCC y MFDWC para la extracción de características.
 	\end{comment}
 	
+	\section{Estructura del trabajo}
+	\begin{enumerate}
+		\item Introducimos de manera general, el contenido de las distintas partes que componen este trabajo.
+		El primer capítulo introduce de manera esquemática el tema principal de este trabajo, justificando su importancia y el impacto en el mundo real. En este mismo capítulo se incluye:
+		\begin{itemize}
+			\item La motivación, donde se argumenta la relevancia de este trabajo.
+			\item El planteamiento del trabajo, que propone de manera general cómo solucionar el problema que vamos a encarar.
+		\end{itemize}
+	
+		\item Seguidamente en el Contexto y estado del arte, se realizará una revisión de la literatura actual en relación con el tema a tratar. Se analizarán los resultados conseguidos hasta el momento así como las técnicas y métodos más usados en este ámbito, en concreto tendrá la siguiente estructura:
+		\begin{itemize}
+			\item Se presentan las características fonéticas del habla y su trasfondo teórico, analizando las posibles limitaciones, o características a tener en cuenta a modo de introducción a las siguientes secciones, más técnicas.
+			
+			\item El reconocimiento emocional del discurso propone una forma de modelar el problema haciendo uso de las técnicas que expone.
+			
+			\item La extracción de características habla sobre qué características podemos encontrar en la voz para reconocer emociones y cómo podemos extraerlas.
+			
+			\item Preprocesado de la señal describe el proceso para convertir la señal de audio a imagen de manera que se aprovechen mejor las ventajas de los clasificadores basados en redes convolucionales.
+			
+			\item Los algoritmos de clasificación exponen diferentes métodos para categorizar las emociones una vez la señal está procesada.
+			
+			\item La discusión sobre el estado del arte, revisa otros trabajos donde se han aplicado estas técnicas y cuáles han sido sus resultados.
+		
+		\end{itemize}
+		
+		\item La metodología de trabajo, comprende los objetivos generales y específicos que se han marcado para este trabajo así como el proceso que se seguirá para llevarlo a cabo.
+		
+		\item El capítulo 4, plantea diferentes experimentos con el objetivo de llegar a una conclusión en la comparativa de esta tesis. Describe  todos los componentes que formarán parte de esos experimentos de manera que se puedan reproducir siguiendo los pasos propuestos.
+		
+		\item El capítulo 5, describe los resultados y el desarrollo de los experimentos planteados en el capítulo anterior, exponiéndolos de manera objetiva.
+		
+		\item En el capítulo 6 se presenta una discusión de la conclusión sobre los resultados, comparándolos con otros trabajos y sus resultados.
+		
+	\end{enumerate}
 	
 
 
 	\printbibliography
+
 
 \end{document}
 
