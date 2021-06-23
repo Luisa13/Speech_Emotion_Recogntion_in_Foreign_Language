@@ -51,8 +51,8 @@
 	Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla. Esta observación puede llevar a que se pregunte si en lenguajes que son muy distintos fonéticamente, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.
 	Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en nuestro caso, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 	
-	\subsection{Reconocimiento del habla}
-	Atendiendo a la manera de cómo modelar las emociones, según la literatura, la clasificación de emociones se ha tratado desde dos enfoques principales:
+	\subsection{Reconocimiento emocional del discurso}
+	Atendiendo a la manera de cómo modelar las emociones, debemos irnos a estudios en psicología donde, la clasificación de emociones se ha tratado desde dos enfoques principales:
 	\begin{itemize}
 		\item Las emociones como categorías discretas
 		\item Las emociones vistas a través de un modelo dimensional
@@ -118,7 +118,7 @@
 	\end{figure}
 	
 	Esto que vemos es una representación digital de la onda, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
-	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello encontramos lo que nos lleva a la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro. \\
+	El siguiente punto que deberíamos atender, sería preguntarnos cómo extraer características relevantes de esta representación, y para ello encontramos lo que nos lleva a la Transformada de Fourier (FFT \emph{Fast Fourier Transform}), la cual nos permite analizar la cantidad de frecuencia contenida en una señal. La Transformada de Fourier transforma la señal de un dominio de tiempo a un dominio de frencuencia, y el resultado de esta transformación se denomina espectro \cite{ntiaudio}. \\
 	Sin embargo, el problema viene cuando en las señales de audio (que son el tipo de señales con las que queremos trabajar), la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Lo que finalmente obtenemos se denomina \textbf{espectograma}.
 	
 	\begin{figure}[H]
@@ -309,7 +309,7 @@
 	 
 	 En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
 	 % WARNING No puedo acceder a la base de datos de Lithuanian para referenciarlo
-	 En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} en donde se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
+	 En el último trabajo, \cite{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} la base de datos lituana en la que se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
 	
 	\section{Conclusiones parciales}
 	En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un estudio más en profundidad de la fonética propia de cada lenguaje.
