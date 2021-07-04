@@ -1,0 +1,1656 @@
+\documentclass[11pt,a4paper,spanish]{book}
+\usepackage{estilo_unir}
+
+\usepackage[style=apa, natbib=true, backend=biber]{biblatex}
+\usepackage{graphicx, float, hyperref, comment, multicol}
+\graphicspath{ {./.images/} }
+% Formato
+%\usepackage[utf8]{inputenc}
+\setlength{\parindent}{0pt} % para evitar las sangrias en todo el doc
+
+% Para el formato del titulo: numero Nombre Capitulo
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{\huge}
+
+% Tablas
+\usepackage{multicol, multirow, adjustbox, changepage}
+\usepackage{changepage}
+\usepackage[dvipsnames]{xcolor}
+
+% Define el nivel de profundidad de las secciones para numerarlas
+\setcounter{secnumdepth}{3}
+\addbibresource{./bibLib/internet.bib}
+\addbibresource{./bibLib/referenceLib.bib}
+
+\raggedbottom % para los espacios en blancos de más
+%---------------------------
+%título del trabajo y autor
+%---------------------------
+\title{Reconocimiento de Emociones en la Lengua no Aprendida}
+\author{Luisa Sánchez Avivar}
+\director{Ciro Rodríguez León}
+\date{Junio del 2021}
+\nombreciudad{Ginebra}
+
+%---------------------------
+%marges
+%---------------------------
+%\usepackage[margin=1.9cm]{geometry}
+%---------------------------
+%---------------------------
+%---------------------------
+%---------------------------
+\begin{document}
+\renewcommand{\listfigurename}{Índice de Ilustraciones}
+\renewcommand{\listtablename}{Índice de Tablas}
+\renewcommand{\contentsname}{Índice de Contenidos}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla} 
+
+\maketitle
+
+\frontmatter
+\tableofcontents
+\listoffigures
+\listoftables
+
+\chapter{Resumen}
+El uso de asistentes automáticos por voz se ha incrementado en los últimos años ampliando su uso a áreas como la atención médica, o centros de llamadas de atención al cliente. La interacción entre el humano y la máquina está basado en el procesamiento del lenguaje natural haciendo este entendimiento puramente semántico, pero estos sistemas pueden ser optimizados mediante el uso del reconocimiento de emociones a través de la voz con independencia del lenguaje. El presente trabajo implementa un sistema para reconocer las emociones dado una lengua, realiza una comparación a través de tres idiomas usando tres clasificadores diferentes. El uso de espectrogramas con redes convolucionales muestras resultados competitivos a los métodos desarrollados en otros trabajos.
+
+
+{\bf Palabras Clave:} reconocimiento de emociones en el habla, redes convolucionales, características espectrales, lengua extranjera.
+
+\chapter{Abstract}
+
+En este estudio se lleva a cabo una reconocimiento emocional de la voz a través de tres lenguas, siguiendo un enfoque que atiende a la proximidad fonética de estas. El idioma inglés se tomará como referencia, mientras que luego se evaluará con una lengua más cercana fonéticamente (alemán, ambas lenguas germánicas) y otra más alejada (francés, romance). Este trabajo se realizará extrayendo características cepstrales, en concreto MFCC, y serán usados distintos clasificadores basados en redes convolucionales (CNN unidimensional, bidimensional y CNN-LSTM). El uso de espectrogramas en una red convoluciona bidimensional, muestra la superioridad frente a los otros consiguiendo un 91\% de exactitud en una clasificación monolingüística.
+
+{\bf Palabras Clave:} Speech emotion recognition, foreign language, MFCC, CNN, spectral features.
+
+
+
+
+\mainmatter
+\chapter{Introducción}
+Desde hace años, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo siempre se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. Esta habilidad ha sido respaldada por numerosos artículos donde se concluye que es posible distinguir e identificar entre al menos tres emociones básicas (felicidad, tristeza, y enfado) a través de la voz (sin necesidad del procesamiento del lenguaje natural y por lo tanto de un contexto).
+
+Análogamente el debate del reconocimiento de emociones en un plano intercultural también se ha enfocado a través del estudio de los gestos faciales en conjunto con la expresión vocal, donde se concluye que los factores sociales tienen un gran impacto, ya que la identificación de las emociones es más fácil para los miembros de la misma cultura que para los de otra distinta \citep{Pell2009a} y \citep{Pell2009}. A pesar de ello hay una gran carencia de comparativas con respecto a la voz donde se demuestre una sólida influencia cultural, sin embargo parece claro que las dimensiones socio culturales que engloban nuestras interacciones pueden tener un gran impacto en nuestra comunicación dentro de un marco emocional.
+
+\section{Motivación}
+
+
+El espectro emocional que una persona esconde en su discurso es un factor esencial de la comunicación humana y ofrece información adicional sin alterar el contenido lingüístico. Las tecnologías orientadas a convertir la voz en texto (\emph{speech to text}) no tienen una forma segura de medir la calidad del diálogo de su interlocutor, impactando en negocios que hacen uso de estos avances (por ejemplo, centros de atención al cliente donde miden su grado de satisfacción).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{dimensionThankYou.JPG} 
+	\caption{Dimensiones acústicas en la forma de decir "Thank you". Fuente: \href{https://otosystemsinc.medium.com/introducing-oto-99199a9b2c1b}{OTO}}
+	\label{fig:thankyou}
+\end{figure}
+
+Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri (Apple) \citep{Siri} o Alexa (Amazon) \citep{amazonAlexa} , que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos \citep{OTOPersonalAssistance}.
+En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo 16 palabras y dígitos\citep{IBMser}, hasta la aparición de Google Home en 2017 \citep{GHome2017}, este tipo de asistentes han ido mejorando su alcance y capacidades.\\
+
+El uso de estos asistentes no sólo se limita al ámbito doméstico, ya que esta tendencia empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica. 
+%	La necesidad del desarrollo de estos sistemas ha disparado la investigación en distintas áreas como la salud o la automoción.
+Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. 
+
+Cabe pensar que en este tipo de tecnología haya un potencial interés para la asistencia sanitaria, o incluso, para la industria automovilística. Visualicemos por ejemplo, un conductor tratando de resolver una incidencia mientras conduce. Esta incidencia puede variar desde buscar una ruta alternativa a un hospital o servicio de emergencia, y el estado emocional en el que se encuentre, puede afectar limitando su habilidad para resolver el problema. 
+
+De la misma manera el reconocimiento de emociones puede ocupar un lugar en los asistentes virtuales de cualquier servicio al integrarlo con técnicas del procesamiento del lenguaje natural, permitiendo mayor eficiencia del procesamiento de la conversación al detectar -por ejemplo-  irritabilidad o frustración en el usuario. 
+SRI Ventures (una central estadounidense centrada en técnicas de procesamiento de la voz para el desarrollo de aplicaciones principalmente en el ámbito de la salud  \citep{nuanceCom}), desarrolla tecnología para analizar síntomas relacionados con enfermedades respiratorias, así como la aplicación de inteligencia artificial para evaluar por voz los sentimientos del cliente con el fin de mejorar el servicio.
+
+Otro equipo de SRI liderado por Elizabeth Shriberg \citep{Shriberg2003} decidieron combinar un sistema para entender la expresión oral con el análisis de emociones en la voz, dando como resultado una tecnología capaz de modelar computacionalmente la entonación de la voz del interlocutor derivando el significado sentimental más allá de las palabras usadas.
+
+Estos ejemplos, impulsan la motivación de crear un sistema capaz de crear una respuesta, no sólo coherente en el plano semántico, sino también sensible al estado emocional del usuario.
+
+
+\section{Planteamiento del Trabajo}
+
+Este trabajo de fin de máster se centra en el uso de técnicas basadas en redes neuronales para la clasificación de emociones a través del discurso en la lengua extranjera. Para acercarnos a este escenario, se parte del supuesto que dado un modelo entrenado en un lenguaje capaz de reconocer emociones en este, se evalúa en un idioma distinto que nunca ha formado parte del anterior conjunto de datos. 
+
+Para ello, el trabajo se divide en dos objetivos principales: el primero será conseguir un modelo lo suficientemente preciso en una sola lengua, y el segundo comparar su comportamiento con otros lenguajes.
+
+Con respecto a esta disciplina, y como ya se verá en el capítulo 2, existen estudios (en el reconocimiento de emociones en una sola lengua) combinando numerosas variables a tener en cuenta, por lo que se probarán distintos enfoques, analizando sus fortalezas y debilidades.
+
+Una de las limitaciones a las que se hace frente, es el reducido número de muestras en las distintas bases de datos disponibles para entrenar el modelo. Teniendo en cuenta esto, y que el objetivo es incrementar las oportunidades de clasificación en otros conjuntos, este problema se resolverá combinando datos de varias bases de datos distintas, lo que aportará variabilidad a los datos de entrenamiento. Por otro lado, debido a que la mayoría de trabajos encontrados que realizan esta clasificación emocional son en una sola lengua, se parte de un enfoque más ingenuo donde se asume que las señales de audio transportan suficiente información que puede ser extraída. 
+
+La evaluación del modelo resultante en otros idiomas no será de manera arbitraria, sino que, dentro de los conjuntos disponibles que se encuentren, seguirá una estrategia atendiendo al grado de proximidad fonética para ver las diferencias.
+
+Con este estudio se pretende entender mejor la relación entre emoción e idioma y arrojar luz a preguntas como ¿qué emociones son más fácilmente reconocibles indistintamente del lenguaje? ¿Hay lenguas donde es más fácil reconocer ciertas emociones? ¿Cómo influye la elección de la base de datos?.
+
+
+\section{Estructura del trabajo}
+	\begin{enumerate}
+		\item Se introduce de manera general, el contenido de las distintas partes que componen este trabajo.
+		El primer capítulo introduce de manera esquemática el tema principal de este trabajo, justificando su importancia y el impacto en el mundo real. En este mismo capítulo se incluye:
+		\begin{itemize}
+			\item La motivación, donde se argumenta la relevancia de este trabajo.
+			\item El planteamiento del trabajo, que propone de manera general cómo solucionar el problema que se va a encarar.
+		\end{itemize}
+		
+		\item Seguidamente en el Contexto y estado del arte, se realizará una revisión de la literatura actual en relación con el tema a tratar. Se analizarán los resultados conseguidos hasta el momento así como las técnicas y métodos más usados en este ámbito, en concreto tendrá la siguiente estructura:
+		\begin{itemize}
+			\item Se presentan las características fonéticas del habla y su trasfondo teórico, analizando las posibles limitaciones, o características a tener en cuenta a modo de introducción a las siguientes seccione que son más técnicas.
+			
+			\item El reconocimiento emocional del discurso propone una forma de modelar el problema haciendo uso de las técnicas que expone.
+			
+			\item La extracción de características debate sobre qué características encontrar en la voz para reconocer emociones y cómo se pueden extraer.
+			
+			\item El preprocesado de la señal describe el proceso para convertir la señal de audio a imagen de manera que se aprovechen mejor las ventajas de los clasificadores basados en redes convolucionales.
+			
+			\item Los algoritmos de clasificación exponen diferentes métodos para categorizar las emociones una vez la señal está procesada.
+			
+			\item La discusión sobre el estado del arte, revisa otros trabajos donde se han aplicado estas técnicas y cuáles han sido sus resultados.
+			
+		\end{itemize}
+		
+		\item La metodología de trabajo, comprende los objetivos generales y específicos que se han marcado para este trabajo así como el proceso que se seguirá para llevarlo a cabo.
+		
+		\item El capítulo 4, plantea diferentes experimentos con el objetivo de llegar a una conclusión en la comparativa de esta tesis. Describe  todos los componentes que formarán parte de esos experimentos de manera que se puedan reproducir siguiendo los pasos propuestos.
+		
+		\item El capítulo 5, describe los resultados y el desarrollo de los experimentos planteados en el capítulo anterior, exponiéndolos de manera objetiva.
+		
+		\item En el capítulo 6 se presenta una discusión de la conclusión sobre los resultados, comparándolos con los de otros trabajos, a la vez que se describen posibles líneas futuras.
+		
+	\end{enumerate}
+
+
+\chapter{Estado del Arte}
+\section{Contexto}
+El reconocimiento de emociones en el habla es una disciplina en inteligencia artificial que trata de reconocer y clasificar emociones a través de la señal de voz. Este campo de estudio se ha hecho cada vez más popular, pero su origen se remonta a 1996, desde que se presentara el primer trabajo defendible sobre el tema "Reconociendo emociones en el habla" por F.Daellert \citep{Dellaert1996}.
+Desde entonces, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo en su gran mayoría, se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. \\
+
+El presente capítulo está dividido en dos partes, en el primero se hablará de los conceptos inherentes a las características fonéticas en el discurso que es el tema en torno al que gira este trabajo, y por otro lado, cómo se puede orientar ese problema con técnicas de aprendizaje profundo haciendo una revisión de la literatura.
+
+
+
+\subsection{Características fonéticas en el habla}
+El objetivo del reconocimiento de emociones en el habla es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
+
+La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \citep{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono sino también el patrón lingüístico asociado \citep{Davletcharova2015}.
+Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita), como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían tener un impacto en la decodificación de los matices en la señal vocal, tal y como se explica en \citep{Chen2017}.
+Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla \citep{XHuan2001}. Esta observación puede llevar a que se pregunte si en lenguajes que son muy distintos fonéticamente, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.\\
+Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que en nuestro caso, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
+
+\subsection{Reconocimiento emocional del discurso}
+Atendiendo a la manera de cómo modelar las emociones de manera que esta información se pueda extraer de señales acústicas \citep{Kumar2019}, se parte de estudios en psicología donde, la clasificación de emociones se ha tratado desde dos enfoques principales:
+\begin{itemize}
+	\item Las emociones como categorías discretas
+	\item Las emociones vistas a través de un modelo dimensional
+\end{itemize}
+
+En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \citep{Ekman1992} quien estableció que estas eran 6: enfado, asco, miedo , felicidad, tristeza y sorpresa.
+En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que dé lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \citep{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro. \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{Rueda-Plutchik.svg.png} 
+	\caption{Rueda de las Emociones de Plutchik. Fuente: \href{https://es.wikipedia.org/wiki/Robert_Plutchik}{Wikipedia}}
+\end{figure} 
+
+Sin embargo, por cuestiones de simplicidad, la mayoría de los estudios centrados en la clasificación de emociones se centran en las emociones vistas como categorías discretas.
+
+
+
+\subsubsection{Extracción de Características}
+La extracción de características es una de las secciones más importantes en el reconocimiento de emociones a través de la voz debido a la ambigüedad de las características y la variedad vocal. La extracción de características es el paso principal en el procesamiento del diálogo, y se lleva a cabo para centrarse en la información contenida en la señal y mejorar el grado de similitud y/o diferenciación entre las clases \citep{Hellbernd2016}. Hasta ahora, por lo general hay dos enfoques principales  con respecto al tipo de características usadas en el Reconocimiento de Emociones en el Discurso:\\
+Los rasgos prosódicos, los cuales extraen información de la prosodia, en concreto, tono, energía y duración, y por otro lado, las características del tracto vocal que normalmente indican la distribución de la energía en la frecuencia del rango vocal (conocidos como Coeficientes Cepstrales).
+La mayoría de los estudios centrados en este tema usan rasgos espectrales como la información extraída del tracto vocal, lo que supone obtener la información derivada del espectro de la señal de la voz y se usan para modelar los patrones de entonación y frecuencia del hablante \citep{Langari2020}.\\
+
+En \citep{Rashid2018} se ofrece una breve explicación de cada una de las técnicas más comunes analizando sus puntos fuertes y débiles: Así pues, podemos encontrar la Transformada Wavelets Discreta (DWT) que a pesar de mejorar la información que se obtiene del diálogo en la correspondiente banda de frecuencia presenta variaciones indeseadas en los límites debido a que las señales de entrada son de una longitud finita. También se encuentran trabajos donde se usen Coeficientes de Predicción Lineal (LPC) \citep{Rana2014} y \citep{Rashmirekha2013} los cuales hacen estimaciones bastante precisas al extraer las propiedades del tracto vocal, pero son altamente sensibles al ruido de cuantificación, por lo que demuestran no ser precisos cuando hay ruido de fondo. \\
+
+No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados, estos son:
+
+\paragraph{Coeficientes Cepstrales con Predicción Lineal (LPCC)}
+Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Esto materializa las características de un canal particular del sonido, teniendo en cuenta que la misma persona con diferentes tonos emocionales tendrá diferentes canales de características, se podrán extraer esos coeficientes para indetificar las emociones contenidas \citep{Sandesara2020}.
+Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación a LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
+
+\paragraph{Coeficientes Cepstrales en la escala de Mel (MFCC)}
+Se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante cepstrales (\emph{Cepstrum}, es el resultado de calcular la transformada de Fourier inversa del espectro de la señal estudiada en escala logarítmica \citep{cepstrumwiki}) que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales). \citep{Davis1980} \\
+Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso \citep{Farouk2014}.\hfill \break
+
+Resumiéndolo, los objetivos clave, serían:
+\begin{itemize}
+	\item Eliminar la excitación del tracto vocal.
+	\item Independizar las características extraídas.
+	\item Ajuste a como los humanos percibimos el ruido y la frecuencia del sonido.
+	\item Capturar la dinámica fonética, que definirá el contexto.
+\end{itemize}
+MFCC constituye una perfecta representación para el sonido cuando la fuente es estable y consistente. 
+
+
+\subsubsection{Procesamiento de la señal como imagen}
+\label{cap2:spectrograms}
+
+El tipo de dato con el que se trabajará principalmente serán señales, concretamente, de audio. En las señales de audio hay una cierta presión de aire que varía con respecto al tiempo \citep{Koolagudi2012}, y al muestrearlas en un determinado rango de frecuencia, se obtendría algo como lo siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{original-waveform.JPG}
+	\caption{Forma de onda de una señal de audio. Fuente: propia}
+	\label{fig:waveform}
+\end{figure}
+
+Los que se muestra en la figura \ref{fig:waveform} es una representación digital de la onda, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
+La Transformada de Fourier (FFT \emph{Fast Fourier Transform}) responde a cómo extraer características relevantes de esta representación, ya que permite analizar la cantidad de frecuencia contenida en una señal. Esta transforma la señal de un dominio de tiempo a un dominio de frencuencia (figura \ref{fig:timeFrecuencyView}), y el resultado es el espectro \citep{ntiaudio}. \\
+%https://stackoverflow.com/questions/59604595/how-to-extract-features-from-fft
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{FFT-Time-Frequency-View.png}
+	\caption{Representación de una señal desde dos planos (frecuencia y tiempo). Fuente: \href{https://commons.wikimedia.org/wiki/File:FFT-Time-Frequency-View.png}{Wikipedia}}
+	\label{fig:timeFrecuencyView}
+\end{figure}
+
+Sin embargo, el problema viene cuando en las señales de audio, la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal, y lo que finalmente se obtiene se denomina \textbf{espectograma}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{processFFT.png} 
+	\caption{Proceso del uso de FFT en una señal. Fuente: \href{https://www.mathworks.com/help/dsp/ref/dsp.stft.html}{Mathworks}}
+\end{figure} 
+
+Este espectrograma puede ser entendido como una representación tridimensional de la señal donde sus características (tiempo, frecuencia y amplitud de la distribución de energía) pueden ser observadas de manera muy visual. Cuando este espectrograma se computa, el eje X representa el tiempo, el eje Y representa la frecuencia, que es convertida a una escala logarítmica, y la gama de colores que se utiliza es para simbolizar la variación de energía expresada (medida decibelios), donde los tonos más oscuros indican unos valores de energía más altos, y viceversa\citep{Kartik2020}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{spectogram.png} 
+	\caption{Espectograma de una muestra aleatoria. Fuente: \href{https://es.other.wiki/wiki/Spectrogram}{Wiki}}
+\end{figure}
+
+La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \citep{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir. Es por ello que el rango donde se mueve este espectrograma, se adapta a la \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas \citep{StevensVolkmann}.\\
+
+Finalmente queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello hay que entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en la anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal \citep{Bao2019}.\\
+El papel del Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a cómo los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal \citep{Nair}. %En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC} 
+
+En la figura \ref{fig:cepstralcoef} se pueden observar el resultado de los pasos que se han discutido hasta ahora.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{waveform_process.jpeg} 
+	\caption{Visualización de los coeficientes cepstrales de una muestra aleatoria. Fuente: \href{https://www.ee.columbia.edu/~stanchen/spring16/e6870/slides/lecture3.pdf}{Columbia University}}
+	\label{fig:cepstralcoef}
+\end{figure}
+
+Dado que se ha convertido una señal de audio en una imagen, ahora se podrá proceder a usar un modelo basado en redes convolucionales, aprovechando sus ventajas en el campo donde mejor rendimiento reporta: el procesamiento de imágenes.
+
+
+\subsubsection{Algoritmos de Clasificación}
+
+\begin{comment} 
+TODO
+Este parrafo debería ser referenciado
+\end{comment}
+Convencionalmente, el estudio del Reconocimiento de Emociones en el Habla incluye el uso de diferentes tipos de clasificadores entre las que destacan las Máquinas de Vector de Soporte (SVNs \emph{Suport Vector Machines}) ya que se han usado extensamente para el reconocimiento de emociones y pueden llegar a presentar un buen rendimiento en comparación con otros clasificadores tradicionales \citep{Africa2020} y \citep{Jain2020}.% el algoritmo K-NN es de los enfoques más simples, Hidden Markov Model(HMM) es a menudo utilizado para lidiar con los cambios temporales en la señal y por último, Gaussian Mixture Model (GMM) el cual es útil para representar las unidades de sonido en características acústicas.%\citep{Farooq2020}.
+
+No obstante, en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo, los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio\citep{Sandesara2020}.
+
+El aprendizaje profundo es un conjunto de algoritmos de aprendizaje automático que modela abstracciones de alto nivel construyendo conceptos complejos a partir de otros más sencillos mediante el uso de una arquitectura jerárquica.
+Esta arquitectura jerárquica es lo que se denomina redes neuronales que son estructuras lógicas cuyo diseño se basa en mayor medida en la organización del sistema nervioso de los mamíferos \citep{Matthew2019}.
+Las neuronas artificiales que la componen son unidades de proceso especializadas en detectar determinadas características de aquello que es percibido \citep{Nielsen2015}.
+
+
+\begin{figure}[!htb]
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=.8\textwidth]{neurona.JPG}
+		\caption{Representación de una neurona real}
+		\label{ref:imgNeuron}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{neuronaArtificial.JPG}\hfill
+		\caption{Representación de una neurona artificial.}
+		\label{ref:imgArtNeuron}
+	\end{minipage}
+\end{figure}
+
+La imagen \ref{ref:imgArtNeuron} muestra el funcionamiento de estas neuronas artificiales claramente inspirado en el diseño de la figura \ref{ref:imgNeuron}. Al nodo le llegan unas entradas $x_i$ que tienen asignadas unos pesos $w_i$ y unos sesgos $b_i$ (\emph{biases}), que son procesadas por la función de activación. El proceso de aprendizaje se consigue por transferencia de información de unas capas a otras gracias al algoritmo de retropropagación (\emph{backpropagation}) cuyo objetivo es encontrar la distribución adecuada a cada una de las variables de entrada \citep{Goodfellow-et-al-2016}.
+
+
+\paragraph{Redes Neuronales Recurrentes}\hfill \break
+Las Redes Neuronales Recurrentes (RNN) son convenientes en tareas en las que los datos son procesados secuencialmente. Esto puede ser especialmente una ventaja ya que las distintas entradas de la señal no se tratan de manera independiente \citep{Lim2017}. En \citep{Lee2015} se propone un sistema basado en RNN aprovechando esta particularidad donde cada nodo toma en cuenta la información recogida en los anteriores; Esto hace que cubra un espectro más amplio de información creando una especie de contexto.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{rnn_structure.JPG} 
+	\caption{Fuente:  \href{http://personal.cimat.mx:8181/~mrivera/cursos/aprendizaje_profundo/RNN_LTSM/introduccion_rnn.html}{Estructura de RNN}}
+	\label{fig:rnn_structure}
+\end{figure}
+
+La figura \ref{fig:rnn_structure} muestra la estructura básica de una Red Neuronal Recurrente donde se puede observar como la red actualiza el peso de las entradas a través del algoritmo Descenso de Gradientes. En algunos casos, estos gradientes se irán haciendo más pequeños a medida que la red avanza, evitando así que los pesos cambien su valor y por lo tanto, la red siga aprendiendo (lo que se conoce como desvanecimiento de gradientes). 
+
+\paragraph{Redes LSTM}\hfill \break
+Como se puede ver, los trabajos anteriormente mencionados que implementan este tipo de arquitectura RNN son relativamente antiguos (2017, y 2015 respectivamente) y en estudios más recientes , a destacar \citep{Wang2020} y \citep{Atmaja2019}, los retos que presenta la clasificación de emociones en el habla, son comúnmente abordados a través de una red de Memoria a Largo Corto-Plazo (LSTM) la cual es capaz de retener información de entradas anteriores en el tiempo y tener en cuenta dependencias temporales largas, ya que cada nodo es una célula de memoria. Esto a su vez, resuelve el problema de desvanecimiento de gradientes que presenta RNN.\\
+Las redes LSTM son un tipo de red recurrente que fueron diseñadas para resolver el problema de la dependencia a largo plazo del que sufre RNN. Como podemos ver en la figura \ref{fig:netLSTM}, estas presentan una estructura en cadena al igual que las redes recurrentes, pero el modulo de repetición en lugar de tener una única capa de red neuronal, tiene 4 que interactúan.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{LSTM3-chain.png}
+	\caption{Estructura de una red LSTM. Fuente: \href{https://colah.github.io/posts/2015-08-Understanding-LSTMs/}{Colah}}
+	\label{fig:netLSTM} 
+\end{figure}
+
+\paragraph{Redes Neuronales Convolucionales}\hfill \break
+%https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53
+Uno de los mayores avances de los últimos años en el campo de la inteligencia artificial son las redes convolucionales, debido a la alta precisión que proporcionan en el procesamiento de imágenes. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{cnnDiagram.JPG}
+	\caption{Estructura de una red CNN. Fuente: \href{https://brilliant.org/wiki/convolutional-neural-network/}{Brilliant}}
+	\label{fig:netCNN} 
+\end{figure}
+
+La tendencia de los modelos basados en redes neuronales densas en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las Redes Neuronales Convolucionales (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \citep{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \citep{AbdulQayyum2019} y \citep{Anvarjon2020}.  %\citep{Farooq2020}.
+
+\subsubsection{Bases de datos}
+\label{lb:cap_baseDatos}
+Aquí se recogen las bases de datos sobre el reconocimiento de emociones más usadas en los estudios comentados anteriormente.
+
+	\begin{itemize}
+		\item SAVEE (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}) es un conjunto de datos aplicado al reconocimiento de emociones que consiste en grabaciones de 480 frases en total en inglés británico ejecutadas por cuatro actores profesionales masculinos modulando siete emociones distintas (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). El estudio \citep{SAVEEdataset} explora y detalla esta base de datos que data del 2011, y es de acceso público para propósitos de investigación.
+		
+		\item IEMOCAP (por sus siglas en ingles, \emph{Interactive Emotional Dyadic Motion Capture}) es una base de datos multimodal privada utilizada para el reconocimiento y análisis de emociones. Consiste en doce horas de contenido audiovisual donde diez actores (cinco hombres y cinco mujeres) mantienen diálogos en ingles previamente transcritos en los que se interpretan cinco emociones distintas (enfado, tristeza, alegría, frustración y neutral).
+		
+		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde veinticuatro actores profesionales vocalizan frases en inglés norteamericano modulando siete emociones (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Cuenta con una completa documentacion \citep{Livingstone2018} y es de acceso público.
+		
+		\item TESS (por sus siglas en inglés, \emph{Toronto Emotional Speech Set data}) es un conjunto de datos compuesto por 2800 archivos de audio donde dos actrices de 26 y 64 años cuya lengua materna es el inglés americano, articulan 200 frases cada una modulándolas en siete emociones (enfado, asco, tristeza, alegría, miedo, sorpresa, y neutral). Este proyecto fue realizado por la universidad de Toronto \citep{E8H2MF-2020} y es de acceso público.
+		
+		\item EMO-DB es una base de datos alemana cuyos detalles se recogen en \citep{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por diez actores (cinco hombres y cinco mujeres) matizando seis emociones (enfado, asco, tristeza, alegría, miedo y neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
+		
+		\item CaFE (por sus siglas en inglés \emph{Canadian French Emotional Speech Dataset}) es una base de datos canadiense en idioma francés donde seis hombres y seis mujeres que pronuncian un total de seis frases interpretando siete emociones  (enfado, asco, tristeza, alegría, miedo, sorpresa y neutral).
+		
+	\end{itemize}
+
+\section{Estado del Arte}
+\label{lb_estado_arte}
+Aunque la mayoría de estudios se basan en análisis que evalúan la precisión del clasificador sobre la propia lengua, el auge de las técnicas basadas en aprendizaje profundo ha permitido aumentar la capacidad de clasificación en los modelos de reconocimiento de emociones. La creación de un mapa de características a partir de diferentes representaciones de la onda sonora con respecto a su frecuencia y tiempo, permiten a las redes neuronales distinguir más atributos para hacer una predicción más exacta. A partir de este paradigma, el intento de clasificar emociones a través de la voz ha sido objeto de estudio aplicando diferentes técnicas.
+
+En \citep{Atmaja2019} proponen sistema basado en una arquitectura LSTM bidireccional (BLSTM) que aplican a un subconjunto de la base de datos IEMOCAP para distinguir entre cuatro emociones(enfado, excitación, tristeza y neutral). Discuten la incapacidad del un modelo BLSTM para detectar características relevantes, y palían el problema añadiendo un modelo de atención. Teniendo ese modelo como punto de partida (BLSTM + modelo de atención), experimentan escogiendo diferentes valores de duración del silencio para medir la eficacia que tendría el modelo si este se eliminara. Además utilizan un complejo sistema de extracción de características entre las que destacan MFCC. Los resultados muestran un máximo del 70.34\% de precisión en los datos sin necesidad de eliminar el silencio de la señal de audio.
+Un año después, J.Wang \citep{Wang2020} propone un modelo dual LSTM donde cada uterancia, se procesa con características MFCC y espectrogramas de MEL simultáneamente. El modelo es entrenado y evaluado en el conjunto de datos IEMOCAP llegando a un 72.7\% de exactitud.
+
+Las redes LSTM cubren en mencionado antes, efecto de contexto, resolviendo el desvanecimiento de gradientes que podemos encontrar en las redes recurrentes, pero de manera aislada no son las que mejores resultados ofrecen y es por ello, que en otros trabajos se han combinado con CNN para aumentar su rendimiento. Por ejemplo en \citep{Lim2017} se lleva a cabo una comparación de tres  arquitecturas (CNN, LSTM y CNN distribuida en el tiempo) donde LSTM (utilizada de manera aislada) es la que puntúa más bajo. Al mismo tiempo, W.Lim y su equipo estudian el resultado de un sistema híbrido que usa una red convolucional distribuida en el tiempo (una combinación de CNN y LSTM) para clasificar emociones en una secuencia de audio, consiguiendo un 88.01\% de precisión. De nuevo, para aprovechar las ventajas que ofrecen las redes convolucionales, la señal es convertida a imagen (espectograma), que es entrenada y probada con el corpus EMO-DB (alemán) distinguiendo entre 7 emociones.
+
+Por otro lado, en \citep{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (enfado, neutral, y tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado, se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
+
+Con el fin de eliminar el preprocesado de la señal, en \citep{AbdulQayyum2019}  presenta un modelo de redes convolucionales para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
+
+En estudios más recientes, \citep{Anvarjon2020} aborda el problema del Reconocimiento de Emociones en el Habla con una red CNN computacionalmente eficiente que es alimentada con los espectrogramas de la señal; es decir, se consigue una representación en 2D de la señal de audio aprovechando mejor las ventajas de una red de este tipo. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{anvarjon2020_emodb.JPG} 
+	\caption{Resultados de T.Anvarjon sobre la base de datos EMO-DB. Fuente: \citep{Anvarjon2020}}
+	\label{fig:anvarjon_emo_plot}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{anvarjon2020_imeocap.JPG} 
+	\caption{Resultados de T.Anvarjon sobre la base de datos IEMOCAP. Fuente: \citep{Anvarjon2020}}
+	\label{fig:anvarjon_ime_plot}
+\end{figure}
+
+El sistema es probado en con dos datasets distintos independientemente, IEMOCAP (en inglés, y eliminando 'frustración') y EMO-DB (alemán) consiguiendo un 77.01\% y 92.02\%  de precisión respectivamente. En las figuras \ref{fig:anvarjon_emo_plot} y \ref{fig:anvarjon_ime_plot} vemos el rendimiento del modelo en los conjuntos de datos correspondientes comprobando el sólido resultado.
+
+Siguiendo por el enfoque de CNN, en \citep{Mustaqeem2020} exploran una arquitectura basada en CNN compuesta por 7 capas bidimensionales. Paralelamente la red es alimentada con espectrogramas y características extraídas a través de MFCC, y lleva a cabo una clasificación de 5 emociones evaluando el resultado en RAVDESS donde consiguen un 81.0\% de precisión e IEMOCAP con un 84.00\%
+
+% TODO: quiza quieres revisar esa verborrea
+Finalmente, es obligatorio hablar del trabajo de \citep{Tamulevicius2020}, en una línea más cercana al objetivo de este proyecto, lleva a cabo un estudio del reconocimiento emocional empleando el cruce de 6 lenguas (lituano, inglés, serbio, español, alemán y polaco). Aunque sus resultados no son realmente señalables y acaban diseñando un clasificador que es entrenado con todas las lenguas para distinguir las emociones indistintamente, dicha clasificación se lleva a cabo mediante el uso de una red neuronal convolucional bidimensional de 3 capas, e insisten en la importancia del uso de características en 2 dimensiones, ya que proveen información temporal además de las características acústicas de las emociones. En el estudio exploran varias de estas características, siendo el uso de cocleogramas las que consiguen una mayor exactitud.
+
+
+Bajo estas líneas, podemos ver la tabla donde se resumen los estudios previamente comentados en la sección \ref{lb_estado_arte}.\\
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | c | c | c| c | c|}
+			\hline
+			Trabajo & Año & Método &  Datos usados  & Acierto \\ 
+			\hline
+			J.Wang & 2020 & LSTM dual + MFCC & IEMOCAP & 72.7\% \\
+			Atmaja & 2019 &   BLSTM + Att  & IEMOCAP (4 emociones) & 73.34\% 	\\
+			Anvarjon & 2020 & CNN 2D + espectogramas Mel & IEMOCAP (4 emociones) & 77.01\%\\
+			Mustaqeem & 2020 & CNN 2D + MFCC & RAVDESS (5 emociones) & 81.01\% \\
+			Abdul & 2019 & CNN & SAVEE & 81.63\%				\\
+			Mustaqeem & 2020 & CNN 2D + MFCC & IEMOCAP (5 emociones) & 84.00\% \\
+			W.Lim & 2017 &   LSTM + CNN & EMO-DB &  88.01\%		\\ 
+			Anvarjon & 2020 & CNN 2D + espectogramas Mel & EMOD-DB & 92.02.01\%\\  
+			Harar & 2017 &  CNN & EMOD-DB (3 emociones) &  96.97\%			\\
+			Tamulevicius & 2020 & CNN 2D + cocleogramas & Lithuanian & 97.00\% \\
+			%& & & &
+			\hline	
+		\end{tabular}
+		
+		\caption{Tabla comparativa y resumida de los trabajos mencionados}
+		\label{tab:metod_comp}
+	\end{center}
+\end{table}
+
+En la tabla \ref{tab:metod_comp} se muestran un resumen de los estudios relacionados con este campo y sus correspondientes resultados, así como los métodos y datos que han usado para ello. La columna de Método, comprende la arquitectura completa, es decir, el sistema de clasificación usado y el método de extracción de características si lo hubiera. En la tercera columna se describen los datos usados (la base de datos) y el número de clases entre las que el sistema ha tenido que diferenciar. Cuando estas no se especifican, quiere decir que se ha usado el conjunto de datos al completo.
+% WARNING No puedo acceder a la base de datos de Lithuanian para referenciarlo
+En el último trabajo, \citep{Tamulevicius2020} se lleva a cabo la comparación de distintos datos, pero es \emph{Lithuanian} la base de datos lituana en la que se basan para crear el modelo, cuya arquitectura es la que se especifica en la tabla.\\
+
+\section{Conclusiones parciales}
+En esta sección se valorarán las conclusiones que se extraigan del análisis previo sobre los distintas etapas correspondientes al desarrollo de un modelo para la clasificación de emociones en el habla. Vemos que los retos que plantea SER se han abordado anteriormente desde distintos enfoques, pero en su mayoría, desde el punto de vista de un único lenguaje. Las dificultades que presenta esta tarea en la lengua extranjera se deben principalmente a las posibles variaciones de aire para expresar la mismas emociones. Este mismo problema se plantea en una modalidad diferente pero bastante relacionada como es la transcripción de la voz a texto (ASR, Reconocimiento Automático del Discurso), sin embargo estos estudios requieren un análisis más profundo de la fonética propia de cada lenguaje.
+
+Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \citep{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\hfill \break
+
+
+Cabe destacar que la combinación de métodos, véase algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
+
+No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, y de manera intuitiva, cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, y por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
+
+En la extracción de características el uso de MFCC ha sido amplia y tradicionalmente escogido al reportar resultados más elevados en comparación con otros métodos. En \citep{Langari2020} denota que los métodos de extracción de características son MFCC y LPCC porque las variaciones en la frecuencia del tono están significativamente relacionados con la expresión humana de emociones. Los parámetros que se computan en MFCC como el número de filtros o la escala de frecuencia, son a menudo escogidos de manera experimental y dependen en gran medida del conjunto de datos con el que se pruebe y el clasificador que implemente el sistema.
+
+En cuanto a los métodos usados como clasificadores, se observa también que CNN (con diferentes modificaciones dependiendo del estudio) es la opción más sólida entre los trabajos más recientes, debido principalmente a que reduce la señal de audio a sus características más relevantes, y la combinación de probabilidades resultantes identifica conjuntos de atributos que determinan una clasificación. El uso de espectrogramas, aprovecha las bondades que las redes convolucionales ofrecen.
+%https://blog.soprasteria.se/2019/10/07/using-cnn-for-speech-emotion-recognition/
+
+
+\chapter{Objetivos y metodología de trabajo}
+
+\section{Objetivo General}
+
+\begin{enumerate}
+	\item Conseguir un modelo que realice una clasificación emocional en el idioma de referencia escogido con un porcentaje de acierto por encima de un 80\%.
+	\item Hacer un estudio comparativo del reconocimiento de emociones por voz, a través de lenguajes no aprendidos (lenguajes que no hayan formado parte del entrenamiento).
+\end{enumerate} 
+
+\section{Objetivos específicos}
+Para conseguir el alcance establecido, es necesario que los siguientes puntos sean satisfechos:
+\begin{itemize}
+	\item Hacer un estudio del estado del arte sobre diferentes métodos, técnicas, y conjunto de datos utilizados en el reconocimiento de emociones a través de la voz. Aquí también se explorará si se dispone de la documentación necesaria, cómo cada uno de esos métodos pudiera estar relacionado con la lengua que usa para aplicarlo y su fonética.
+	
+	\item  Conseguir al menos 3 datasets pertenecientes a 3 idiomas diferentes donde uno de ellos será usado como referencia, y además, deberán cumplir las siguientes condiciones: Uno de los conjuntos de datos restantes deberá tener raíces fonéticas distintas al corpus de referencia, y el otro tener raíces fonéticas similares.
+	
+	\item Diseñar una solución en la que el conjunto de datos de referencia tenga un porcentaje de acierto superior al 80\% en la clasificación de emociones.
+	
+	\item Aplicar el modelo diseñado en el paso anterior a los otros conjuntos de datos.
+	
+	\item Evaluar la tasa de acierto obtenida en cada uno de eso conjuntos y comparar los resultados obtenidos.
+	
+\end{itemize}
+\section{Metodología de trabajo}
+Para este proyecto se plantea una metodología de desarrollo iterativa, en las que tras una fase inicial, el proyecto entra en un bucle donde el trabajo pasa por una serie de etapas que se repiten durante la vida del proyecto. En cada iteración se diseñan unas modificaciones y capacidades funcionales que son añadidas en función de la etapa anterior.\\
+Este tipo de metodología es normalmente adoptada en desarrollo de producto \citep{Larman2003}, pero para esta comparación se ha modificado mediante la extracción de unos pasos iniciales del bucle que la caracteriza, adaptándola mejor a nuestras necesidades.
+
+\begin{enumerate}
+	\item Fase inicial: 
+	\begin{enumerate}
+		\item Revisión de la literatura sobre el reconocimiento de emociones en el habla, así como los métodos usados y los resultados obtenidos. Este paso permite una mayor comprensión del problema, y su alcance.
+		
+		\item Análisis y recolección de posibles conjuntos de datos en diferentes idiomas, aptos para los experimentos que se quieren realizar.
+		
+	\end{enumerate}
+	
+	\item Elaboración: Se llevan a cabo los experimentos y la implementación de los componentes mediante unos pasos iterativos, a saber:
+	
+	\begin{enumerate}
+		
+		\item Identificación y redacción de una serie de pruebas iniciales con los diferentes métodos y técnicas de la revisión de la literatura, aplicados según el análisis de las bases de datos.
+		
+		\item Implementación en Python de las pruebas diseñadas con las técnicas y arquitecturas identificadas.
+		
+		\item Ajuste de los parámetros así como el balance de los datos con el fin de conseguir un mejor resultado.
+		
+		\item Evaluación: Se evalúan los resultados obtenidos de la implementación antes de decidir la iteración por finalizada. En caso de que los resultados no sean los esperados hay dos posibilidades: Si los errores obtenidos no distan demasiado de las especificaciones parciales, se pueden realizar reajustes en el modelo. Si por el contrario, dichos resultados están demasiado lejos del objetivo, se creará una segunda versión con una estrategia diferente, añadiendo más iteaciones al proceso de elaboración.
+	\end{enumerate} 
+	
+	\item Evaluación y comparación de los resultados.
+	
+\end{enumerate}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.15]{Iterative_Process_Diagram.png}
+	\caption{Proceso iterativo propuesto Fuente: \href{https://en.wikipedia.org/wiki/Iterative_and_incremental_development}{Wikipedia}}
+	\label{fig:iterative_process}
+\end{figure}
+
+
+Al contrario que en desarrollos de software más tradicionales donde podrían verse flujos de trabajo basados en metodologías ágiles o en cascada, hemos creído que este modelo se adapta mejor a las necesidades de este proyecto, debido principalmente, al grado de incertidumbre que presenta un proyecto basado en Inteligencia Artificial en comparación con la ingeniería del software estándar. Por ejemplo, una metodología ágil asume que pequeños cambios funcionales hace posible el alcance de los objetivos a bajo coste y alta predictibilidad. Esto no se corresponde con este tipo de trabajo por las siguientes características:
+
+\begin{itemize}
+	\item Es difícil conocer los costes y riesgos de la mayoría de los requisitos. Por ejemplo el estudio del conjunto de datos es algo que afecta directamente a la elaboración de los distintos modelos, y por lo tanto el crecimiento funcional es indeterminado.  
+	
+	\item Los cambios o modificaciones no pueden ser aplicados por diseño, requieren experimentos, además esas modificaciones son realmente complicadas de atomizar, por lo que el coste es impredecible. 
+	
+	\item Si bien es difícil tener una conclusión final por las estrictas fechas de entrega, un modelo iterativo permite obtener datos presentables a lo largo del proyecto.
+\end{itemize}
+
+\chapter{Planteamiento de la comparativa}
+
+En este capítulo se identificará el problema en concreto a tratar, a la vez que el diseño de los experimentos para acometerlo. Para ello se exponen los datos utilizados así como un análisis en detalle de estos respondiendo a por qué se escogen esos conjuntos. Finalmente las técnicas de procesamiento y el diseño de la red neuronal propuesta que se usan en este trabajo.
+
+El objetivo de esta comparativa es contrastar los resultados obtenidos tras aplicar el mismo sistema de reconocimiento de emociones en la voz entrenado con un lenguaje de referencia, con los otros dos lenguajes escogidos. Mediante esta comparativa se pretende responder a la pregunta si es posible reconocer emociones en un idioma que en principio se desconoce.
+
+\section{Conjunto de Datos}
+\label{lb_c4_datos}
+Los datos en un proyecto de inteligencia artificial son clave de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la siguiente estrategia con respecto a los datos.
+
+\subsection{Idioma de referencia: Inglés} El idioma de referencia será el que aprenda nuestra red neuronal, y desde el cual se intenten reconocer emociones en otras lenguas. En este caso se propone el inglés.\\
+Las bases de datos a las que se ha tenido acceso son limitadas, y no presentan un gran número de muestras, por lo que en previsión de un rendimiento pobre en el modelo, nos hemos decantado por escoger varias del mismo idioma de cara a un entrenamiento más completo.
+
+\paragraph{RAVDESS}
+Como ya se hizo ver en la sección \ref{lb:cap_baseDatos}, RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), contiene 7356 archivos en total, entre los cuales podemos encontrar tres modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene veinticuatro actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
+
+Cada uno de estos archivos están nombrados de manera única mediante siete números a modo de descripción de las características del audio. Éste respeta la siguiente convención:
+\begin{itemize}
+	\item Modalidad (01 Audio y vídeo, 02 Sólo vídeo, 03 Sólo audio).
+	\item Canal vocal (01 discurso normal, 02 canción).
+	\item Emoción que representa.
+	\item Intensidad Emocional Si es normal o fuerte. La voz neutral no contempla la intensidad fuerte.
+	\item Repetición (si es la primera repetición 01, si es la segunda 02).
+	\item Actor que ejecuta la acción.
+\end{itemize}
+
+Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de sólo audio (03), donde se vocaliza una frase de manera hablada (01) y con tono alegre (03). La intensidad es normal (01), corresponde a la primera repetición (01) y el actor que la ejecuta es el n.01.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{ravdess_distribucion.png} 
+	\caption{Distribución de las emociones en RAVDESS en la modalidad sólo audio (1440 archivos)}
+	\label{fig:emociones_ravdess}
+\end{figure}
+
+A pesar de que este dataset hay 7356 muestras para este proyecto únicamente se usarán aquellas que presentan una modalidad de sólo audio, lo que nos deja con un total de 1440 muestras, sin embargo como se puede apreciar en la figura \ref{fig:emociones_ravdess} las emociones están bien distribuidas.
+
+\paragraph{SAVEE} (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}), cuenta con 480 archivos de audio en formato wav muestreados a 44.1 kHz, donde cuatro actores anglosajones (inglés británico) de 27 a 31 años, modulan siete emociones con frases específicas a cada una.
+Cada archivo ha sido etiquetado de manera que el primer carácter (o caracteres, antes de un dígito) corresponde a la emoción que representa. Así las letras 'a', 'd', 'f', 'h', 'n', 'sa' y 'su', corresponden a enfado (\emph{angry}), asco (\emph{disgust}), miedo (\emph{fear}), felicidad (\emph{happiness}), neutral (\emph{neutral}), tristeza (\emph{sadness}), sorpresa (\emph{surprise}). El número que le sigue a continuación, se refiere a la frase pronunciada. Por ejemplo, el archivo d03.wav hace referencia a la tercera frase de la emoción asco.
+%QUESTION Deberia incluir algunas de las frases?
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{savee_distribucion.png} 
+	\caption{Distribución de las emociones en SAVEE}
+	\label{fig:emociones_savee}
+\end{figure}
+
+A pesar de que sólo presenta 480 audios, el hecho de que se use una frase distinta para cada emoción, lo convierte en un conjunto de datos muy completo para el entrenamiento. La figura \ref{fig:emociones_savee} muestra la distribución de las emociones, observando que están bien balanceadas.
+
+\paragraph{TESS}
+Este dataset lo conforman 2800 archivos de audio en formato wav donde dos actrices angloparlantes de 26 y 64 años vocalizan 200 palabras insertadas en la frase \emph{Say the word\_\_\_} donde se interpretan 7 emociones a enfado, asco, miedo, felicidad, neutral, tristeza y sorpresa. Los archivos están organizados en carpetas atendiendo a la actriz y a la emoción que representa, y nombrados mediante 3 cadenas de caracteres separadas por un guión bajo donde la primera indica la actriz, la segunda la palabra que se pronuncia, y el tercero la emoción.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{tess_distribucion.png} 
+	\caption{Distribución de las emociones en TESS}
+	\label{fig:emociones_tess}
+\end{figure}
+
+En la figura \ref{fig:emociones_tess} vemos la distribución de las emociones en la base de datos TESS.
+
+
+
+\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera al menos haya un porcentaje mayor de reconocimiento que en el segundo conjunto de datos de validación. Para este caso, propondremos el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \citep{Fennell2001}.\\
+
+Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por 10 actores (5 hombres y 5 mujeres) modulando 7 emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
+\begin{itemize}
+	\item Las dos primeras posiciones determinan el actor que las interpreta.
+	\item De la posición 3 a las 5 se define el texto que se pronuncia
+	\item La posición 6 indica la emoción.
+	\item Versión del audio en caso de que la hubiese (codificado con letras).
+\end{itemize}
+
+Como ejemplo, el archivo \emph{03a01Fa.wav} indica que el actor 03 (hombre de 31 años) cita el texto a01 (\emph{Der Lappen liegt auf dem Eisschrank}, en alemán "El mantel está colgando del frigo"), con la emoción F (felicidad), y es la versión \emph{a} (la primera).
+
+La documentación del corpus también nos ofrece información sobre el género y edad de los actores, lo cual se ha determinado irrelevante, y las distintas frases que pueden aparecer en los archivos.
+Las emociones que clasifica son enfado (W), aburrimiento (L), asco (E), miedo o ansiedad (A), felicidad (F), tristeza (T) y neutral (N) codificadas en el nombre del archivo por su inicial en alemán (especificada entre paréntesis).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{distribucion_emo.JPG} 
+	\caption{Distribución de las emociones en EMODB}
+	\label{fig:emociones_emodb}
+\end{figure}
+
+
+\subsection{Idioma con raíces fonéticas distintas: Francés} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
+Con este conjunto se espera que haya una diferencia notable con respecto al idioma con raíces fonéticas similares, reportando un menor procentaje de reconocimiento. Para este caso, se propone el idioma francés (que es una lengua romance), utilizando para ello el conjunto de datos en francés canadiense para el reconocimiento de emociones, CaFE, el cual contiene 6 frases diferentes pronunciadas por 6 hombres y 6 mujeres en 6 emociones básicas además de 'neutral', grabadas cada una en dos intensidades distintas. Este conjunto fue grabado a alta resolución en formato aiff con una frecuencia de muestreo de 192 kHz  y 24 bits por muestra.
+Los archivos están organizados en una jerarquía de carpetas, de manera que no es necesario escanear el archivo para saber el genero del actor, la intensidad, o la emoción representada en el audio, sino que basta irse a la carpeta correspondiente.
+Las emociones que se incluyen aquí son enfado (\emph{colere}), asco (\emph{degout}), alegría (\emph{joie}), tristeza(\emph{tristesse}), miedo (\emph{peur}), sorpresa (\emph{surprise}) y neutro (\emph{neutre}). En la tabla \ref{fig:emociones_cafe}, podemos ver la distribución de las mismas.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.25]{cafe_distribucion.png} 
+	\caption{Distribución de las emociones en CaFE}
+	\label{fig:emociones_cafe}
+\end{figure}
+
+
+
+\section{Extracción de características}
+\label{sec:extraccion_cap4}
+Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
+\subsubsection{Coeficientes Cepstrales en la escala de Mel}
+Como ya hemos mencionado, MFCC es uno de los mejores algoritmos para capturar características de la señal de audio debido a su similitud a como el sistema auditivo humano procesa el sonido y las frecuencias, así mismo, su efectividad se ha visto reportada y discutida a lo largo de otros estudios.
+La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo del propio archivo de audio \citep{Bao2019}.
+
+\begin{comment}
+Razon por el numero de características:
+https://dsp.stackexchange.com/questions/28898/mfcc-significance-of-number-of-features
+Mencionar que otros estudios
+\end{comment}
+
+
+\section{Configuración}
+En esta sub-sección se muestra los recursos a los que se ha accedido para el desarrollo del estudio, así como su correspondiente configuración.
+
+
+\paragraph{Google Colab} Para la exploración de los datos así como el desarrollo, y entrenamiento de los modelos se ha hecho uso de la plataforma gratuita desarrollada por Google, Google Colab. Esta plataforma ofrece 12GB de RAM  y 107.77GB de espacio en disco, que será más que suficiente dado el tamaño que nuestro dataset.
+
+\paragraph{Librosa 0.8.1} Librosa es un paquete que ofrece diversas funcionalidades para el análisis de audio y música, cuya información más en detalle se puede encontrar en \citep{librosa082}. Esta librería ha sido esencial para la extracción de características MFCC así como algunas técnicas de aumento de datos.
+
+\paragraph{OpenCV 3.4.2} OpenCV es una librería de código abierto desarrollada por INTEL en 1999, cuyo principal objetivo es la provisión de funciones y recursos para visión computacional, cubriendo áreas como la reconstrucción 3D, detección de movimiento o reconocimiento de objetos, etc. Si bien en este proyecto no se necesitarán sus recursos más avanzados, será útil en la lectura de espectrogramas como imagen. 
+
+\paragraph{Tensorflow 2.0} Es una plataforma de código abierto originalmente creada por Google que provee un conjunto de librerías y recursos para el desarrollo de modelos con aprendizaje automático. Tensorflow, que además ofrece soporte de Keras, se ha usado tanto para la estandarización de los datos, como para la compilación y entrenamiento del modelo.
+
+\paragraph{Python 3} Python es un lenguaje interpretado de alto nivel. Todo el código para este proyecto ha sido desarrollado en Python 3.
+
+\section{Pre-procesado de los datos}
+Como se ha visto en la sección \ref{lb_c4_datos} no hay una abundante disposición de datos, esto podría convertirse en un problema y perjudicar el rendimiento del modelo en el entrenamiento. 
+Será necesario, antes del entrenamiento, un previo procesado de los datos.
+
+\subsection{División de los datos por género}
+\label{cap4:division}
+En un primer análisis exploratorio de los datos, se han estudiado las diferencias entre la voz masculina y la voz femenina en las emociones, observando lo siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.35]{comparative_waveform.png} 
+	\caption{Comparativa de los extractos de voz por género en RAVDESS}
+	\label{fig:comp_emociones_genero}
+\end{figure}
+En la figura \ref{fig:comp_emociones_genero} podemos ver la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
+
+
+\subsection{Normalización, estandarización y balanceado de los datos}
+\label{cap:normalizacion}
+Este proceso se aplicará a todas las pruebas:
+\begin{itemize}
+	\item El proceso de estandarización consistirá en el cociente entre la media artimética de los valores de los datos de entrenamiento, y la desviación normal de los de test. En esta técnica los valores son centrados con respecto a su media con una desviación estándar, consiguiendo una mejora en la estabilidad numérica del modelo. Ya que a lo largo de las pruebas, usaremos combinaciones de aumentos de datos e incluso mezclas entre distintos datasets, es recomendable aplicar este paso.
+	%https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/
+	
+	\item  La categorización cambia el formato de los datos para su uso en el modelo con keras en el modelo. En nuestro caso utilizaremos la codificación One Hot que representa los enteros en secuencias de bits. Esto se hace con el fin de evitar que los números enteros no confundan al modelo asignándole una peso proporcional al índice asociado a una clase (categoría).
+	
+	\item La división de los datos en entrenamiento y test, se hará con el algoritmo \emph{StratifiedShuffleSplit} de la librería de Python \emph{sklearn} que además se encarga de barajar de manera aleatoria los datos previamente.
+	
+\end{itemize}
+
+
+
+\subsection{Técnicas de aumento de datos}
+Dado el bajo número de muestras en los distintos conjuntos de datos a los que hemos podido acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
+Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. En nuestro caso, sabemos que el sonido tiene las siguientes características: tono, duración, timbre e intensidad. Por lo que debemos modificar levemente nuestros datos alrededor de esas características de manera que sólo difieran en pequeños factores de la muestra original.
+
+
+\subsubsection{Ruido Blanco}
+Añadir ruido blanco a la pista de audio, implica la inyección de valores aleatorios distribuidos de manera irregular con una media de 0 y una desviación de estándar de 1. Para implementar este método se usará el paquete numpy.
+
+\begin{figure}[!htb]
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{original-waveform.JPG}
+		\caption{Muestra original}
+		\label{ref:audio_original_1}
+	\end{minipage}\hfill 
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{wn-waveform.JPG}\hfill
+		\caption{Misma muestra con ruido blanco}
+		\label{ref:audio_wn}
+	\end{minipage}
+\end{figure}
+
+
+\subsubsection{Desplazamiento del sonido}
+Desplaza el sonido hacia la izquierda o la derecha una cantidad aleatoria de segundos. Por ejemplo, si el sonido ha sido desplazado hacia delante (izquierda) x segundos, los x primeros segundos se marcan con 0. Si por el contrario han sido desplazados hacia detrás (derecha), los últimos x segundos se marcarán con 0.
+
+\begin{figure}[!htb]
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{original-waveform.JPG}
+		\caption{Muestra original}
+		\label{ref:audio_original_2}
+	\end{minipage}\hfill 
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{shift-waveform.JPG}\hfill
+		\caption{Misma muestra con desplazamiento del sonido}
+		\label{ref:audio_shiftting}
+	\end{minipage}
+\end{figure}
+
+\subsubsection{Cambio de tono}
+Se refiere al proceso de cambiar el tono a un sonido sin variar su velocidad. Para implementar este método se usará la librería Librosa que ofrece un método específico.
+
+\begin{figure}[!htb]
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{original-waveform.JPG}
+		\caption{Muestra original}
+		\label{ref:audio_original_3}
+	\end{minipage}\hfill 
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\includegraphics[width=.6\textwidth]{pitch-waveform.JPG}\hfill
+		\caption{Misma muestra con cambio del tono}
+		\label{ref:audio_tunning}
+	\end{minipage}
+\end{figure}
+
+
+\subsection{Espectrogramas}
+%Como ya se había explicado en la sección \ref{label}, los espectrogramas son la representación visual de un espectro de frecuencias de una señal que varía con el tiempo \citep{wikipedia2021}
+Como vimos en el capítulo 2, y siguiendo los pasos de los trabajos \citep{Anvarjon2020} y \citep{Mustaqeem2020}, el uso de espectogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto para este trabajo, se hará uso de los espectrogramas de las características MFCC de la señal, cuyo proceso constará de dos partes: 
+\begin{enumerate}
+	\item Generación de espectogramas como imágen
+	\item Lectura y procesado de las imágenes que alimentarán la red
+\end{enumerate}
+
+Para generar estos espectrogramas, se hará con la ayuda del paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; Una vez generadas, se guardan en disco recortando el padding 0.05 pulgadas y en formato jpg.
+Finalmente, las imágenes generadas son leídas con la ayuda de OpenCV donde se transforma su canal de color a RGB y son redimensionadas con un tamaño de 40 x 30 píxeles.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.4]{mfcc_espectrogram.jpg} 
+	\caption{Epectrograma MFCC de una onda de audio. Fuente propia}
+	\label{fig:mfcc_sample}
+\end{figure}
+
+
+\section{Arquitectura}
+\label{sec:arquitectura_cap4}
+Como se ha podido ver en la revisión de la literatura del capítulo 2, las redes convolucionales esta una tendencia muy adoptada en los últimos trabajos en esta área de estudio.
+
+%Por temas de tiempo blablabla [...] se ha decidido por una red base que reporte buenos resultados.
+%blabla...
+
+%Los trabajos como los de \citep{AbdulQayyum2019}, \citep{Anvarjon2020} utilizan CNN en sus trabajos. 
+%Para un caso base en la línea de trabajo se ha optado por una red convolucional inspirada %en el trabajo de \citep{AbdulQayyum2019}, la cual consta de:
+\subsection{Arquitectura principal}
+\subsubsection{Modelo 3 CNN 2D}
+\label{cap4:Modelo3}
+% TODO Describir inicio, inspiracion etc
+Esta arquitectura consiste en:
+\begin{itemize}
+	\item 3 capas convolucionales bidimensionales con 32 filtros y un tamaño del kernel de 4 x 10. Como función de activación se usa Relu y pading establecido a 'same'.
+	
+	\item A las todas las capas convolucionales, les sigue una capa Max Pooling con tamaño para la \emph{pool} de 3, que posteriormente se aplica un Dropout del 20\%
+	
+	\item Una capa Flatten, seguida de la capa densa de salida con 7 nodos y activación Softmax.
+\end{itemize}
+
+La estrategia de entrenamiento que se siguió fue un optimizador Adam con los parámetros por defecto que ofrece Keras y la entropía cruzada categórica (\emph{categorical crossentropy}) como función de pérdida.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{arquitechture.JPG} 
+	\caption{Arquitectura propuesta. Fuente propia}
+	%\label{fig:lstm-cnn}
+\end{figure}
+
+
+\subsection{Otras arquitecturas}
+A pesar de que la arquitectura citada en la sección anterior, será con la que se lleven a cabo los principales experimentos y con los resultados más interesantes, se considera que la mención de otras arquitecturas que han formado parte de los experimentos de este trabajo, ayudará al lector a entender la progresión de los mismos, por lo que se ha visto conveniente incluirlas.
+
+% TODO:
+\subsubsection{Modelo1 CNN}
+\label{cap4:Modelo1}
+\begin{itemize}
+	\item 3 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5 con BatchNormalization y MaxPooling de tamaño 8.
+	
+	
+	\item 1 capa convolucional unidimensional con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5 con BatchNormalization y Dropout del 10\%.
+	
+	\item 1 capa densa de 128 nodos.
+	
+	\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación Softmax.
+\end{itemize}
+
+\subsubsection{Modelo2 CNN}
+\label{cap4:Modelo2}
+En un principio, se optó por una línea de trabajo inspirada en el estudio de \citep{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
+
+\begin{itemize}
+	\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
+	En las dos capas convolucionales se usa regularización de tipo L2 para aplicar una penalización a las capas del kernel con un valor de 0.01 y corregir así el overfitting.
+	
+	\item La primera capa convolucional está seguida de una capa Dropout del 0.5 y una capa Max Pooling con un tamaño 8.
+	
+	\item A la segunda capa convolucional se sigue otra capa de Dropout con un valor del 25\% y una capa Flatten.
+	
+	\item Por último esta arquitectura cierra con una capa densa con 7 nodos (número de clases) con una función de activación Softmax.
+\end{itemize}
+
+En cuanto al entrenamiento del modelo se usará un optimizador RMSprop con una tasa de aprendizaje de 0.00005, valor de $\rho$ de 0.9 y $\epsilon$ a 'None', por dar mejores resultados frente a Adam del caso inicial desde el que se partió, mientras que la función de pérdida utilizada para este propósito será entropía cruzada categórica (\emph{categorical crossentropy}).\\
+Se añaden además, para intentar afinar el modelo los callbacks ReduceLROnPlateau, que reduce la tasa de aprendizaje cuando el modelo ha dejado de mejorar y EarlyStopping, que detiene el entrenamiento si se ha llegado una meseta, es decir, si durante un determinado número de épocas, el modelo ha dejado de mejorar. En ReduceLROnPlateau se monitorizará la \emph{val loss} con el fin de minimizarla, y como configuración se empleará un factor de reducción de la tasa de aprendizaje de 0.9, una paciencia de 20 épocas y una tasa de aprendizaje mínimo de 0.000001.
+Con respecto a EarlyStopping, la variable monitorizada será 'val accuracy' con el fin de maximizarla y una paciencia de 20 épocas.\\
+Este entrenamiento se llevará a cabo durante 1000 épocas cpn nun batch de tamaño 16.
+% Hablar de las bondades las redes con 1 dimension
+% En que ayudan
+
+
+
+\subsubsection{Modelo4 CNN-LSTM}
+\label{cap4:Modelo4}
+% TODO Describir inicio, inspiracion etc
+\begin{itemize}
+	\item 3 capas convolucionales unidimensionales con 64 filtros de 3 x 3 y activación Relu, seguidas de una capa Max Pooling con tamaño 2 para la pool.
+	
+	\item Una capa Flatten con un Dropout del 25\%
+	
+	\item 2 capas LSTM unidimensionales con 50 y 20 unidades respectivamente y un Dropout del 50\%. Sólo permitiremos a la primera capa LSTM devolver el estado oculto de salida por cada entrada de tiempo. Ya que a este nivel se cambia a redes unidimensionales, deberemos redimensionar la entrada a 1 x 960.
+	
+	\item Capa de salida densa de 7 nodos y función Softmax.
+	
+\end{itemize}
+
+
+
+\section{Criterios de éxito}
+El objetivo de esta sección es definir las métricas que se usarán para comparar los distintos modelos en los experimentos parciales, así como los resultados obtenidos al aplicar dichos modelos a los datos mencionados en la sección \ref{lb_c4_datos}.\\
+Las dos principales métricas que se usarán para decidir cómo de buena es la predicción del modelo serán:
+\begin{itemize}
+	\item \textbf{Exactitud o \emph{Accuracy} } Establece una comparación entre los resultados predichos y los obtenidos determinando cómo de preciso es el algoritmo cuando se trata de identificar las clases
+	
+	\[
+	Accuracy = \frac{TP + TN}{ TP + FN + TN + FP} 
+	\]
+	\hfill \break
+	
+	\item \textbf{F1 score} Siendo el \emph{recall} la fracción de elementos relevantes que son recuperados (el cociente de las predicciones positivas y el número de clases positivas en el conjunto de test), la medida de F1 Score conviene el balance entre la precisión y el \emph{recall}.
+	\[
+	Recall = \frac{TP}{ TP + FN} 
+	\]
+	
+	\[
+	%\begin{equation}
+	Precision = \frac{TP}{TP + FP}
+	%\end{equation}
+	\]
+	
+	\[
+	F1 Score = \frac{2 * (Precision * Recall)}{Precision + Recall}
+	\]
+	\hfill \break
+	
+\end{itemize}
+
+En algunos casos, la \emph{accuracy} puede ser engañosa debido a la paradoja de la exactitud donde puede existir un sesgo debido a una distribución desbalanceada de las clases. Esto hace que pueda ser más inteligente elegir un modelo con menor exactitud pero con mayor poder predictivo.
+Para ver ese poder predictivo por lo tanto, es aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión, y la matriz de confusión que nos permitirá observar como se comporta un modelo especifico prediciendo las clases.
+
+Estas métricas se aplicarán a todas las clases en cada uno de los experimentos con el objetivo de determinar cómo de bueno es el modelo a la hora de reconocerlas. Como hemos visto en la presentación de las bases de datos, la clases tienden a estar muy balanceadas con la excepción de EMO-DB en alemán. Por ello, para tener una representación más igualitaria se aplicarán técnicas de aumento de datos a este conjunto y se balanceará el número de sus clases.
+
+Accuracy y F1 se tomarán por cada una de las clases, a la vez que se observa el rendimiento del modelo por cada época para comprobar si reporta un ajuste correcto.
+
+\section{Diseño de los experimentos}
+%TODO intro
+% Ahora se detallaran los experimentos blablableble
+%Por cuestiones de espacio, se han incluido unicamente la mejor versión de ese diseño tatata...
+En la presente sección se expondrán los diseños de los experimentos para cumplir nuestro cometido. Ya hablábamos en el capítulo 3, que nuestro propósito general, era doble: por un lado conseguir un modelo que fuera capaz de clasificar satisfactoriamente en el propio idioma con el que se entrena, y por otro, evaluar este modelo en otras lenguas distintas. Por ello, se divide la presente en dos subsecciones, con la intención de que el lector le resulte más fácil seguir la narrativa de este proyecto.
+
+\subsection{Búsqueda de un  modelo óptimo}
+Estos experimentos giran en torno a la búsqueda del modelo en el que más tarde, se validarán los lenguajes extranjeros. Como resumen se ofrece al final, la tabla \ref{tab:resumenTests1} que resume las características más diferenciadoras de cada uno de estas pruebas.
+
+\subsubsection[]{\large Prueba 1 {\normalsize \textcolor{Gray}{RAVDESS con división de los datos por género en una red convolucional unidimensional}}}
+
+\paragraph{Datos y preprocesado}
+Para esta prueba se usará el conjunto de datos RAVDESS dividiendo previamente el conjunto de entrenamiento por género (720 muestras iniciales por cada uno). 
+
+De cada una de las divisiones, se extraerán las características MFCC como es descrito en la sección \ref{sec:extraccion_cap4} y se normalizarán como se especifica en \ref{sec:norm_cap4}. Una vez normalizados, se categorizarán usando la técnica \emph{One hot encoding} para que el modelo asigne una importancia equitativa a todas las clases.
+Finalmente los datos son divididos en entrenamiento (70\%), y validación(20\%) y test(10\%).\\
+
+\paragraph{Entrenamiento}
+Para el entrenamiento se usará el modelo Modelo1 CNN descrito en la sección \ref{cap4:Modelo1}. El modelo es entrenado durante un total de 100 épocas y con un tamaño del batch de 16.
+
+
+
+\subsubsection[]{\large Prueba 1.B {\normalsize \textcolor{Gray}{RAVDESS en una red convolucional unidimensional}}}
+Se aplicarán los mismos parámetros que en la Prueba 1 con la diferencia que se usará el conjunto de datos RAVDESS al completo.
+
+%PRUEBA 2 - NOTEBOOK 3
+\subsubsection{\large Prueba 2  {\normalsize \textcolor{Gray}{RAVDESS con técnicas de aumento de datos.}}}
+
+\paragraph{Datos y preprocesado}Para esta prueba se usará el conjunto de datos RAVDESS completo (audio sólo, 1440 muestras iniciales), haciendo uso de las técnicas de aumento de datos que se han especificado en la sección \ref{sec:aumento_cap4} de manera independiente, a saber:
+\begin{itemize}
+	\item Ruido blanco
+	\item Desplazamiento del sonido.
+	\item Modulación del tono.
+\end{itemize}
+Para ello se extraerán las características MFCC, normalizándolas y categorizándolas con \emph{One hot encoding}.
+
+\paragraph{Entrenamiento}Para este entrenamiento se usará el modelo descrito en la subsección \ref{cap4:Modelo2}. el cual está basado en una red convolucional unidimensional de tres capas y regularización L2 en las dos primeras.
+El modelo se compila con un optimizador RMSprop con un learning rate de 0.00005 y $\rho$ a 0.9, y finalmente se entrena durante 100 épocas con un batch de tamaño 16.\\
+
+
+%PRUEBA 2.B - NOTEBOOK 5
+\subsubsection[]{\large Prueba 2.B {\normalsize \textcolor{Gray}{Combinación de las técnicas de aumento de datos en RAVDESS}}}
+
+\paragraph{Datos y preprocesado}Esta prueba implementará los mismos parámetros que la anterior, pero hará uso de las técnicas de aumento de datos combinándolas entre sí.
+\begin{itemize}
+	\item Ruido blanco y desplazamiento del sonido, con un total de 4320 características MFCC.
+	
+	\item Modulación del tono y desplazamiento, con un total de 4320 características MFCC.
+	
+	\item Ruido blanco, desplazamiento del sonido y modulación del tono con un total de 5760 características MFCC.
+\end{itemize}
+
+\paragraph{Entrenamiento} Para el entrenamiento, se seguirán los mismos parámetros que en la prueba 2.	
+
+
+%PRUEBA 3 - NOTEBOOK 1_CROSSCORPUS
+\subsubsection[]{\large Prueba 3 {\normalsize \textcolor{Gray}{Combinación de datasets}}}
+
+\paragraph{Datos y preprocesado} Siguiendo una estrategia distinta con el fin de aumentar el número de muestras, se combinarán diferentes bases de datos (RAVDESS, SAVEE y TESS, detalladas en la sección \ref{sec:idioma_ref}). Se extraerán las características MFCC para luego normalizar las muestras y categorizarlas.
+Las subsecciones de esta prueba corresponden a las distintas combinaciones de los datos:
+\begin{itemize}
+	\item RAVDESS y TESS, con un total de 4240 muestras.
+	\item SAVEE y TESS, con un total de 3280 características MFCC.
+	\item RAVDESS, SAVEE y TESS, con un total de 4720 características.
+\end{itemize}
+
+\paragraph{Entrenamiento} Para el entrenamiento se usará el modelo Modelo2 CNN basado en una arquitectura CNN unidimensional, tal y como se detalla en la sección \ref{cap4:Modelo2}, entrenándolo durante 100 épocas con un batch de tamaño 32.
+
+
+
+\subsubsection[]{\large Prueba 3.B {\normalsize \textcolor{Gray}{Combinación de datasets con aumento de datos}}}
+% basandonos en las pruebas anteriores, se aplicara esta tecnica o esta otra
+Se seguirán los mismos parámetros en la Prueba 3, pero aplicando técnicas de aumento de datos (en concreto se aplicará Ruido blanco, por ser la que mejor resultado reportó).
+
+%PRUEBA 3 - NOTEBOOK 2_CROSSCORPUS
+\subsubsection{\large Prueba 4 {\normalsize \textcolor{Gray}{Red CNN bidimensional con espectrogramas}}}
+
+%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+\paragraph{Datos y preprocesado} Para esta prueba se ha decidido prescindir de la base de datos RAVDESS y usar en su lugar, la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen.
+
+\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 3 basado en una arquitectura CNN bidimensional compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo3}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+%\end{minipage}
+%\setlength{\leftskip}{0cm}
+
+
+\subsubsection{\large Prueba 5 {\normalsize \textcolor{Gray}{Red LSTM-CNN con espectrogramas}}}
+
+%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+
+\paragraph{Datos y preprocesado} El conjunto de datos usado para esta prueba, será la combinación SAVEE y TESS con un total de 3284 muestras. Con respecto al preprocesado de los datos, se extraerán las características MFCC y posteriormente esas características serán convertidas a imagen, exactamente igual que en la prueba 4.
+
+\paragraph{Entrenamiento} Para el entrenamiento se usará el Modelo 4 basado en una arquitectura dual CNN-LSTM compilándolo con un optimizador Adam (valores por defecto en keras) tal y como es descrito en la sección \ref{cap4:Modelo4}, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+
+%\end{minipage}
+
+Como se menciona en el inicio de esta sección, la tabla \ref{tab:resumenTests1} muestra el resumen con los datos que creemos más característicos de cada una de las pruebas. 
+Así pues, en la columna 'Datos Entr.' se refiere al conjunto de datos que se usarán en el entrenamiento, especificando la naturaleza de estos datos en 'Tipo Dato' (espectrogramas como imagen, o características directamente extraídas de la muestra de audio) mientras que en 'Arquitectura', con qué modelo se llevará a cabo la prueba. En la columna Aumento Datos, se muestra qué técnica de aumento de datos se ha utilizado (en tal caso), donde 'R.B.' corresponde a ruido blanco, 'Desp.' a desplazamiento del sonido y 'Mod.' a modulación del tono.
+
+
+\begin{table}[H]
+	\begin{adjustwidth}{-1cm}{}
+		\centering
+		\begin{center}
+			\begin{tabular}{| c | p{3.5cm} | c | c c c | p{3.5cm} |}
+				\hline
+				\multirow{2}{*}{\textbf{Prueba}} &\multirow{2}{*}{\textbf{Datos Entr.}}& \multirow{2}{*}{\textbf{Arquitectura}} & 
+				\multicolumn{3}{|c|}{\textbf{Aumento Datos}} & 
+				\multirow{2}{*}{\textbf{Tipo Dato}} \\ \cline{4-6}
+				& & & R.B. & Desp. & Mod. & \\ 
+				\hline \hline
+				1 & RAVDESS por género & CNN 1D simplificado & No &No &No & carac. MFCC	\\ \hline
+				
+				1.B & RAVDESS & CNN 1D simplificado &No &No &No & carac. MFCC\\ \hline
+				
+				\multirow{3}{*}{2} & \multirow{3}{*}{RAVDESS} & \multirow{3}{*}{CNN 1D} &Sí &No &No  & \multirow{3}{*}{carac. MFCC}\\
+				& & & No &Sí &No & 	\\
+				& & & No &No &Sí  & 	\\ \hline
+				
+				
+				\multirow{3}{*}{2.B} & \multirow{3}{*}{RAVDESS} & \multirow{3}{*}{CNN 1D } & Sí &Sí &No & \multirow{3}{*}{carac. MFCC}\\
+				
+				& &  & No &Sí &Sí & \\
+				& &  & Sí &Sí &Sí& \\ \hline
+				
+				\multirow{3}{*}{3} & RAVDESS y TESS & \multirow{3}{*}{CNN 1D} &  No &No &No & \multirow{3}{*}{carac. MFCC}	\\ 
+				\cline{2-2}
+				& SAVEE y TESS &  &  No &No &No & 	\\
+				\cline{2-2}
+				& RAVDESS, SAVEE y TESS &  &  No &No &No & 	\\ \hline
+				
+				\multirow{3}{*}{3.B} & RAVDESS y TESS & \multirow{3}{*}{CNN 1D} & \multirow{3}{*}{ Sí}&\multirow{3}{*}{ No} & \multirow{3}{*}{ No} & \multirow{3}{*}{carac. MFCC}	\\
+				& SAVEE y TESS &  & &&  & 	\\
+				& RAVDESS, SAVEE y TESS &  & &&  & 	\\ 
+				\hline
+				
+				4 & SAVEE y TESS & CNN 2D &Sí &No &No & espectrogramas MFCC\\ \hline
+				
+				5 & SAVEE y TESS & CNN 2D - LSTM &Sí &No &No & espectrogramas MFCC\\ \hline
+				
+			\end{tabular}
+			
+			\caption{Resumen de las pruebas para la obtención de un modelo óptimo en la propia lengua (inglés)}
+			\label{tab:resumenTests1}
+		\end{center}
+	\end{adjustwidth}
+\end{table}
+
+
+\subsection{Pruebas con lenguajes extranjeros}
+En estas pruebas se evaluarán los mejores modelos de la sección anterior, con lenguajes que no han sido vistos en su entrenamiento. Al final de este bloque se presenta la tabla \ref{tab:resumenTests2} que resume los puntos mas característicos de las pruebas.
+
+\subsubsection{\large Prueba 6 {\normalsize \textcolor{Gray}{Red CNN 1D validada en alemán}}}
+
+\paragraph{Datos y preprocesado}  El conjunto de datos usado para el entrenamiento será la combinación SAVEE y TESS, sin embargo para que las clases del conjunto de entrenamiento y las de validación coincidan, es necesario prescindir de dos clases: sorpresa y miedo.\\ 
+Por otro lado, los datos de validación presentaban una distribución muy irregular, por lo que para que tuvieran una representación más equilibrada y una interpretación más justa en la validación, se han balanceado aumentando el dataset con aumento de datos (ruido blanco) y se han igualado el número de instancias de cada clase a aquella con una proporción menor.\\
+A continuación se extraen 13 características MFCC y después de estandarizar los datos como se detalla en la sección \ref{cap:normalizacion}, se dividen en entrenamiento y test. Debido a que los datos que se usarán para la validación provienen de una fuente externa a la de entrenamiento el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test.\\
+
+\paragraph{Entrenamiento} Para el entrenamiento se utilizará el Modelo 1CNN compilándolo con el optimizador RMSProp como se describe en \ref{cap4:Modelo1}. Posteriormente es entrenado durante 100 épocas con un batch de tamaño 32.
+
+
+\subsubsection[]{\large Prueba 7 {\normalsize \textcolor{Gray}{Red CNN 2D validada en alemán}}}
+
+%\begin{adjustwidth}{1cm}{}
+
+\paragraph{Datos y preprocesado} Al igual que en la prueba anterior, se reducirán de ambos conjuntos de datos el número de emociones a 5, eliminando de la ecuación 'miedo' y 'sorpresa'. Seguidamente, se procederá a la generación de imágenes donde:
+\begin{enumerate}
+	\item En primer lugar se aplicará aumento de datos (sólo con ruido blanco).
+	\item Se leerán hasta un máximo de 92 para que quede balanceado.
+\end{enumerate}
+Una vez generadas las imágenes, se leerán con las dimensiones 30 x 40.
+
+Ya que que los datos que se usarán para la validación provienen de una fuente externa a la de entrenamiento el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test. 
+
+\paragraph{Entrenamiento} En esta prueba se usará el Modelo 3 basado en una red convolucional bidimensional, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+
+%\end{adjustwidth}
+
+\subsubsection[]{\large Prueba 8 {\normalsize \textcolor{Gray}{Red CNN-LSTM validada en alemán}}}
+
+%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+
+\paragraph{Datos y preprocesado}  Este procedimiento, será exactamente igual que el de la prueba 7, tanto para los datos de entrenamiento como para los de validación.
+
+\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.	
+%\end{minipage}
+
+
+
+
+\subsubsection{\large Prueba 9 {\normalsize \textcolor{Gray}{Red CNN 1D validada en francés}}}
+
+%\hfill\begin{minipage}{\dimexpr\textwidth-1cm}
+
+\paragraph{Datos y preprocesado} El dataset usado para la validación en esta prueba está bien balanceado y además las emociones que contempla coinciden con las del conjunto de entrenamiento, pero presenta pocos datos, por lo que se ha recurrirá al aumento de datos (ruido blanco) para paliar este problema.\\
+A continuación se extraen 13 características MFCC y después de estandarizar los datos como se detalla en la sección \ref{cap:normalizacion}, se dividirán en entrenamiento y test. Como ha sido común en esta sección, el balance para esta división ha sido de 75\% para entrenamiento y 25\% para test.
+
+\paragraph{Entrenamiento}  Para el entrenamiento se utilizará el Modelo 1CNN compilándolo con el optimizador RMSProp como se describe en \ref{cap4:Modelo1}. Posteriormente es entrenado durante 100 épocas con un batch de tamaño 32.
+
+%\end{minipage}
+
+\subsubsection{\large Prueba 10 {\normalsize \textcolor{Gray}{Red CNN 2D validada en francés}}}
+
+\paragraph{Datos y preprocesado} Respecto al tratamiento de los datos de entrenamiento, no será diferente del que se hizo en la Prueba 5.
+Para los datos de validación con la base de datos CaFE, en cambio, se procederá a lo siguiente:
+\begin{enumerate}
+	\item Generar las imágenes de los espectrogramas con Librosa y guardarlas.
+	\item Leer las imágenes y sus etiquetas(nombre de la emoción) previamente generadas en el mismo orden que fueron leídas para el conjunto de entrenamiento para que coincidan cuando se categoricen.
+	\item Normalizar y categorizar el conjunto.
+	\item Barajar imágenes y etiquetas de la misma manera.
+\end{enumerate}
+
+\paragraph{Entrenamiento}   Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.
+
+
+
+\subsubsection{\large Prueba 11 {\normalsize \textcolor{Gray}{Red CNN 1D validada en francés}}}
+
+\paragraph{Datos y preprocesado} Este procedimiento, será exactamente igual que el de la prueba 10, tanto para los datos de entrenamiento como para los de validación.\\
+
+\paragraph{Entrenamiento} Para el entrenamiento de esta prueba se usará el Modelo 4 basado en una red CNN- LSTM, entrenándolo durante 100 épocas con un tamaño del batch de 32.\\
+
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | c |}
+			\hline
+			\textbf{Prueba} &
+			\textbf{Emociones}& 
+			\textbf{Arquitectura} & 
+			\textbf{Datos Val.} & 
+			\textbf{Tipo Dato} \\ 
+			\hline\hline
+			6 & \multirow{3}{*}{5} & CNN 1D & \multirow{3}{*}{EMO-DB} & caract. MFCC\\ 
+			7 &  & CNN 2D &  & espetrog. MFCC\\ 
+			8 &  & CNN 2D - LSTM &  & espetrog. MFCC\\ \hline
+			9 & \multirow{3}{*}{6} & CNN 2D & \multirow{3}{*}{CaFE} & caract. MFCC\\  
+			10 &  & CNN 2D &  & espetrog. MFCC\\ 
+			11 &  & CNN 2D - LSTM &  & espetrog. MFCC\\
+			\hline
+			
+		\end{tabular}
+		
+		\caption{Resumen de las pruebas en las que se aplican los mejores modelos a distintos lenguajes.}
+		\label{tab:resumenTests2}
+	\end{center}
+\end{table}
+
+
+\chapter{Desarrollo de la comparativa}
+A continuación se detallan todas las pruebas presentadas en el capítulo anterior.
+Las primeras dos pruebas pueden parecer irrelevantes desde el punto de vista de una conclusión final, pero ayuda a entender el punto de partida y su progresión, por eso se omite la estructura que sí se muestra en las pruebas posteriores.
+
+\section{Búsqueda de un  modelo óptimo}
+\label{cap:4ModeloOptimo}
+
+\subsection{Pruebas 1 y 1.B}
+Ya que la mayoría de los estudios hacían uso de de conjuntos de datos con acceso privado, el objetivo de esta prueba era saber cómo se comportaba un primer enfoque de una arquitectura basada en CNN unidimensional en la base de datos RAVDESS. Tal y como se comentó en la sección \ref{cap4:division}, se tomó la decisión de dividir el dataset por género, ya que se observaban claras diferencias en una muestra aleatoria que comparaba la variaciones de la onda acústica por cada una de las emociones (ver \ref{fig:comp_emociones_genero}). En un primer momento, la inspiración para la arquitectura fue tomada del trabajo de \citep{Mustaqeem2020} pero después de varias pruebas el mejor resultado obtenido fue un 50\% de \emph{accuracy} en la subdivisión para el género femenino y un 31\% para el másculino, mientras que se obtuvo un 38.3\% usando el conjunto completo. 
+
+%50\% accuracy con 720 muestras & 31\%  accuracy con 720 muestras & 38.3 \% accuracy con 1440 muestras \\
+
+\begin{table}[H]
+	
+	\centering
+	\begin{center}
+		\begin{tabular}{|c |c |c|}
+			\hline
+			G.Femenino & G.Masculino & RAVDESS completo\\ 
+			\hline
+			\includegraphics[scale=0.15]{tests1_2/female_plot.png} & \includegraphics[scale=0.15]{tests1_2/male_plot.png} & \includegraphics[scale=0.15]{tests1_2/all_data_plot.png}\\
+			\hline
+			50\% acc. con 720 muestras & 31\%  acc. con 720 muestras & 38.3 \% acc. con 1440 muestras \\
+			\hline	
+		\end{tabular}
+		\caption{Resultados comparando la división por género.}
+		\label{cap5:genderplots}
+	\end{center}
+\end{table}
+
+El entrenamiento se realizó durante 100 épocas quedando estancado cuando pasaba el 30\% de accuracy. Analizando los resultados se observó que, la magnitud de los datos usados podría ser insuficiente teniendo en cuenta el número de clases entre las que se quería distinguir.
+
+\subsection{Pruebas 2 y 2.B} %Data Augmentation
+Debido a los pobres resultados conseguidos en la Prueba 1, en la prueba 2 se decidió contar con el conjunto de datos completo para aplicar técnicas de aumento de datos con el fin de incrementar el número de muestras. Si bien los frutos de esta prueba no arrojaron unos resultados satisfactorios, condujeron a una sólida reducción del overfitting.
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			Ruido blanco & Desplazamiento & Modulación del tono \\ 
+			\hline
+			\includegraphics[scale=0.15]{tests1_2/whitenoise.png} & \includegraphics[scale=0.15]{tests1_2/desplazamiento.png} & \includegraphics[scale=0.15]{tests1_2/modulacion.png}\\
+			\hline
+			38.38\% accuracy  & 44\%  accuracy & 40\% accuracy \\
+			\hline	
+		\end{tabular}
+		\caption{Resultados obtenidos tras aplicar aumento de datos.}
+		%\label{}
+	\end{center}
+\end{table}
+En la Prueba 2.B, se procedió entonces a combinar los diferentes métodos de aumento de datos. Los resultados de esta prueba se recogen en la tabla \ref{cap4:tabDA2}
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{|p{4.75cm} |p{4.75cm} |p{4.75cm}|}
+			\hline
+			Ruido blanco y Desplazamiento& Desplazamiento y Modulación & Ruido blanco, Desplazamiento y Modulación del tono \\ 
+			\hline
+			\includegraphics[scale=0.15]{tests1_2/wn_despl.png} & \includegraphics[scale=0.15]{tests1_2/mod_desp.png} & \includegraphics[scale=0.15]{tests1_2/todas.png}\\
+			\hline
+			36.02\% accuracy & 45.58\%  accuracy & 40.03\% accuracy \\
+			\hline	
+		\end{tabular}
+		\caption{Resultados obtenidos tras aplicar aumento de datos.}
+		\label{cap4:tabDA2}
+	\end{center}
+\end{table}
+
+Los resultados de estas dos últimas pruebas han sido lo suficientemente bajos para descartar mostrar las métricas de éxito.
+
+\subsection{Pruebas 3 y 3.B} %Ensamblado de datasets
+A pesar de que en las pruebas anteriores, no se ha llegado a unos resultados satisfactorios, parece claro que el aumento del conjunto de datos es la dirección por la que apostar, ya que ha reducido notablemente el sobre ajuste que presentaban las primeras pruebas. No obstante, observamos que hasta ahora hemos venido usando la base de datos RAVDESS con 1440 instancias para una clasificación de 8 categorías. Recordemos que por la revisión del estado del arte (ver tabla \ref{tab:metod_comp}), sabemos que \citep{Mustaqeem2020} llega al 81.01\% de accuracy en RAVDESS con una red CNN bidimensional y haciendo una selección de 5 clases. Este conjunto de datos, únicamente contempla 2 tipos de frases, por lo que el bajo rendimiento puede deberse a la poca diversidad de los datos. 
+El objetivo de esta prueba es experimentar un enfoque distinto para aumentar el número de elementos con los que la red entrenará: Un ensamblado de conjuntos de datos en el mismo idioma, aportando una mayor diversidad a los datos, y más capacidad de aprendizaje a la red.
+\paragraph{Datos y preprocesado} En las tres versiones de la prueba 3, se procedió a crear diferentes combinaciones de los datasets, una vez se extrajeron las características MFCC: En un primer lugar se juntaron RAVDESS y TESS dejando un total de 4240 muestras, por otro lado TESS y SAVEE con 3284, y finalmente la combinación de los tres RAVDESS, TESS y SAVEE con 4720 características. La figura \ref{ref:balanceTest3} nos muestra el balance de la distribución de las clases en cada uno de los conjuntos contruidos, y como podemos ver, están bien balanceados.
+\begin{table}[H]
+	\centering
+	\begin{center}
+		
+		\begin{tabular}{ c  c | c  c |c  c }
+			RAVDESS y &TESS & TESS y &SAVEE & RAVDESS, &TESS y SAVEE \\
+			\hline
+			asco 		& 592 & asco 		& 460 & asco 		& 652\\
+			felicidad 	& 592 & felicidad 	& 460 & felicidad 	& 652\\
+			sorpresa 	& 592 & sorpresa 	& 460 & sorpresa 	& 652\\
+			tristeza 	& 592 & tristeza 	& 460 & tristeza 	& 652\\
+			miedo 		& 592 & miedo 		& 460 & miedo 		& 652\\
+			enfado 		& 592 & enfado 		& 460 & enfado 		& 652\\
+			neutral 	& 496 & neutral 	& 524 & neutral 	& 616\\
+			\hline
+		\end{tabular}
+		
+		\caption{Balance entre las clases de las diferentes combinaciones (sin data augmentation)}
+		\label{ref:balanceTest3}
+	\end{center}
+\end{table}
+
+\paragraph{Entrenamiento}
+El entrenamiento de los tres modelos los diferentes conjuntos (tanto en la Prueba 3 como en la 3.B), siguió la misma estrategia, ya que el objetivo era obtener mayor accuracy mediante el incremento de muestras. Se consiguió una notable mejoría en comparación a las pruebas anteriores, alcanzando niveles similares a los que reporta la literatura.
+Paradójicamente, el que peores resultados logró fue la combinación con mayor número de características RAVEE, TESS y SAVEE con 4720 como vemos en la figura \ref{fig:accuTest3_A}.
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | c | c |}
+			\hline
+			RAVDESS y TESS & TESS y SAVEE & RAVDESS, TESS y SAVEE \\ 
+			\hline
+			\includegraphics[scale=0.15]{tests3/ravdess_tess.png} & \includegraphics[scale=0.15]{tests3/tess_savee_1cnn.png} & \includegraphics[scale=0.15]{tests3/ravdess_tess_savee.png}\\
+			\hline
+			
+			73.22\% accuracy & 84.39\%  accuracy & 66.96\% accuracy \\
+			\hline	
+		\end{tabular}
+		\caption{Prueba 3: Resultados tras ensamblar distintos datasets sin aumento de datos.}
+		\label{fig:accuTest3_A}
+	\end{center}
+\end{table}
+
+El uso de la técnica de aumento de datos, no arrojó una mejoría significativa como podemos comparar en la figura \ref{fig:accuTest3_B} (si acaso, una levísima reducción del overfitting).
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c | c | c | c | c | c |}
+			\hline
+			RAVDESS y TESS & TESS y SAVEE & RAVDESS, TESS y SAVEE \\ 
+			\hline
+			\includegraphics[scale=0.15]{tests3/ravdess_tessTest3_A.png} & 
+			\includegraphics[scale=0.15]{tests3/savee_tessTest3_A.png} & 
+			\includegraphics[scale=0.15]{tests3/ravdess_tess_savee_Aug.png}\\
+			\hline
+			
+			73.07\% accuracy & 84.32\%  accuracy & 81.52\% accuracy \\
+			\hline	
+		\end{tabular}
+		\caption{Prueba 3.B: Resultados tras ensamblar distintos datasets con aumento de datos.}
+		\label{fig:accuTest3_B}
+	\end{center}
+\end{table}
+
+\paragraph{Evaluación}
+Aunque hay margen de mejora, cabe resaltar el avance con respecto a las otras pruebas, y los resultados sugieren que la diversidad de datos es lo que conlleva un mejor rendimiento del modelo. En la prueba 3 (ya que los resultados de las tres opciones fueron proporcionales, en esta descripción se usa como referencia la subprueba con TESS y SAVEE, y a continuación se provee la tabla \ref{result_Test3} con los resultados de cada una de las combinaciones de esta prueba):
+
+\begin{itemize}
+	\item En las tres opciones, se mantuvo que el enfado fue el más difícil de distiguir: En TESS y SAVEE, su precisión fue tan sólo de 38\% mientras que el F1 subió hasta 55\%.
+	
+	\item El asco, el miedo, la tristeza y la neutralidad, se mantuvieron en un 100\% de precisión, pero su F1 fue de 87\% 87\% 90\% y 85\% respectivamente.
+	
+	\item La felicidad llegó 99\% de precisión pero su F1 fue de 78\%.
+	
+	\item La sorpresa finalmente también llegó al 99\% de precisión como la felicidad, pero su F1 se quedó en el 79\%.
+\end{itemize}
+
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c|| c c |  c c |  c c | }
+			\hline
+			\multicolumn{1}{|c||}{Emoción} & 
+			\multicolumn{2}{|c|}{RAVDES y SAVEE}&
+			\multicolumn{2}{|c|}{TESS y SAVEE} &
+			\multicolumn{2}{|c|}{RAVDES, TESS y SAVEE} \\
+			\hline
+			& 
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+			\hline
+			
+			asco 		& 1.00 & 0.68 & 1.00 & 0.87 & 1.00 & 0.59\\
+			felicidad 	& 1.00 & 0.67 & 0.99 & 0.78 & 1.00 & 0.62\\
+			sorpresa 	& 1.00 & 0.44 & 0.99 & 0.79 & 1.00 & 0.47\\
+			tristeza 	& 0.99 & 0.77 & 1.00 & 0.90 & 1.00 & 0.76\\
+			miedo 		& 0.99 & 0.81 & 1.00 & 0.87 & 0.98 & 0.70\\
+			enfado 		& 0.28 & 0.44 & 0.38 & 0.55 & 0.25 & 0.40\\
+			neutral 	& 1.00 & 0.88 & 1.00 & 0.85 & 1.00 & 0.76\\
+			\hline
+		\end{tabular}
+		
+		\caption{Resultado de la evaluación en cada una de las combinaciones de conjuntos de datos.}
+		\label{result_Test3}
+	\end{center}
+\end{table}
+
+
+\subsection{Pruebas 4 y 5}
+El objetivo de estas pruebas es experimentar el uso de los espectrogramas como entrada la red. Por una lado una red CNN bidimensional inspirada en el trabajo de \citep{Mustaqeem2020}, y por otro una arquitectura dual CNN y LSTM. Para no extender esta sección más de lo necesario, y teniendo en cuenta que el objetivo de tener un modelo preciso es poder testearlo con otros idiomas, se ha escogido el mejor resultado de la prueba anterior.
+%TODO: corregir y asegurarte de las dimensiones
+\paragraph{Datos y preprocesado}
+Este paso fue el mismo en ambas pruebas, la extracción de características  se llevó a cabo con el paquete Librosa, y después se procedió a generar los espectogramas. Se leyeron un total de 3284 imágenes, las cuales se recortaron con unas dimensiones de 30 x 40 píxeles.
+
+\subsubsection{Prueba 4}
+\paragraph{Entrenamiento}
+El modelo escogido para esta prueba (una red convolucional bidimensional) se entrenó durante 100 épocas con un batch de tamaño 32, llegando a un 91.10\% de precisión como vemos en la figura \ref{fig:cnn2d}. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{test4_5/savee_tess_cnn2d.png} 
+	\caption{Rendimiento del modelo CNN usando los datos de SAVEE y TESS}
+	\label{fig:cnn2d}
+\end{figure}
+
+Vemos que el modelo alcanza valores altos en una época temprana (en la \emph{epoch} 3  pasa de un 66\% de precisión en test a un 80\%), y se estabiliza en torno a la época 50 (90\% - 91\%).
+
+\paragraph{Evaluación}
+Esta prueba supuso una sólida mejora en comparación a las pruebas anteriores, ya que los resultados fueron bastante satisfactorios. En la tabla \ref{result_Test4} podemos ver la capacidad del modelo para reconocer cada clase, observando que en concordancia con los resultados obtenidos hasta ahora, el enfado es la que menos puntúa, mientras que la tristeza la que es más fácil de reconocer.
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c|| c c | }
+			\hline
+			\multicolumn{1}{|c||}{Emoción} & 
+			\multicolumn{2}{|c|}{TESS y SAVEE} \\
+			\hline
+			& 
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+			\hline
+			asco 		&  0.96 &  0.91 \\
+			felicidad 	&  0.94 &  0.91 \\
+			sorpresa 	&  0.96 &  0.94 \\
+			tristeza 	&  0.99 &  0.94 \\
+			miedo 		&  0.95 &  0.92 \\
+			enfado 		&  0.75 &  0.85 \\
+			neutral 	&  0.89 &  0.93 \\
+			\hline
+		\end{tabular}
+		
+		\caption{Prueba 4: Resultados del modelo CNN entrenado con espectogramas MFCC exrtaídos de la combinación de los conjuntos de datos TESS y SAVEE.}
+		\label{result_Test4}
+	\end{center}
+\end{table}
+
+\subsubsection{Prueba 5}
+\paragraph{Entrenamiento}
+En esta prueba el modelo escogido (red CNN bidimensional con salida LSTM) fue entrenada durante 100 épocas con batch de tamaño 32 llegando a un 90.37\% de precisión. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{test4_5/savee_tess_lstmcnn2d.png} 
+	\caption{Rendimiento del modelo CNN - LSTM usando los datos de SAVEE y TESS}
+	\label{fig:lstm-cnn}
+\end{figure}
+
+Si observamos la figura \ref{fig:lstm-cnn}, al igual que en la prueba 4, en el entrenamiento se alcanzaron valores altos en una época temprana (en la \emph{epoch} 5  pasa de un 78\% a un 80\% de precisión en test), y se estabiliza en torno a la época 65 (90\% ~ 91\%).
+
+\paragraph{Evaluación}
+Junto con la prueba 4, estas fueron las que mejores resultados reportaron, despejando cualquier duda sobre la eficacia de trabajar con espectrogramas. En la tabla \ref{result_Test5} observamos ciertas curiosidades.
+\begin{itemize}
+	\item Se mantiene que el enfado es el que más cuesta reconocer, pero sin embargo es la única emoción cuya F1 es más alta que su precisión. Esto también ocurre en las pruebas anteriores.
+	
+	\item La que puntúa más alto, es el asco, en lugar de la tristeza como ocurren en las pruebas anteriores, sin embargo podemos ver que tristeza, asco, sorpresa, felicidad y miedo son las que más fácilmente reconoce. 
+	
+	\item El miedo y el estado neutral, mantienen unos valores muy estables entre la precisión y F1.
+\end{itemize}
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c|| c c | }
+			\hline
+			\multicolumn{1}{|c||}{Emoción} & 
+			\multicolumn{2}{|c|}{TESS y SAVEE} \\
+			\hline
+			& 
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+			\hline
+			asco 		& 1.00 & 0.95 \\
+			felicidad 	& 0.98 & 0.93 \\
+			sorpresa 	& 0.99 & 0.93 \\
+			tristeza 	& 0.96 & 0.90 \\
+			miedo 		& 0.92 & 0.92\\
+			enfado 		& 0.69  & 0.81 \\
+			neutral 	& 0.88 & 0.89\\
+			\hline
+		\end{tabular}
+		
+		\caption{Prueba 5: Resultados del modelo CNN-LSTM entrenado con espectogramas MFCC extradídos de la combinación de los conjuntos de datos TESS y SAVEE.}
+		\label{result_Test5}
+	\end{center}
+\end{table}
+
+\section{Evaluación con otros Lenguajes}
+En esta segunda parte hablaremos del desarrollo de las pruebas donde los modelos más exitosos de las pruebas anteriores, son validados en idiomas extranjeros.
+Hay que mencionar, que los datos de entrenamiento se preprocesaron exactamente igual que en las pruebas donde sus correspondientes modelos formaron parte (el modelo CNN 1D en la prueba 3.B, el modelo CNN 2D en la prueba 4 y el modelo CNN-LSTM 2D en la prueba 5 ) por lo que carece de interés repetir aquí la misma información. 
+Por la misma razón tampoco se comentará el entrenamiento, que de poco se diferencia de las pruebas ya mencionadas.
+
+\subsection{Pruebas 6, 7 y 8}
+Las pruebas 6, 7 y 8 evaluarán un sistema que es capaz de clasificar en inglés, con la expresión de emociones en alemán usando la base de datos EMO-DB. Aunque la prueba principal era evaluar el mejor modelo resultante de las pruebas anteriores, hemos decidido que sería interesante evaluarlo en aquellos modelos que no dieron tan buen resultado (por encima del 80\% de exactitud como se dijo en el capítulo 3, de otro modo esos resultados podrían ser demasiado aleatorios).
+
+\paragraph{Datos y preprocesado}
+
+Tras utilizar técnicas de aumento de datos en EMO-DB, y balancearlo, la distribución entre las clases quedó como se muestra en la tabla \ref{ref:balanceTest678}
+La reducción de las emociones para que las bases de datos casaran, mermó el conjunto de validación a 455 características, y el de entrenamiento por consiguiente a 2364 características.
+
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{ c  c | c  c |c  c }
+			\multicolumn{2}{c|}{Prueba 6} &
+			\multicolumn{2}{|c|}{Prueba 7} &
+			\multicolumn{2}{|c}{Prueba 8} \\
+			\hline
+			asco 		& 90 & asco 	& 90 & asco 	  & 90\\
+			felicidad 	& 91 & felicidad & 91 & felicidad & 91\\
+			tristeza 	& 92 & tristeza & 92 & tristeza   & 92\\
+			enfado 		& 91 & enfado 	& 91 & enfado 	  & 91\\
+			neutral 	& 91 & neutral 	& 91 & neutral 	  & 91\\
+			\hline
+		\end{tabular}
+		
+		\caption{Balance entre las clases pertenecientes a EMOD-DB, tras preprocesarlo para usarlo en las correspondientes pruebas.}
+		\label{ref:balanceTest678}
+	\end{center}
+\end{table}
+
+\paragraph{Evaluación}
+Los resultados en general, fueron bastante pésimos consiguiendo un 27\%, 22\% y 28\% de precisión respectivamente.
+En la tabla \ref{results_TestGerman} se muestran los resultados conseguidos tras haber evaluado los modelos anteriores con el idioma alemán.
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c|| c c |  c c |  c c | }
+			\hline
+			\multicolumn{1}{|c||}{Emoción} & 
+			\multicolumn{2}{|c|}{Modelo CNN 1D}&
+			\multicolumn{2}{|c|}{Modelo CNN 2D} &
+			\multicolumn{2}{|c|}{Modelo CNN-LSTM} \\
+			
+			\hline
+			& 
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+			\hline
+			
+			asco 		& 0.25 & 0.20 & 0.17 & 0.10 & 0.17 & 0.19 \\
+			felicidad 	& 0.57 & 0.56 & 0.32 & 0.11 & 0.49 & 0.28 \\
+			tristeza 	& 0.49 & 0.32 & 0.07 & 0.08 & 0.27 & 0.23 \\
+			enfado 		& 0.16 & 0.23 & 0.18 & 0.14 & 0.30 & 0.26\\
+			neutral 	& 0.27 & 0.16 & 0.32 & 0.46 & 0.31 & 0.40\\
+			\hline
+		\end{tabular}
+		
+		\caption{Resultados al evaluar los mejores modelos con el idioma alemán.}
+		\label{results_TestGerman}
+	\end{center}
+\end{table}
+
+Desgraciadamente, no se pudo encontrar ninguna relación en el reconocimiento de emociones entre los modelos, así como en la sección anterior vimos que la emoción más difícil de distinguir era el asco, aquí difícilmente se ve un patrón.\\
+En la prueba 6 con el Modelo CNN 1D, el más difícil de clasificar es el estado neutral, mientras que en el Modelo CNN 2D el que más le cuesta es la tristeza, y en el Modelo CNN-LSTM, el asco.
+
+\subsection{Prueba 9, 10 y 11}
+Este conjunto de pruebas están dedicadas a la evaluación de los modelos que puntuaron más alto en la sección \ref{cap:4ModeloOptimo}, en el idioma francés.
+\paragraph{Datos y preprocesado}
+Una vez se preprocesaron los datos como se especifica en el capítulo 4, el balance del conjunto de entrenamiento quedó como se muestra en la tabla \ref{ref:balanceTest91011}.
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{ c  c | c  c |c  c }
+			\multicolumn{2}{c|}{Prueba 9} &
+			\multicolumn{2}{|c|}{Prueba 10} &
+			\multicolumn{2}{|c}{Prueba 11} \\
+			\hline
+			asco 		& 107 & asco 		& 107 & asco 	  & 107	\\
+			felicidad 	& 107 & felicidad 	& 105 & felicidad & 105	\\
+			tristeza 	& 107 & tristeza 	& 108 & tristeza  & 108	\\
+			enfado 		& 107 & enfado 		& 108 & enfado 	  & 108	\\
+			neutral 	& 107 & neutral 	& 106 & neutral   & 106	\\
+			sorpresa 	& 106 & sorpresa 	& 108 & sorpresa  & 108 \\
+			miedo 		& 107 & miedo		& 106 & miedo 	  & 106 \\
+			\hline
+		\end{tabular}
+		
+		\caption{Balance entre las clases pertenecientes a CAFFE, tras preprocesarlo para usarlo en las correspondientes pruebas.}
+		\label{ref:balanceTest91011}
+	\end{center}
+\end{table}
+En las tres pruebas se extrajeron 13 características MFCC, con la diferencia de que en las pruebas 10 y 11, se generaron los espectrogramas a partir de esas características.
+
+\paragraph{Evaluación}
+Los resultados de la clasificación de cada emoción por cada uno de los modelos se muestra en la tabla \ref{results_TestFrench}.
+
+\begin{table}[H]
+	\centering
+	\begin{center}
+		\begin{tabular}{| c|| c c |  c c |  c c | }
+			\hline
+			\multicolumn{1}{|c||}{Emoción} & 
+			\multicolumn{2}{|c|}{Modelo CNN 1D}&
+			\multicolumn{2}{|c|}{Modelo CNN 2D} &
+			\multicolumn{2}{|c|}{Modelo CNN-LSTM} \\
+			
+			\hline
+			& 
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}&
+			\multicolumn{1}{|c|}{Accuracy}&\multicolumn{1}{|c|}{F1}\\
+			\hline
+			
+			asco 		& 0.00 & 0.00 & 0.15 & 0.20 & 0.21 & 0.22\\
+			felicidad 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.18 & 0.25 \\
+			tristeza 	& 0.28 & 0.18 & 0.23 & 0.10 & 0.21 & 0.11 \\
+			enfado 		& 0.14 & 0.23 & 0.19 & 0.22 & 0.20 & 0.26 \\
+			neutral 	& 0.00 & 0.00 & 0.17 & 0.20 & 0.35 & 0.11 \\
+			sorpresa 	& 0.00 & 0.00 & 0.11 & 0.03 & 0.36 & 0.24 \\
+			miedo 		& 0.09 & 0.07 & 0.20 & 0.09 & 0.11 & 0.10 \\
+			\hline
+		\end{tabular}
+		
+		\caption{Resultados al evaluar los mejores modelos con el idioma francés.}
+		\label{results_TestFrench}
+	\end{center}
+\end{table}
+
+Aunque los resultados son realmente pobres, encaja con las expectativas previas, en las que los modelos evaluados en este idioma tendrían un peor desempeño. Por otro lado vuelve a cumplirse, que el Modelo basado en redes convolucionales unidimensionales (Modelo CNN 1D) tiene una precisión más baja en general, en comparación con el enfoque que trabaja con espectrogramas (Modelo CNN 2D y Modelo CNN-LSTM).
+
+
+
+\chapter{Conclusiones y Trabajo Futuro}
+
+\section{Análisis de los resultados}
+El objetivo de los dos primeros bloques (pruebas 1, 1.B, 2 y 2.B) fue ver el comportamiento del método elegido para el desarrollo inicial de las pruebas con el conjunto de datos RAVDESS. Aunque la observación de los datos llevó a la conclusión de que una separación por género tendría sentido, los datos no fueron consistentes, dando las dos divisiones, porcentajes de exactitud muy diferentes además de un enorme desajuste. Tras aplicar distintas técnicas de aumento de datos se pudo apreciar una sólida reducción del overfitting, por lo que las siguientes pruebas se orientaron a la combinación de dichas técnicas con el objetivo de aumentar el accuracy, incrementando el número de muestras pero esta relación no era lineal. La combinación de las tres técnicas (ruido blanco, desplazamiento y modulación) con un total de 5760 muestras, no sobresalió demasiado en comparación con el uso de una sola técnica. 
+Cabe destacar que, el modelo debió ser profundamente simplificado con el fin de reducir el overfitting, y que al contrario de \citep{Mustaqeem2020} no se planteó la disminución del número de emociones, de cara a los futuros idiomas con los que se evaluaría (por ejemplo, para poder cuadrar el máximo número de emociones posible).
+
+Dados los resultados de las pruebas anteriores, y teniendo en cuenta que una vez conseguido un modelo suficientemente preciso, se evaluaría con otros idiomas, se decidió apostar por una estrategia para el aumento de datos distinta. El ensamblado de diferentes conjuntos aportó la variabilidad en los datos de la que carecía RAVDESS en un primer momento, y apuntó la dirección hacia la que se debía trabajar.
+Cabe destacar los sorprendentes resultados que se obtuvieron en comparación a los anteriores: TESS y SAVEE con 3284 muestras, consiguieron un 84.39\% frente al 40.30\%  que se ganó con la combinación de las tres técnicas propuestas de aumento de datos (con 5760 muestras). La aplicación de aumento de datos en este bloque no arrojó resultados demasiado diferentes salvo en el caso de la combinación RAVDESS, TESS y SAVEE:
+\begin{itemize}
+	\item RAVDESS y SAVEE pasaron de 4240 muestras con un 73.22\% de precisión, a 8096 instancias con 73.07\% en su versión aumentada.
+	
+	\item TESS y SAVEE pasaron de sólo 3280 muestras con un 84.39\% de precisión, a 6560 instancias con un 84.32\%.
+	
+	\item RAVDESS, TESS y SAVEE, sin embargo, pasaron de un 66.96\% con 4720 muestras a un 81.52\% con 13696 instancias.
+\end{itemize}
+
+Por lo que como conclusión en esta parte, pudimos comprobar la importancia de la variabilidad en los datos, donde a la hora de incrementar la accuracy, apostar por esta característica es más eficiente que técnicas más tradicionales de aumento de datos.
+
+Las pruebas 4 y 5 exploraron el uso de espectrogramas con características MFCC como estrategia. El uso de imágenes consiguió los mejores resultados hasta el momento, con un 91\% en CNN y y 90\% en CNN-LSTM en una clasificación de 7 emociones en inglés. 
+% debido a los avances con CNN blablabla
+En todas las pruebas que se hicieron en este idioma, pudimos observar que en enfado era la emoción más complicada de distinguir sugiriendo así un patrón para este lenguaje.
+No obstante, en las pruebas donde el mismo modelo entrenado en inglés se evaluaba con otros idiomas, este patrón no se pudo encontrar de manera tan clara.
+Tal y como predijimos, obtuvimos un porcentaje de accuracy un poco mayor en la evaluación con alemán (lengua con raíces fonéticas más próximas al idioma que se usó en el entrenamiento), que en la evaluación con francés (lengua con raíces fonéticas más lejanas al idioma que se usó en el entrenamiento). La reducción del número de emociones en las pruebas hechas con alemán, no elevaron las posibilidades de una mejor clasificación en cada categoría, donde la felicidad fue la emoción donde se consiguió un porcentaje de acierto más alto con un 57\% en un modelo CNN unidimensional, y 32\% y 49\% trabajando con espectrogramas en los modelos CNN y LSTM-CNN respectivamente.
+Por otro lado, las pruebas donde se evaluaba el francés, fueron aún más pobres. Los distintos modelos fueron incapaces de reconocer ciertas emociones (entre ellas, la felicidad), lo cual contrasta con las observaciones que habíamos hecho con la evaluación en alemán.
+Por lo que respecta a los experimentos hechos evaluando una lengua extranjera, llegamos a las mismas conclusiones que Tamulevicius \citep{Tamulevicius2020} donde tras hacer diversas pruebas con diferentes idiomas, únicamente puede reconocer aquellos con los que entrena su modelo. 
+La estrategia que se planteó donde las lenguas extranjeras se dividían según su similitud fonética parece no ser muy relevante coincidiendo con \citep{Pell2008} donde afirma que para reconocer el estado emocional en una lengua no aprendida, se necesita mayor exposición a esta.
+%[...]
+Queda claro la superioridad de una arquitectura bidimensional frente a una unidimensional en tareas de clasificación en la propia lengua, pero llama la atención que el modelo no fuera capaz de abstraer la información extraída de las características para clasificar emociones en otras lenguas (incluso reduciendo el número de categorías). Haciendo una revisión de lo aprendido en este trabajo, hacemos algunas observaciones sobre por qué, usando espectrogramas que han resultado ser tan exitosos, no se comportan de la misma manera en otros lenguajes:
+
+\begin{itemize}
+	\item Los objetos visuales y los sonidos no se agrupan en una imagen de la misma manera. Cuando nos encontramos un píxel de un determinado color en una imagen se puede asumir que pertenece a un determinado objeto. Por el contrario, los cambios instantáneos en las características del sonido como el tono o la intensidad, no se separan en capas distinguibles en un espectograma. Esto quiere decir que no se puede asumir que una determinada frecuencia representada en un espectrograma pertenezca a un determinado tipo de sonido (por ejemplo, podría estar producida por la interacción de varias ondas). En definitiva, esto hace que separar sonidos simultáneos en espectrogramas tal y como lo hacemos con objetos opacos en imágenes, sea especialmente difícil \citep{Wyse2017}. %https://towardsdatascience.com/whats-wrong-with-spectrograms-and-cnns-for-audio-processing-311377d7ccd
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.9]{spectrogramsEmotions.JPG} 
+		\caption{Espectrogramas de tres emociones en tres bases de datos distintas.}
+		\label{fig:spectroEmo}
+	\end{figure}
+	
+	\item Los ejes x e y de una imagen no tienen el mismo significado que en un espectrograma. Por ejemplo, un perro en una foto, seguiría siendo un perro independientemente si se mueve horizontal o verticalmente en la imagen. Sin embargo esto no ocurre de la misma manera en un espectrograma donde estas dos dimensiones representan unidades distintas: frecuencia y tiempo \citep{spectrograms2021}.
+	
+	\item La forma en la que procesamos esas señales no es comparable. A la hora de localizar un objeto de manera visual en nuestro entorno, escaneamos lo que nos rodea varias veces, ya que los objetos que lo conforman son estáticos. 
+	Por otro lado, un sonido toma la forma física de la presión manifestada en la onda, y desde el punto de vista de quien la percibe, esa determinada onda con un determinado estado sólo existe en un momento específico. Dicho de otro modo, la información que contiene una onda de audio está dispuesta de manera secuencial
+	\citep{JHui2019}.
+	
+\end{itemize} 
+
+\section{Trabajo futuro}
+
+Debido a los ajustados tiempos de entrega, el alcance de este proyecto se ha debido simplificar, por lo que se plantean líneas de trabajo futuras:
+
+En este trabajo se han explorado el reconocimiento de emociones en la voz usando características cepstrales, ya que sabíamos por nuestra revisión del estado del arte, que eran de las que mejor funcionaban. Aunque los resultados del clasificador sobre una sola lengua, estuvieron a la altura de otros estudios, atendiendo al análisis previo en este mismo capítulo, creemos que esta no es la mejor manera de abordar ese problema.
+%ya que aunque la imagen de un espectograma aprovecha los beneficios las redes convolucionales, 
+Por un lado se cree que sería recomendable no tratar las emociones como categorías discretas, ya que varían enormemente de un lenguaje a otro. Esto requiere un análisis más en profundidad sobre la fonética en el idioma en cuanto a la expresión emocional para conseguir una mayor independencia cultural.
+
+Por otro lado, y aunque el tiempo dedicado a la tesis no lo ha permitido, sería interesante explorar la combinación mecanismos de atención junto al punto anterior, ya que podrían computar segmentos relevantes de la señal de audio y conseguir así mejor generalización \citep{Yoon2019}. 
+
+
+%\begin{thebibliography}{a}
+%\bibitem{etiqueta} \textsc{Autores},
+%\textit{nombre referencia.}
+%Información addicional
+%\end{thebibliography}
+%\bibliographystyle{plain} 
+%\bibliography{bibliografia}
+
+
+\printbibliography
+
+%\bibliographystyle{apacite}
+%\bibliography{./bibLib/referenceLib.bib}
+
+\appendix
+\chapter{Apendices}
+Atención, deberá generar un pdf con la plantilla de artículo y añadirla como anexo utilizando includepdf.
+
+%\includepdf[pages=-]{anexo.pdf} %descomentar cuándo esté el artículo terminado.
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
