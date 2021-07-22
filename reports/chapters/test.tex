@@ -69,14 +69,14 @@
 \listoftables
 
 \chapter{Resumen}
-En este estudio se llevó a cabo un reconocimiento emocional de la voz multi-lingüístico. Para ello, se implementaron tres modelos distintos entrenados en inglés, y posteriormente fueron evaluados en dos lenguas extranjeras que no formaron parte del entrenamiento (francés y alemán). Las características cepstrales de la escala de Mel se extrajeron a partir de las muestras de audio y fueron usadas en los tres clasificadores con una arquitectura basada en redes convolucionales. El uso de espectrogramas en una arquitectura híbrida de redes convolucionales y LSTM se mostró superior frente a los otros, consiguiendo un 92.06 \% de exactitud en una clasificación monolingu?ística. Por otro lado, la clasificación multi-lingüística no arrojó resultados satisfactorios aplicando el mismo método.
+En este estudio se llevó a cabo un reconocimiento emocional de la voz multi-lingüístico. Para ello, se implementaron tres modelos distintos entrenados en inglés, y posteriormente fueron evaluados en dos lenguas extranjeras que no formaron parte del entrenamiento (francés y alemán). Las características cepstrales de la escala de Mel se extrajeron a partir de las muestras de audio y fueron usadas en los tres clasificadores con una arquitectura basada en redes convolucionales. El uso de espectrogramas en una arquitectura híbrida de redes convolucionales y LSTM se mostró superior frente a los otros, consiguiendo un 92.06 \% de exactitud en una clasificación monolingu?ística. Por otro lado, la clasificación multi-lingüística no arrojó resultados satisfactorios aplicando el mismo método.\\
 
 
 {\bf Palabras Clave:} CNN-LSTM, Reconocimiento de emociones en el habla, características espectrales, Lengua extranjera.
 
 \chapter{Abstract}
 
-This work performs a speech emotional recognition through three languages. For this purpose, three different models have been implemented and trained in english, and subsequently tested in other two languages which never took part in the training (french and german). It is assumed that speech audio signals carry emotional information that can be retrieved and hence MFCC features are extracted since they are recognized as best suited to represent emotions through prosody. Different classifiers based on convolutional neural network (CNN) architecture are used (unidimensional CNN, bidimensional CNN and LSTM-CNN). The results show that CNN-LSTM outperforms over the other options with a 92.06\% in a monolinguistic clasification in english, while appliying the same approach in a cross language classification did not deliver satisfactory results.
+This work performs a speech emotional recognition through three languages. For this purpose, three different models have been implemented and trained in english, and subsequently tested in other two languages which never took part in the training (french and german). It is assumed that speech audio signals carry emotional information that can be retrieved and hence MFCC features are extracted since they are recognized as best suited to represent emotions through prosody. Different classifiers based on convolutional neural network (CNN) architecture were used (unidimensional CNN, bidimensional CNN and LSTM-CNN). The results show that CNN-LSTM outperforms over the other options with a 92.06\% of accuracy in a monolinguistic clasification in english, while appliying the same approach in a cross language classification did not deliver satisfactory results.\\
 
 {\bf Keywords:} CNN-LSTM, foreign language, MFCC, spectral features, Speech Emotion Recognition.
 
@@ -100,19 +100,19 @@ El espectro emocional que una persona esconde en su discurso es un factor esenci
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.8]{dimensionThankYou.JPG} 
-	\caption{Dimensiones acústicas en la forma de decir "Thank you". Fuente: \href{https://otosystemsinc.medium.com/introducing-oto-99199a9b2c1b}{OTO}}
+	\caption{Dimensiones acústicas en la forma de decir "Thank you". Fuente: \href{https://otosystemsinc.medium.com/introducing-oto-99199a9b2c1b}{OTO Systems}}
 	\label{fig:thankyou}
 \end{figure}
 
-Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy \citep{Lisetti1998}. La importancia de la interacción con las máquinas a través de comandos de voz, se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri en Apple \citep{Effron2011} o Alexa en Amazon \citep{Arnold2017} , que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos \citep{OTOPersonalAssistance}.
-En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo dieciséis palabras y dígitos\citep{IBMser}, hasta la aparición de Google Home en 2017 \citep{Hautala2015}, este tipo de asistentes han ido mejorando su alcance y capacidades.\\
+Es indudable el impacto que ha creado la inteligencia artificial en la forma en la que nos comunicamos con las máquinas a día de hoy \citep{Lisetti1998}. La importancia de la interacción con las máquinas a través de comandos de voz se ha visto acentuada gracias a la aparición de asistentes inteligentes como Siri en Apple \citep{Effron2011} o Alexa en Amazon \citep{Arnold2017} , que han explotado las diferentes áreas del análisis de la voz con el objetivo de mejorar la experiencia de usuario. Otras compañías como OTO han desarrollado modelos de análisis de voz capaces de detectar atributos únicos en la voz del interlocutor, lo que es usando por centros de asistencia telefónica para potenciar y mejorar sus sistemas automáticos \citep{OTOPersonalAssistance}.
+En definitiva, desde el primer software de reconocimiento por voz que fue presentado por IBM en 1961 reconociendo dieciséis palabras y dígitos \citep{IBMser}, hasta la aparición de Google Home en 2017 \citep{Hautala2015}, este tipo de asistentes han ido mejorando su alcance y capacidades.\\
 % SEGUIR CON ESTO
 %https://www.arxiv-vanity.com/papers/1912.10458/
 
 El uso de estos asistentes no sólo se limita al ámbito doméstico, ya que esta tendencia empieza a extenderse hasta en la aplicación de asistentes personalizados para coches automáticos y asistencia de ayuda telefónica en la industria médica.
 Por ejemplo, el uso de altavoces inteligentes han demostrado su efectividad en contrarrestar los efectos de la soledad, el aislamiento y la depresión en personas de la tercera edad al ser usadas en residencias \citep{Mizak2017}.
 Novel Effect integró sus sistemas con Alexa (Amazon) para crear una tecnología que ofrece una lectura interactiva con fines educativos incrementando la retención de contenidos y su comprensión \citep{Rowe2018}.
-De la misma manera compañías como Capital One en la industria financiera, o KAYAK en el sector turístico han integrado también sus sistemas con Alexa para dar soporte a sus clientes \citep{Collier2016} y \citep{John2017}.
+De la misma manera, compañías como Capital One en la industria financiera, o KAYAK en el sector turístico han integrado también sus sistemas con Alexa para dar soporte a sus clientes \citep{Collier2016} y \citep{John2017}.
 
 %	REF https://hbr.org/2019/04/your-company-needs-a-strategy-for-voice-technology-2
 Sin embargo, a pesar de los avances tecnológicos, estos asistentes de voz normalmente carecen de la habilidad de reconocer el estado emocional del usuario, y cerrar esta brecha podría ser un gran avance en las industrias ya mencionadas. 
@@ -133,9 +133,9 @@ Este trabajo de fin de máster se centra en el uso de técnicas basadas en redes a
 
 Para ello, el trabajo se divide en dos objetivos principales: el primero será conseguir un modelo lo suficientemente preciso en una sola lengua, y el segundo comparar su comportamiento con otros lenguajes.
 
-Con respecto a esta disciplina, y como ya se verá en el capítulo 2, existen estudios (en el reconocimiento de emociones en una sola lengua) combinando numerosas variables a tener en cuenta, por lo que se probarán distintos enfoques, analizando sus fortalezas y debilidades.
+Con respecto a esta disciplina, y como ya se verá en el capítulo 2, existen estudios (en el reconocimiento de emociones en una sola lengua) combinando numerosas variables a tener en cuenta, por lo que se probarán distintos enfoques analizando sus fortalezas y debilidades.
 
-Una de las limitaciones a las que se hace frente, es el reducido número de muestras en las distintas bases de datos disponibles para entrenar el modelo. Teniendo en cuenta esto, y que el objetivo es incrementar las oportunidades de clasificación en otros conjuntos, este problema se resolverá combinando datos de varias bases de datos distintas, lo que aportará variabilidad a los datos de entrenamiento. Por otro lado, debido a que la mayoría de trabajos encontrados que realizan esta clasificación emocional son en una sola lengua, se parte de un enfoque más ingenuo donde se asume que las señales de audio transportan suficiente información que puede ser extraída. 
+Una de las limitaciones a las que se hace frente es el reducido número de muestras en las distintas bases de datos disponibles para entrenar el modelo. Teniendo este punto en cuenta y que el objetivo es incrementar las oportunidades de clasificación en otros conjuntos, este problema se resolverá combinando datos de varias bases de datos distintas, lo que aportará variabilidad a los datos de entrenamiento. Por otro lado, debido a que la mayoría de trabajos encontrados que realizan esta clasificación emocional son en una sola lengua, se parte de un enfoque más ingenuo donde se asume que las señales de audio transportan suficiente información que puede ser extraída. 
 
 La evaluación del modelo resultante en otros idiomas no será de manera arbitraria, sino que, dentro de los conjuntos disponibles que se encuentren, seguirá una estrategia atendiendo al grado de proximidad fonética para ver las diferencias.
 
@@ -151,7 +151,7 @@ Con este estudio se pretende entender mejor la relación entre emoción e idioma y
 			\item El planteamiento del trabajo, que propone de manera general cómo solucionar el problema que se va a encarar.
 		\end{itemize}
 		
-		\item Seguidamente en el Contexto y estado del arte, se realizará una revisión de la literatura actual en relación con el tema a tratar. Se analizarán los resultados conseguidos hasta el momento así como las técnicas y métodos más usados en este ámbito, en concreto tendrá la siguiente estructura:
+		\item Seguidamente, en el Contexto y estado del arte se realizará una revisión de la literatura actual en relación con el tema a tratar. Se analizarán los resultados conseguidos hasta el momento así como las técnicas y métodos más usados en este ámbito, en concreto tendrá la siguiente estructura:
 		\begin{itemize}
 			\item Se presentan las características fonéticas del habla y su trasfondo teórico, analizando las posibles limitaciones, o características a tener en cuenta a modo de introducción a las siguientes secciones que son más técnicas.
 			
@@ -183,28 +183,28 @@ Con este estudio se pretende entender mejor la relación entre emoción e idioma y
 \chapter{Estado del Arte}
 \section{Contexto}
 El reconocimiento de emociones en el habla es una disciplina en inteligencia artificial que trata de reconocer y clasificar emociones a través de la señal de voz. Este campo de estudio se ha hecho cada vez más popular, pero su origen se remonta a 1996, desde que se presentara el primer trabajo defendible sobre el tema "Reconociendo emociones en el habla" por F.Daellert \citep{Dellaert1996}.
-Desde entonces, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo en su gran mayoría, se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. \\
+Desde entonces, el reconocimiento de emociones a través de la voz ha sido motivo de interés para la investigación, sin embargo, en su gran mayoría se ha estudiado sobre un mismo lenguaje debatiendo la habilidad de reconocer y clasificar las emociones oralmente expresadas. \\
 
-El presente capítulo está dividido en dos partes, en el primero se hablará de los conceptos inherentes a las características fonéticas en el discurso que es el tema en torno al que gira este trabajo, y por otro lado, cómo se puede orientar ese problema con técnicas de aprendizaje profundo haciendo una revisión de la literatura.
+El presente capítulo está dividido en dos partes: en la primera se hablará de los conceptos inherentes a las características fonéticas en el discurso, que es el tema en torno al que gira este trabajo. En la segunda parte, cómo se puede orientar ese problema con técnicas de aprendizaje profundo haciendo una revisión de la literatura.
 
 
 
 \subsection{Características fonéticas en el habla}
 El objetivo del reconocimiento de emociones en el habla es reconocer el trasfondo emocional del mensaje a través de la voz. Esta manifestación sonora posee factores clave para la comunicación humana que ayudan en su interacción sin alterar el contexto del mensaje.\\
 
-La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \citep{Pell2001} por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono sino también el patrón lingüístico asociado \citep{Davletcharova2015}.
+La expresión de las emociones están íntimamente relacionadas con las propiedades fonéticas en el habla donde se observan señales y patrones para marcar contrastes lingüísticos en un idioma \citep{Pell2001}, por lo tanto, los efectos del lenguaje en la comunicación emocional son evidentes al haber sido observadas y medidas las variaciones en el rango tonal y la frecuencia para expresarlas, cambiando no sólo el tono sino también el patrón lingüístico asociado \citep{Davletcharova2015}.
 Por otro lado tanto la proporción de consonantes y vocales (que hacen variar la presión de aire que se necesita), como el ratio de sílabas por palabra en cada idioma, caracterizan la expresión oral de las emociones. Existen muchos factores relacionados con el lenguaje como la morfología o la duración del estímulo que podrían tener un impacto en la decodificación de los matices en la señal vocal, tal y como se explica en \citep{Chen2017}.
 Existe una clasificación dependiendo de la velocidad silábica en la expresión de dichos idiomas, sin embargo poco se conoce acerca de los efectos en las medidas respiratorias en el habla \citep{XHuan2001}. Esta observación puede llevar a que se pregunte si en lenguajes que son muy distintos fonéticamente, las emociones expresadas mediante la voz puedan ser reconocidas desde el punto de vista del otro idioma.\\
-Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que para este trabajo, se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
+Normalmente estos estudios se llevan a cabo en un único lenguaje, lo que para este trabajo se traduciría como el reconocimiento de emociones llevado a cabo en la lengua materna; Mientras este ejercicio puede llegar a ser intuitivo, distinguir las mismas emociones en la lengua extranjera supone un reto ya que implicaría importantes matices culturales. Por ejemplo, no sería lo mismo entender qué emociones intenta expresar un italo parlante desde el punto de vista de una persona que entiende el español (ambas lenguas latinas), que comprender las mismas emociones del discurso desde un germano hablante. Así bien, es importante definir qué idioma se está reconociendo y desde cuál, por lo que analizar las raíces lingüísticas y fonéticas de los idiomas a estudiar es esencial. \hfill \break
 
 \subsection{Reconocimiento emocional del discurso}
-Atendiendo a la manera de cómo modelar las emociones de manera que esta información se pueda extraer de señales acústicas \citep{Kumar2019}, se parte de estudios en psicología donde, la clasificación de emociones se ha tratado desde dos enfoques principales:
+Atendiendo a la manera en cómo se modelan las emociones de manera que esta información pueda ser extraída a partir de señales acústicas \citep{Kumar2019}, se parte de estudios en psicología donde la clasificación de emociones se ha tratado desde dos enfoques principales:
 \begin{itemize}
-	\item Las emociones como categorías discretas
-	\item Las emociones vistas a través de un modelo dimensional
+	\item Las emociones como categorías discretas.
+	\item Las emociones vistas a través de un modelo dimensional.
 \end{itemize}
 
-En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \citep{Ekman1992} quien estableció que estas eran 6: Enfado, Asco, Miedo , Felicidad, Tristeza y Sorpresa.
+En el primer punto, a todos los humanos se les atribuye un conjunto de emociones básicas que pueden ser reconocidas interculturalmente. El debate se centra en la definición de dichas emociones, y fue Paul Elkman y su equipo en 1992 \citep{Ekman1992} quien estableció que estas eran seis: Enfado, Asco, Miedo , Felicidad, Tristeza y Sorpresa.
 En el segundo punto, las emociones se definen respecto a una o más dimensiones, donde normalmente las dimensiones que se comprenden tienden a ser la afectividad, la excitación o la intensidad. Aquí la discusión se centra en encontrar el número de dimensiones que dé lugar a un modelo coherente y pueda incluir las emociones conocidas. El modelo de Plutchik \citep{Plutchik2001} sea quizá el más conocido en este enfoque, y propone un modelo tridimensional que organiza las emociones en círculos concéntricos situando la más básicas en el centro como se representa en la figura \ref{fig:Plutchik}. \\
 
 \begin{figure}[H]
@@ -220,20 +220,20 @@ Sin embargo, por cuestiones de simplicidad, la mayoría de los estudios centrados
 
 \subsubsection{Extracción de Características}
 La extracción de características es una de las secciones más importantes en el reconocimiento de emociones a través de la voz debido a la ambigüedad de las características y la variedad vocal. La extracción de características es el paso principal en el procesamiento del diálogo, y se lleva a cabo para centrarse en la información contenida en la señal y mejorar el grado de similitud y/o diferenciación entre las clases \citep{Hellbernd2016}. Hasta ahora, por lo general hay dos enfoques principales  con respecto al tipo de características usadas en el Reconocimiento de Emociones en el Discurso:\\
-Los rasgos prosódicos, los cuales extraen información de la prosodia, en concreto, tono, energía y duración, y por otro lado, las características del tracto vocal que normalmente indican la distribución de la energía en la frecuencia del rango vocal (conocidos como Coeficientes Cepstrales).
+Por un lado, los rasgos prosódicos, los cuales extraen información de la prosodia, en concreto, tono, energía y duración; Y por otro lado, las características del tracto vocal, que normalmente indican la distribución de la energía en la frecuencia del rango vocal (conocidos como \textit{coeficientes cepstrales}).
 La mayoría de los estudios centrados en este tema usan rasgos espectrales como la información extraída del tracto vocal, lo que supone obtener la información derivada del espectro de la señal de la voz y se usan para modelar los patrones de entonación y frecuencia del hablante \citep{Langari2020}.\\
 
-En \citep{Rashid2018} se ofrece una breve explicación de cada una de las técnicas más comunes analizando sus puntos fuertes y débiles: Así pues, se puede encontrar la Transformada Wavelets Discreta (DWT) que a pesar de mejorar la información que se obtiene del diálogo en la correspondiente banda de frecuencia presenta variaciones indeseadas en los límites debido a que las señales de entrada son de una longitud finita. También se encuentran trabajos donde se usen Coeficientes de Predicción Lineal (LPC) \citep{Rana2014} y \citep{Rashmirekha2013} los cuales hacen estimaciones bastante precisas al extraer las propiedades del tracto vocal, pero son altamente sensibles al ruido de cuantificación, por lo que demuestran no ser precisos cuando hay ruido de fondo. \\
+En \citep{Rashid2018} se ofrece una breve explicación de cada una de las técnicas más comunes analizando sus puntos fuertes y débiles: Así pues, se puede encontrar la Transformada Wavelets Discreta (DWT), que a pesar de mejorar la información que se obtiene del diálogo en la correspondiente banda de frecuencia, presenta variaciones indeseadas en los límites debido a que las señales de entrada son de una longitud finita. También se encuentran trabajos donde se usan Coeficientes de Predicción Lineal (LPC) \citep{Rana2014} y \citep{Rashmirekha2013} los cuales hacen estimaciones bastante precisas al extraer las propiedades del tracto vocal, pero son altamente sensibles al ruido de cuantificación, por lo que demuestran no ser precisos cuando hay ruido de fondo. \\
 
-No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados, estos son:
+No obstante, a lo largo de los últimos años se ha popularizado el uso de otros métodos reportando mejores resultados. Estos son:
 
 \paragraph{Coeficientes Cepstrales con Predicción Lineal (LPCC)}
-Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Esto materializa las características de un canal particular del sonido, teniendo en cuenta que la misma persona con diferentes tonos emocionales tendrá diferentes canales de características, se podrán extraer esos coeficientes para indetificar las emociones contenidas \citep{Sandesara2020}.
+Calcula una envolvente a los Coeficientes de Predicción Lineal (LPC) y luego hace una conversión a coeficientes cepstrales; Esto materializa las características de un canal particular del sonido, teniendo en cuenta que la misma persona con diferentes tonos emocionales tendrá diferentes canales de características, se podrán extraer esos coeficientes para identificar las emociones contenidas \citep{Sandesara2020}.
 Tiene una baja vulnerabilidad al ruido de fondo y mejora el ratio de error en comparación con LPC, pero sigue teniendo una gran sensibilidad al ruido de cuantificación.\hfill \break
 
 \paragraph{Coeficientes Cepstrales en la escala de Mel (MFCC)}
 Es la representación compacta del espectro de una señal de audio.
-MFCC se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por un lado, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano, y por lo otro lado, la separación de frecuencias mediante cepstrales (\emph{Cepstrum}, es el resultado de calcular la transformada de Fourier inversa del espectro de la señal estudiada en escala logarítmica \citep{Childers1977}) que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales) \citep{Davis1980} .\\
+MFCC se basa en la desintegración de la señal para tener como resultado un resumen de las características que la forman. La obtención de este conjunto de valores numéricos se basa por una parte, en el rango de frecuencias de Mel, el cual consiste en una adaptación de frecuencias de la señal a aquellas más fácilmente percibidas por el oído humano; y por otra, la separación de frecuencias mediante cepstrales (\emph{Cepstrum}, es el resultado de calcular la transformada de Fourier inversa del espectro de la señal estudiada en escala logarítmica \citep{Childers1977}), que divide la señal en dos bandas de frecuencias: baja (correspondientes a los fonemas producidos por el tracto vocal) y alta (correspondientes a la excitación de las cuerdas vocales) \citep{Davis1980} .\\
 Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es generado por humanos, por lo que es frecuentemente usada y sugerida para identificar palabras monosilábicas en un discurso \citep{Farouk2014}.\hfill \break
 
 \begin{comment}
@@ -249,7 +249,7 @@ Debido a esto, encapsula la mayor parte de energía proveniente del sonido que es
 
 Enumerando los objetivos clave del proceso serían:
 \begin{enumerate}
-	\item Divide la señal en segmentos de tiempo cortos. Ya que la frecuencia de la señal cambia en la línea temporal, no tendría sentido aplicar la Transformada de Fourier en toda la señal, ya que se perdería parte de la frecuencia a lo largo de ese tiempo produciendo distorsiones.
+	\item Divide la señal en segmentos de tiempo cortos. Ya que la frecuencia de la señal cambia en la línea temporal, no tendría sentido aplicar la Transformada de Fourier en toda la señal, puesto que se perdería parte de la frecuencia a lo largo de ese tiempo produciendo distorsiones.
 	
 	\item Pasar la señal del dominio de tiempo a dominio de frecuencia. Ya que FFT (\textit{Fast Fourier Transform}) asume que la señal de audio es periódica y continua, al fragmentar la señal se garantiza que es periódica, y para la continuidad se aplica la función de ventana de Hann \citep{Smith2011}. Si no se hiciese este paso se producirían distorsiones en las frecuencias más altas.
 	
@@ -283,7 +283,7 @@ El tipo de dato con el que se trabajará principalmente serán señales, concretame
 \end{figure}
 
 Los que se muestra en la figura \ref{fig:waveform} es una representación digital de la onda, de manera que ahora puede ser interpretada y analizada fácilmente.\hfill \break
-La Transformada de Fourier (FFT \emph{Fast Fourier Transform}) responde a cómo extraer características relevantes de esta representación, ya que permite analizar la cantidad de frecuencia contenida en una señal. Esta transforma la señal de un dominio de tiempo a un dominio de frencuencia (figura \ref{fig:timeFrecuencyView}), y el resultado es el espectro \citep{ntiaudio}. \\
+La Transformada de Fourier (FFT \emph{Fast Fourier Transform}) responde a cómo extraer características relevantes de esta representación, ya que permite analizar la cantidad de frecuencia contenida en una señal. Ésta transforma la señal de un dominio de tiempo a un dominio de frencuencia (figura \ref{fig:timeFrecuencyView}), y el resultado es el espectro \citep{ntiaudio}. \\
 %https://stackoverflow.com/questions/59604595/how-to-extract-features-from-fft
 
 \begin{figure}[H]
@@ -294,24 +294,9 @@ La Transformada de Fourier (FFT \emph{Fast Fourier Transform}) responde a cómo e
 \end{figure}
 
 Sin embargo el problema viene cuando en las señales de audio, la cantidad de frecuencia varía en el tiempo, por lo que FFT es insuficiente al no poder representar en el espectro resultante esta variación de la señal en el tiempo. La Transformada de Fourier en tiempo reducido, (\emph{short-time Fast Fourier Transform}) resuelve este problema calculando la FFT en segmentos (ventanas de tiempo) superpuestos de la señal. Tras aplicar el filtro de banco en la escapa Mel mencionado anteriormente, se obtiene finalmente lo que se denomina \textbf{espectrograma}.
-\begin{comment}
-	\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.3]{processFFT.png} 
-	\caption{Proceso del uso de FFT en una señal. Fuente: \href{https://www.mathworks.com/help/dsp/ref/dsp.stft.html}{Mathworks}}
-	\end{figure} 
-	
-	
-	\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.4]{spectogram.png} 
-	\caption{Espectrograma de una muestra aleatoria. Fuente: \href{https://es.other.wiki/wiki/Spectrogram}{Wiki}}
-	\label{fig:espectrogram}
-	\end{figure}
-\end{comment}
 
 
-Este espectrograma (figura \ref{fig:espectrogram}) puede ser entendido como una representación tridimensional de la señal donde sus características (tiempo, frecuencia distribución de energía) pueden ser observadas de manera muy visual. Cuando este espectrograma se computa, el eje X representa el tiempo, el eje Y representa la frecuencia, que es convertida a una escala logarítmica, y la gama de colores que se utiliza es para simbolizar la variación de energía expresada (medida decibelios), donde los tonos más oscuros indican unos valores de energía más altos, y viceversa\citep{Kartik2020}.
+Este espectrograma (figura \ref{fig:espectrogram}) puede ser entendido como una representación tridimensional de la señal donde sus características (tiempo, frecuencia distribución de energía) pueden ser observadas de manera muy visual. Cuando este espectrograma se computa, el eje \textit{X} representa el tiempo, el eje \textit{Y} representa la frecuencia, que es convertida a una escala logarítmica, y la gama de colores que se utiliza es para simbolizar la variación de energía expresada (medida decibelios), donde los tonos más oscuros indican unos valores de energía más altos, y viceversa\citep{Kartik2020}.
 
 
 \begin{figure}[H]
@@ -333,9 +318,9 @@ Este espectrograma (figura \ref{fig:espectrogram}) puede ser entendido como una 
 \end{figure}
 
 
-La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \citep{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir. Es por ello que el rango donde se mueve este espectrograma, se adapta a la \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas \citep{StevensVolkmann}.\\
+La respuesta a por qué las frecuencias son convertidas a una escala logarítmica es sencillamente porque los humanos no percibimos las frecuencias en una escala lineal \citep{Varshney}, es decir, nuestra habilidad para distinguir entre frecuencias fluctúa a lo largo del rango en el que somos capaces de percibir. Es por ello, que el rango donde se mueve este espectrograma se adapta a la \textbf{escala de Mel}, en la cual los armónicos se observan equidistantes, reduciendo como resultado las variantes acústicas que no son significativas \citep{StevensVolkmann}.\\
 
-Finalmente queda entender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello hay que entender como el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en la anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Nuestras articulaciones controlan la forma del tracto vocal, por lo que la forma de onda de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal \citep{Bao2019}.\\
+Finalmente queda comprender el concepto de \emph{Cepstrum} o coeficientes cepstrales, y para ello hay que entender cómo el sonido (respecto a la articulación de palabras) es producido. Técnicamente, esta producción del sonido en la anatomía se definiría como la combinación de las vibraciones producidas por las cuerdas vocales con las vibraciones producidas por la resonancia del tracto vocal. Las articulaciones que una persona realiza al hablar controlan la forma del tracto vocal, por lo que la forma de onda de la voz será reprimida o amplificada a diferentes frecuencias por la forma de nuestro tracto vocal \citep{Bao2019}.\\
 El papel del Cepstrum es la separación de frecuencias en el algoritmo de MFCC, atendiendo a cómo los sonidos son producidos siguiendo un modelo anatómico, de manera que cuando es computado separa la señal de voz y la resonancia del tracto vocal \citep{Nair}. %En \ref{fig:mfcc_process} observamos el paso IDFT, donde tras ajustar la señal a la escala de Mel, se calcula una variante de FFT (\emph{Inverse Discrete Fourier Transform}) y se obtienen los \textbf{coeficientes de MFCC} 
 
 En la figura \ref{fig:cepstralcoef} se pueden observar el resultado de los pasos que se han discutido hasta ahora.
@@ -357,10 +342,10 @@ Dado que se ha convertido una señal de audio en una imagen, ahora se podrá proce
 
 Convencionalmente, el estudio del Reconocimiento de Emociones en el Habla incluye el uso de diferentes tipos de clasificadores entre las que destacan las Máquinas de Vector de Soporte (SVNs \emph{Suport Vector Machines}) ya que se han usado extensamente para el reconocimiento de emociones y pueden llegar a presentar un buen rendimiento en comparación con otros clasificadores tradicionales \citep{Africa2020} y \citep{Jain2020}.
 
-No obstante, en estudios más recientes, se han propuesto clasificadores basados en aprendizaje profundo, los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio\citep{Sandesara2020}.
+No obstante, en estudios más recientes se han propuesto clasificadores basados en aprendizaje profundo, los cuales han superado a los enfoques tradicionales resultando ser más eficientes además de tener la capacidad de aprender las características emocionales en el reconocimiento de emociones a través del audio\citep{Sandesara2020}.
 
 El aprendizaje profundo es un conjunto de algoritmos de aprendizaje automático que modela abstracciones de alto nivel construyendo conceptos complejos a partir de otros más sencillos mediante el uso de una arquitectura jerárquica.
-Esta arquitectura jerárquica es lo que se denomina redes neuronales que son estructuras lógicas cuyo diseño se basa en mayor medida en la organización del sistema nervioso de los mamíferos \citep{Matthew2019}.
+Esta arquitectura jerárquica es lo que se denomina redes neuronales, que son estructuras lógicas cuyo diseño se basa en mayor medida en la organización del sistema nervioso de los mamíferos \citep{Matthew2019}.
 Las neuronas artificiales que la componen son unidades de proceso especializadas en detectar determinadas características de aquello que es percibido \citep{Nielsen2015}.
 
 
@@ -417,7 +402,7 @@ Uno de los mayores avances de los últimos años en el campo de la inteligencia ar
 	\label{fig:netCNN} 
 \end{figure}
 
-La tendencia de los modelos basados en redes neuronales densas en este ámbito, es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las Redes Neuronales Convolucionales (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \citep{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \citep{AbdulQayyum2019} y \citep{Anvarjon2020}.  %\citep{Farooq2020}.
+La tendencia de los modelos basados en redes neuronales densas en este ámbito es aprender características específicas desde varios métodos usados en el reconocimiento de emociones a través de la percepción acústica. En el uso de las Redes Neuronales Convolucionales (CNN) la idea principal es tomar ventaja de las propiedades de la señal, como la conectividad local, los pesos compartidos y el uso de varias capas  \citep{Lim2017}. Estas suponen una importante contribución en la Clasificación Emocional de la Voz debido al uso de características significativas, y su uso en recientes estudios se ha incrementado a lo largo de los años donde destacan los trabajos de \citep{AbdulQayyum2019} y \citep{Anvarjon2020}.  %\citep{Farooq2020}.
 
 \subsubsection{Bases de datos}
 \label{lb:cap_baseDatos}
@@ -430,7 +415,7 @@ Aquí se recogen las bases de datos sobre el reconocimiento de emociones más usad
 		
 		\item RAVDESS (por sus siglas en inglés, \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}) es un popular conjunto dinámico multimodal (contiene varios formatos) donde veinticuatro actores profesionales vocalizan frases en inglés norteamericano modulando ocho emociones (Enfado, Calma, Asco, Tristeza, Alegría, Miedo, Sorpresa y Neutral). Tiene un total de 7356 grabaciones entre audio (hablado), audio(canciones) y vídeo. Cuenta con una completa documentacion \citep{Livingstone2018} y es de acceso público.
 		
-		\item TESS (por sus siglas en inglés, \emph{Toronto Emotional Speech Set data}) es un conjunto de datos compuesto por 2800 archivos de audio donde dos actrices de 26 y 64 años cuya lengua materna es el inglés americano, articulan 200 frases cada una modulándolas en siete emociones (Enfado, Asco, Tristeza, Alegría, Miedo, Sorpresa, y Neutral). Este proyecto fue realizado por la universidad de Toronto \citep{E8H2MF-2020} y es de acceso público.
+		\item TESS (por sus siglas en inglés, \emph{Toronto Emotional Speech Set data}) es un conjunto de datos compuesto por 2800 archivos de audio donde dos actrices de 26 y 64 años cuya lengua materna es el inglés americano, articulan 200 frases cada una y modulándolas en siete emociones (Enfado, Asco, Tristeza, Alegría, Miedo, Sorpresa, y Neutral). Este proyecto fue realizado por la universidad de Toronto \citep{E8H2MF-2020} y es de acceso público.
 		
 		\item EMO-DB es una base de datos alemana cuyos detalles se recogen en \citep{emodb2005}, data del 2005 y es de acceso público. La conforma una colección de 800 grabaciones interpretadas por diez actores (cinco hombres y cinco mujeres) matizando seis emociones (Enfado, Asco, Tristeza, Alegría, Miedo y Neutral) y son llevadas a cabo en una cámara anecoica (capaz de absorber las ondas sonoras o electromagnéticas sin reflejarlas).
 		
@@ -443,11 +428,11 @@ Aquí se recogen las bases de datos sobre el reconocimiento de emociones más usad
 Aunque la mayoría de estudios se basan en análisis que evalúan la precisión del clasificador sobre la propia lengua, el auge de las técnicas basadas en aprendizaje profundo ha permitido aumentar la capacidad de clasificación en los modelos de reconocimiento de emociones. La creación de un mapa de características a partir de diferentes representaciones de la onda sonora con respecto a su frecuencia y tiempo, permiten a las redes neuronales distinguir más atributos para hacer una predicción más exacta. A partir de este paradigma, el intento de clasificar emociones a través de la voz ha sido objeto de estudio aplicando diferentes técnicas.
 
 En \citep{Atmaja2019} proponen sistema basado en una arquitectura LSTM bidireccional (BLSTM) que aplican a un subconjunto de la base de datos IEMOCAP para distinguir entre cuatro emociones(Enfado, excitación, Tristeza y Neutral). Discuten la incapacidad del un modelo BLSTM para detectar características relevantes, y palían el problema añadiendo un modelo de atención. Teniendo ese modelo como punto de partida (BLSTM + modelo de atención), experimentan escogiendo diferentes valores de duración del silencio para medir la eficacia que tendría el modelo si este se eliminara. Además utilizan un complejo sistema de extracción de características entre las que destacan MFCC. Los resultados muestran un máximo del 70.34\% de precisión en los datos sin necesidad de eliminar el silencio de la señal de audio.
-Un año después, J.Wang \citep{Wang2020} propone un modelo dual LSTM donde cada uterancia, se procesa con características MFCC y espectrogramas de MEL simultáneamente. El modelo es entrenado y evaluado en el conjunto de datos IEMOCAP llegando a un 72.7\% de exactitud.
+Un año después, J.Wang \citep{Wang2020} propone un modelo dual LSTM donde cada uterancia se procesa con características MFCC y espectrogramas de MEL simultáneamente. El modelo es entrenado y evaluado en el conjunto de datos IEMOCAP llegando a un 72.7\% de exactitud.
 
 Las redes LSTM cubren en mencionado antes, efecto de contexto, resolviendo el desvanecimiento de gradientes que que se puede encontrar en las redes recurrentes, pero de manera aislada no son las que mejores resultados ofrecen y es por ello, que en otros trabajos se han combinado con CNN para aumentar su rendimiento. Por ejemplo en \citep{Lim2017} se lleva a cabo una comparación de tres  arquitecturas (CNN, LSTM y CNN distribuida en el tiempo) donde LSTM (utilizada de manera aislada) es la que puntúa más bajo. Al mismo tiempo, W.Lim y su equipo estudian el resultado de un sistema híbrido que usa una red convolucional distribuida en el tiempo (una combinación de CNN y LSTM) para clasificar emociones en una secuencia de audio, consiguiendo un 88.01\% de precisión. De nuevo, para aprovechar las ventajas que ofrecen las redes convolucionales, la señal es convertida a imagen (espectrograma), que es entrenada y probada con el corpus EMO-DB (alemán) distinguiendo entre 7 emociones.
 
-Por otro lado, en \citep{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (Enfado, Neutral, y Tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado, se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
+Por otro lado, en \citep{Harar2017} describe un método que utiliza una arquitectura basada en Redes Convolucionales sin selección de características para distinguir únicamente entre tres emociones (Enfado, Neutral, y Tristeza) a través de la voz. Su objetivo es predecir el estado emocional de una persona en una grabación corta de audio donde la mencionada arquitectura consiste en 6 capas convolucionales y 3 densas. Como conjunto de datos utilizan la Base de Datos de Berlín de Discurso Emocional (EMO-DB), un corpus alemán que contiene un total de 800 frases (10 frases distintas re-interpretadas en 7 emociones por 5 mujeres y 5 hombres), del cual extraen un subconjunto de 271 grabaciones etiquetadas. De las señales de audio con las que el sistema es alimentado se han eliminado los segmentos de silencio después de ser estandarizadas consiguiendo una exactitud de 96.97\%.
 
 Con el fin de eliminar el preprocesado de la señal, en \citep{AbdulQayyum2019}  presenta un modelo de redes convolucionales para una clasificación de emociones en el idioma inglés. Este utiliza la base de datos SAVEE, la cual contiene 480 muestras que distinguen entre 6 emociones, interpretadas por hombres y mujeres angloparlantes, donde obtiene finalmente un 81.63\% de precisión. Este trabajo llega a sus resultados mediante la comparación de 3 enfoques (MVR, SVN, y RNN) en el que a cada uno le aplican tres métodos de extracción de características distintos, con el sistema propuesto basado en CNN sin ningún procesado de la señal, siendo este último el que consigue una mejor capacidad de predicción.
 
@@ -512,7 +497,7 @@ En esta sección se valorarán las conclusiones que se extraigan del análisis prev
 Los trabajos de Pell se han centrado durante años en el análisis de la prosodia a través de los idiomas. A pesar de su antigüedad y que no entra demasiado en detalles técnicos, merece la pena mencionar que en \citep{Pell2008} lleva a cabo un estudio comparativo entre la detección emocional de la prosodia en la lengua materna y la extranjera, concluyendo que el proceso para entender las emociones vocales en una lengua no aprendida, implica una mayor exposición a esta para familiarizarse con señales prosódicas correspondientes a significados subyacentes.\hfill \break
 
 
-Cabe destacar que la combinación de métodos, véase algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor, se diluye. 
+Cabe destacar que la combinación de métodos, véase algoritmos de clasificación, filtros para preprocesar la señal, y métodos de extracción de características, así como distintos conjuntos de datos, es realmente diversa, por lo que visualizar una dirección clara para determinar qué línea es la mejor se diluye. 
 
 No obstante hay observaciones, que pueden llevar a una conclusión general; Por ejemplo, y de manera intuitiva, cuanto mayor es el número de clases (emociones en nuestro caso), peor será la capacidad de clasificación de la red, y por eso en algunos trabajos se extrae un subconjunto reduciendo las opciones entre las que clasificar.  
 
@@ -578,17 +563,17 @@ Este tipo de metodología es normalmente adoptada en desarrollo de producto \cite
 		
 	\end{enumerate}
 	
-	\item Elaboración: Se llevan a cabo los experimentos y la implementación de los componentes mediante unos pasos iterativos, a saber:
+	\item Elaboración: se llevan a cabo los experimentos y la implementación de los componentes mediante unos pasos iterativos, a saber:
 	
 	\begin{enumerate}
 		
-		\item Identificación y redacción de una serie de pruebas iniciales con los diferentes métodos y técnicas de la revisión de la literatura, aplicados según el análisis de las bases de datos.
+		\item Identificación y redacción de una serie de pruebas iniciales con los diferentes métodos y técnicas descritas en la literatura, aplicados según el análisis de las bases de datos.
 		
 		\item Implementación en Python de las pruebas diseñadas con las técnicas y arquitecturas identificadas.
 		
 		\item Ajuste de los parámetros así como el balance de los datos con el fin de conseguir un mejor resultado.
 		
-		\item Evaluación: Se evalúan los resultados obtenidos de la implementación antes de decidir la iteración por finalizada. En caso de que los resultados no sean los esperados hay dos posibilidades: Si los errores obtenidos no distan demasiado de las especificaciones parciales, se pueden realizar reajustes en el modelo. Si por el contrario, dichos resultados están demasiado lejos del objetivo, se creará una segunda versión con una estrategia diferente, añadiendo más iteraciones al proceso de elaboración.
+		\item Evaluación: Se evalúan los resultados obtenidos de la implementación antes de decidir la iteración por finalizada. En caso de que los resultados no sean los esperados hay dos posibilidades: si los errores obtenidos no distan demasiado de las especificaciones parciales, se pueden realizar reajustes en el modelo. Si por el contrario, dichos resultados están demasiado lejos del objetivo, se creará una segunda versión con una estrategia diferente, añadiendo más iteraciones al proceso de elaboración.
 	\end{enumerate} 
 	
 	\item Evaluación y comparación de los resultados.
@@ -605,11 +590,11 @@ El objetivo de esta comparativa es contrastar los resultados obtenidos tras apli
 
 \section{Conjunto de Datos}
 \label{lb_c4_datos}
-Los datos en un proyecto de inteligencia artificial son clave de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera y para encontrar una respuesta, se seguirá la estrategia que se presenta a continuación respecto a los datos.
-Es importante mencionar, que por cuestiones de coherencia entre las bases de datos (garantizar que todas las bases de datos con las que se va a trabajar comparten exactamente las mismas emociones), se extraerán de los conjuntos originales, seis emociones para clasificar en este trabajo: Enfado, Asco, Tristeza, Miedo, Felicidad y Neutral. En las figuras correspondientes a cada conjunto se ha marcado en un color más claro la emoción que se suprime.
+Los datos en un proyecto de inteligencia artificial son clave de cara a la obtención de un resultado coherente en nuestro trabajo. Este estudio pretende analizar si es posible clasificar emociones en la lengua extranjera, y para encontrar una respuesta se seguirá la estrategia que se presenta a continuación respecto a los datos.
+Es importante mencionar, que por cuestiones de coherencia entre las bases de datos (garantizar que todas las bases de datos con las que se va a trabajar comparten exactamente las mismas emociones) se extraerán de los conjuntos originales seis emociones para clasificar en este trabajo: Enfado, Asco, Tristeza, Miedo, Felicidad y Neutral. En las figuras correspondientes a cada conjunto se ha marcado en un color más claro la emoción que se suprime.
 
 \subsection{Idioma de referencia: Inglés} El idioma de referencia será el  que aprenda el modelo, y desde el cual se intenten reconocer emociones en otras lenguas, es decir, el idioma que se use en el entrenamiento. En este caso se propone el inglés.\\
-Las bases de datos a las que se ha tenido acceso son limitadas, y no presentan un gran número de muestras, por lo que en previsión de un rendimiento pobre en el modelo, se decidió escoger varias del mismo idioma de cara a un entrenamiento más completo.
+Las bases de datos a las que se ha tenido acceso son limitadas y no presentan un gran número de muestras, por lo que en previsión de un rendimiento pobre en el modelo, se decidió escoger varias del mismo idioma de cara a un entrenamiento más completo.
 
 \paragraph{RAVDESS}
 Como ya se hizo ver en la sección \ref{lb:cap_baseDatos}, RAVDESS (por sus siglas en inglés \emph{Ryerson Audio-Visual Database of Emotional Speech and Song}), contiene 7356 archivos en total, entre los cuales se pueden encontrar tres modalidades: sólo audio (en 16 bit, 48 kHz y en formato wav), audio-video (720p H.264, AAC 48kHz, en formato mp4) y sólo video sin sonido. Esta base de datos contiene veinticuatro actores profesionales vocalizando dos frases en inglés norte americano (\emph{Kids are talking by the door} y \emph{Dogs are sitting by the door}).
@@ -636,7 +621,7 @@ Así por ejemplo, el archivo 03-01-03-01-01-01-01.wav dirá que es un archivo de s
 A pesar de que este dataset hay 7356 muestras para este proyecto únicamente se usarán aquellas que presentan una modalidad de sólo audio, lo que deja un total de 1056 muestras (tras eliminar Sorpresa y Calma), sin embargo como se puede apreciar en la figura \ref{fig:emociones_ravdess} las emociones están bien distribuidas.
 
 \paragraph{SAVEE} (por sus siglas en inglés, \emph{ Surrey Audio-Visual Expressed Emotion}), cuenta con 480 archivos de audio en formato wav muestreados a 44.1 kHz, donde cuatro actores anglosajones (inglés británico) de 27 a 31 años, modulan siete emociones con frases específicas a cada una.
-Cada archivo ha sido etiquetado de manera que el primer carácter (o caracteres, antes de un dígito) corresponde a la emoción que representa. Así las letras 'a', 'd', 'f', 'h', 'n', 'sa' y 'su', corresponden a Enfado (\emph{angry}), Asco (\emph{disgust}), Miedo (\emph{fear}), Felicidad (\emph{happiness}), Neutral (\emph{neutral}), Tristeza (\emph{sadness}), Sorpresa (\emph{surprise}). El número que le sigue a continuación, se refiere a la frase pronunciada. Por ejemplo, el archivo d03.wav hace referencia a la tercera frase de la emoción Asco.
+Cada archivo ha sido etiquetado de manera que el primer carácter (o caracteres, antes de un dígito) corresponde a la emoción que representa. Así las letras 'a', 'd', 'f', 'h', 'n', 'sa' y 'su', corresponden a Enfado (\emph{angry}), Asco (\emph{disgust}), Miedo (\emph{fear}), Felicidad (\emph{happiness}), Neutral (\emph{neutral}), Tristeza (\emph{sadness}), Sorpresa (\emph{surprise}). El número que le sigue a continuación se refiere a la frase pronunciada. Por ejemplo, el archivo d03.wav hace referencia a la tercera frase de la emoción Asco.
 %QUESTION Deberia incluir algunas de las frases?
 
 \begin{figure}[H]
@@ -662,7 +647,7 @@ En la figura \ref{fig:emociones_tess} se puede apreciar la distribución de las e
 
 
 
-\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera al menos haya un porcentaje mayor de reconocimiento que en el segundo conjunto de datos de validación. Para este caso, se propone el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \citep{Fennell2001}.\\
+\subsection{Idioma con raíces fonéticas similares: Alemán} Este conjunto de datos pertenecerá a un idioma con unas raíces similares al idioma de referencia, de manera que se espera al menos haya un porcentaje mayor de reconocimiento que en el segundo conjunto de datos de validación. Para este caso se propone el alemán ya que el idioma de referencia (inglés) es una lengua germánica occidental \citep{Fennell2001}.\\
 
 Para este caso el conjunto de datos propuesto es la Base de Datos del Discurso Emocional de Berlín (EMODB, por sus siglas en inglés \emph{Berlin Database of Emotional Speech}). Este corpus contiene 800 grabaciones interpretadas por diez actores (cinco hombres y cinco mujeres) modulando siete emociones en el idioma alemán. Cada archivo tiene una frecuencia de muestreo de 16 kHz con una resolución de 16 bits, y una duración de 3 segundos de media. Como en el anterior, se utiliza una nomenclatura para nombrar a los archivos que satisface lo siguiente:
 \begin{itemize}
@@ -687,9 +672,9 @@ Las emociones que clasifica son Enfado (W), Aburrimiento (L), Asco (E), Miedo o 
 En la figura \ref{fig:emociones_emodb} se puede apreciar la distribución de las clases en EMO-DB que como puede verse, están muy desajustadas.
 
 \subsection{Idioma con raíces fonéticas distintas: Francés} Este conjunto de datos pertenecerá a un idioma con unas raíces más distantes al idioma de referencia.\\
-Con este conjunto se espera que haya una diferencia notable con respecto al idioma con raíces fonéticas similares, reportando un menor porcentaje de reconocimiento. Para este caso, se propone el idioma francés (que es una lengua romance), utilizando para ello el conjunto de datos en francés canadiense para el reconocimiento de emociones, CaFE, el cual contiene seis frases diferentes pronunciadas por seis hombres y seis mujeres en seis emociones básicas además de Neutral, grabadas cada una en dos intensidades distintas. Este conjunto fue grabado a alta resolución en formato aiff con una frecuencia de muestreo de 192 kHz  y 24 bits por muestra.
+Con este conjunto se espera que haya una diferencia notable con respecto al idioma con raíces fonéticas similares, reportando un menor porcentaje de reconocimiento. Para este caso se propone el idioma francés (que es una lengua romance), utilizando para ello el conjunto de datos en francés canadiense para el reconocimiento de emociones, CaFE, el cual contiene seis frases diferentes pronunciadas por seis hombres y seis mujeres en seis emociones básicas además de Neutral, grabadas cada una en dos intensidades distintas. Este conjunto fue grabado a alta resolución en formato aiff con una frecuencia de muestreo de 192 kHz  y 24 bits por muestra.
 Los archivos están organizados en una jerarquía de carpetas, de manera que no es necesario escanear el archivo para saber el genero del actor, la intensidad, o la emoción representada en el audio, sino que basta irse a la carpeta correspondiente.
-Las emociones que se incluyen aquí son Enfado (\emph{colere}), Asco (\emph{degout}), Alegría (\emph{joie}), Tristeza(\emph{tristesse}), Miedo (\emph{peur}), Sorpresa (\emph{surprise}) y Neutral (\emph{neutre}). En la figura \ref{fig:emociones_cafe}, se ve la distribución original de las mismas.
+Las emociones que se incluyen aquí son Enfado (\emph{colere}), Asco (\emph{degout}), Alegría (\emph{joie}), Tristeza(\emph{tristesse}), Miedo (\emph{peur}), Sorpresa (\emph{surprise}) y Neutral (\emph{neutre}). En la figura \ref{fig:emociones_cafe} se ve la distribución original de las mismas.
 
 
 \begin{figure}[H]
@@ -703,21 +688,21 @@ Las emociones que se incluyen aquí son Enfado (\emph{colere}), Asco (\emph{degou
 
 \section{Extracción de características}
 \label{sec:extraccion_cap4}
-Teniendo en cuenta el previo estudio de la literatura en el capítulo 2, se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
+Teniendo en cuenta el previo estudio de la literatura en el capítulo 2 se concluye que los métodos más prometedores, y que por lo tanto merecen la pena aplicar a este estudio comparativo serían los siguientes:
 \subsubsection{Coeficientes Cepstrales en la escala de Mel}
 Como ya se ha mencionado, MFCC es uno de los mejores algoritmos para capturar características de la señal de audio por su similitud a cómo el sistema auditivo humano procesa el sonido y las frecuencias, de la misma manera, su efectividad se ha visto reportada y discutida a lo largo de otros estudios.
 La librería usada para la manipulación de audio Librosa ofrece la posibilidad de extraer características MFCC de un archivo de audio. En cuanto a la configuración, se extraerán 13 características MFCC usando el rango de muestreo del propio archivo de audio \citep{Bao2019}.
 
 \subsection{Espectrogramas}
 %Como ya se había explicado en la sección \ref{label}, los espectrogramas son la representación visual de un espectro de frecuencias de una señal que varía con el tiempo \citep{wikipedia2021}
-Como se vio en el capítulo 2, y siguiendo los pasos de los trabajos \citep{Anvarjon2020} y \citep{Mustaqeem2020}, el uso de espectrogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto para este trabajo, se hará uso de los espectrogramas de las características MFCC de la señal, cuyo proceso constará de dos partes: 
+Como se vio en el capítulo 2, y siguiendo los pasos de los trabajos \citep{Anvarjon2020} y \citep{Mustaqeem2020}, el uso de espectrogramas hace referencia a la conversión de la señal a imagen, y el objetivo de esta técnica es aprovechar las fortalezas de las redes convolucionales en las imágenes aplicándolas a un problema de señal de audio. En concreto, para este trabajo se hará uso de los espectrogramas de las características MFCC de la señal, cuyo proceso constará de dos partes: 
 \begin{enumerate}
-	\item Generación de espectrogramas como imagen
-	\item Lectura y procesado de las imágenes que alimentarán la red
+	\item Generación de espectrogramas como imagen.
+	\item Lectura y procesado de las imágenes que alimentarán la red.
 \end{enumerate}
 
-Para generar estos espectrogramas, se hará con la ayuda del paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; Una vez generadas, se guardan en disco recortando el padding 0.05 pulgadas y en formato jpg.
-Finalmente, las imágenes generadas son leídas con la ayuda de OpenCV donde se transforma su canal de color a RGB y son re-dimensionadas con un tamaño de 40 x 30 píxeles. Las figuras generadas tendrán un aspecto como el que se muestra en la figura \ref{fig:mfcc_sample}
+Esto espectrogramas se generarán con el paquete Librosa, especificando en los correspondientes parámetros la extracción 13 características MFCC; una vez generadas, las imágenes se guardan en disco recortando el \textit{padding} 0.05 pulgadas y en formato jpg.
+Finalmente, las imágenes generadas son leídas con la ayuda de OpenCV, donde se transforma su canal de color a RGB y son re-dimensionadas con un tamaño de 40 x 30 píxeles. Las figuras generadas tendrán un aspecto como el que se muestra en la figura \ref{fig:mfcc_sample}
 
 \begin{figure}[H]
 	\centering
@@ -758,7 +743,7 @@ Los siguientes puntos se aplicarán a todas las pruebas:
 
 %MFCC values are not very robust in the presence of additive noise, and so it is common to normalize their values in speech recognition systems to lessen the in influence of noise.
 \begin{itemize}
-	\item El proceso de estandarización consistirá en el cociente entre la media artimética de los valores de los datos de entrenamiento, y la desviación normal de los de test. En esta técnica los valores son centrados con respecto a su media con una desviación estándar, consiguiendo una mejora en la estabilidad numérica del modelo. Ya que a lo largo de las pruebas, se usarán combinaciones de aumentos de datos e incluso mezclas entre distintos datasets, es recomendable aplicar este paso.
+	\item El proceso de estandarización consistirá en el cociente entre la media artimética de los valores de los datos de entrenamiento, y la desviación normal de los de test. En esta técnica los valores son centrados con respecto a su media con una desviación estándar, consiguiendo una mejora en la estabilidad numérica del modelo. Ya que, a lo largo de las pruebas se usarán combinaciones de aumentos de datos e incluso mezclas entre distintos datasets, es recomendable aplicar este paso.
 	%https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/
 	
 	\item  La categorización cambia el formato de los datos para su uso en el modelo con keras. En nuestro caso se utilizará la codificación \textit{One Hot} que representa los enteros en secuencias de bits. Esto se hace con el fin de evitar que los números enteros no confundan al modelo asignándole una peso proporcional al índice asociado a una clase (categoría).
@@ -775,14 +760,14 @@ En un primer análisis exploratorio de los datos, se han estudiado las diferencia
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4]{comparative_waveform.png} 
-	\caption{Comparativa de los extractos de voz por género en RAVDESS}
+	\caption{Comparativa de los extractos de voz por género en RAVDESS. Fuente propia}
 	\label{fig:comp_emociones_genero}
 \end{figure}
 En la figura \ref{fig:comp_emociones_genero} se puede observar la comparación de la voz masculina (naranja) y la voz femenina (azul) por cada una de las emociones en el idioma inglés. Ya que es muy distinto, puede ser recomendable dividir el conjunto de datos atendiendo a esta característica.
 
 
 \subsection{Técnicas de aumento de datos}
-Dado el bajo número de muestras en los distintos conjuntos de datos a los que se pudo acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual, se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
+Dado el bajo número de muestras en los distintos conjuntos de datos a los que se pudo acceder, se ha visto conveniente explorar distintas técnicas de aumento de datos. El aumento de datos es una técnica por la cual se aumenta el número de muestras en un conjunto mediante la creación de nuevas muestras sintéticas con pequeñas modificaciones a cada uno de los archivos. Esta aumento de los datos se puede traducir por una reducción del overfitting (sobreajuste), ya que el modelo se mantendría invariable mejorando así su capacidad de generalización.
 Esta técnica es ampliamente conocida cuando se procesan imágenes, siendo esas modificaciones rotaciones, transposiciones etc. 
 
 Se sabe que el sonido tiene las siguientes características: tono, duración, timbre e intensidad\citep{Moataz2011}, por lo que se deben modificar levemente los datos alrededor de esas características de manera que sólo difieran en pequeños factores de la muestra original.
@@ -902,7 +887,7 @@ A pesar de que la arquitectura citada en la sección anterior, será con la que se
 
 \subsubsection{Modelo CNN 1D}
 \label{cap4:Modelo2}
-En un principio, se optó por una línea de trabajo inspirada en el estudio de \citep{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
+En un principio se optó por una línea de trabajo inspirada en el estudio de \citep{AbdulQayyum2019} ya que combina buenos resultados y un sistema sencillo. Pero tras varias pruebas esta arquitectura se ha refinado hasta definirse, por ahora, lo siguiente:
 
 \begin{itemize}
 	\item 2 capas convolucionales unidimensionales con activación Relu. El número de filtros es de 128 y  y el tamaño del kernel de 5.
@@ -970,7 +955,7 @@ Las dos principales métricas que se usarán para decidir cómo de buena es la pred
 \end{itemize}
 
 En algunos casos, la \emph{accuracy} puede ser engañosa debido a la paradoja de la exactitud donde puede existir un sesgo por a una distribución desbalanceada de las clases \citep{Valverde-Albacete2013}. Esto hace que pueda ser más inteligente elegir un modelo con menor exactitud pero con mayor poder predictivo.
-Para ver ese poder predictivo por lo tanto, es aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión.
+Para ver ese poder predictivo es, por lo tanto, aconsejable elegir más de una métrica de evaluación. Para ello se contará con F1 Score que es la media armónica entre el \emph{recall} y la precisión.
 
 Estas métricas se aplicarán a todas las clases en cada uno de los experimentos con el objetivo de determinar cómo de bueno es el modelo a la hora de reconocerlas. Como se ha visto en la presentación de las bases de datos, la clases tienden a estar muy balanceadas con la excepción de EMO-DB en alemán. Por ello, para tener una representación más igualitaria se aplicarán técnicas de aumento de datos a este conjunto y se balanceará el número de sus clases.
 
@@ -983,7 +968,7 @@ Accuracy y F1 se tomarán por cada una de las clases, a la vez que se observa el 
 En la presente sección se expondrán los diseños de los experimentos para cumplir los objetivos establecidos en el capítulo 3. Por un lado hay que conseguir un modelo que sea capaz de clasificar satisfactoriamente en el idioma con el que se entrena, para que finalmente se evalúe este modelo en otras lenguas distintas permitiendo hacer una comparación. Por ello, se divide la presente en dos bloques, con la intención de que al lector le resulte más fácil seguir la narrativa de este proyecto. Dentro de estos bloques se muestran los experimentos planteados, que a su vez están formados por varias pruebas con una configuración similar.
 
 \subsection{Búsqueda del mejor modelo}
-Estos experimentos giran en torno a la búsqueda del modelo en el que más tarde, se validarán los lenguajes extranjeros. Como resumen se ofrece al final, la tabla \ref{tab:resumenTests1} que resume las características más diferenciadoras de cada uno de estas pruebas.
+Estos experimentos giran en torno a la búsqueda del modelo en el que, más tarde, se validarán los lenguajes extranjeros. Como resumen se ofrece al final, la tabla \ref{tab:resumenTests1} que resume las características más diferenciadoras de cada uno de estas pruebas.
 
 \subsubsection{Experimento 1}
 \begin{enumerate}[label*= Prueba 1.\Alph*, leftmargin=3cm]
@@ -2357,18 +2342,18 @@ Para finalizar esta tesis de máster, se reúnen a continuación las conclusiones e
 Respecto al primer objetivo específico, el cual consistía en una revisión en profundidad de la literatura actual, se abordó en el capítulo 2. Se llegó a la conclusión de que no existía una línea definida sobre qué métodos, técnicas y datos  eran los más adecuados, para abordar este problema. Añadir además que, si bien el número de artículos sobre el reconocimiento de emociones en una lengua es abundante, no existe un oferta tan extensa para abordar el problema del reconocimiento de emociones en la lengua extranjera. Debido a esto, se decidió apostar por las técnicas que más apoyo tenían por parte de la literatura.
 
 
-De esta manera, una vez se reunieron los conjuntos de datos que atendían a las condiciones establecidas en el capítulo 3, se pasó al siguiente punto de los objetivos específicos donde se debía diseñar una solución cuyo porcentaje de exactitud fuese superior a un 81\%. Los tres mejores modelos desarrollados en este trabajo consiguieron una puntuación por encima de la marca que se propuso, donde la diversidad de datos jugó un papel determinante. Esta estrategia no sólo redujo el overfitting, si no que hizo posible un modelo más rentable, ya que en comparación a las arquitecturas de otros trabajos, los tres modelos propuestos conseguían mejor porcentaje de acierto con diseños más simples.
-En el desarrollo de los modelos se comprobó que la generación de datos sintéticos podía ser contraproducente (especialmente con ruido blanco). Por otra parte quedó clara la superioridad del uso de espectrogramas para un clasificador de emociones mono-lenguaje, especialmente con una arquitectura híbrida CNN-LSTM ya que tiene en cuenta la información temporal inherente a la señal de audio.
+De esta manera, una vez se reunieron los conjuntos de datos que atendían a las condiciones establecidas en el capítulo 3, se pasó al siguiente punto de los objetivos específicos donde se debía diseñar una solución cuyo porcentaje de exactitud fuese superior a un 81\%. Los tres mejores modelos desarrollados en este trabajo consiguieron una puntuación por encima de la marca que se propuso, donde la diversidad de datos jugó un papel determinante. Esta estrategia no sólo redujo el overfitting, si no que hizo posible un modelo más rentable, ya que en comparación a las arquitecturas de otros trabajos se logró mejor porcentaje de acierto con diseños más simples.
+En el desarrollo de los modelos se comprobó que la generación de datos sintéticos podía ser contraproducente (especialmente con ruido blanco). Por otra parte, quedó clara la superioridad del uso de espectrogramas para un clasificador de emociones mono-lenguaje, especialmente con una arquitectura híbrida CNN-LSTM ya que tiene en cuenta la información temporal inherente a la señal de audio.
 
-Por lo que respecta a los experimentos hechos evaluando una lengua extranjera y atendiendo al último punto de los objetivos, se ha llegado a las mismas conclusiones que Tamulevicius \citep{Tamulevicius2020} donde tras hacer diversas pruebas con diferentes idiomas, únicamente puede reconocer aquellos con los que entrena su modelo. No obstante, extrayendo lo aprendido en este trabajo, se desaconseja tratar la señal acústica con imágenes estáticas (espectrogramas) por no adaptarse correctamente a cómo estas funcionan y perder información importante.
+Por lo que respecta a los experimentos hechos evaluando una lengua extranjera y atendiendo al último punto de los objetivos, se ha llegado a las mismas conclusiones que Tamulevicius \citep{Tamulevicius2020} donde tras hacer diversas pruebas con diferentes idiomas, únicamente puede reconocer aquellos con los que entrena su modelo. No obstante, tras extraer lo aprendido en este trabajo, se desaconseja tratar la señal acústica con imágenes estáticas (espectrogramas) por no adaptarse correctamente a cómo estas funcionan y perder información importante.
 
-La estrategia que se planteó donde las lenguas extranjeras se dividían según su similitud fonética parece no ser muy relevante coincidiendo con \citep{Pell2008} donde afirma que para reconocer el estado emocional en una lengua no aprendida, se necesita mayor exposición a esta.\\
+La estrategia que se planteó donde las lenguas extranjeras se dividían según su similitud fonética parece no ser muy relevante coincidiendo con \citep{Pell2008}, donde afirma que para reconocer el estado emocional en una lengua no aprendida se necesita mayor exposición a esta.\\
 
 
 
 Debido a los ajustados tiempos de entrega, el alcance de este proyecto se ha debido simplificar, por lo que se plantean líneas de trabajo futuras:
 
-En este trabajo se han explorado el reconocimiento de emociones en la voz usando características cepstrales, ya que por la revisión del estado del arte, se asumió que eran de las que mejor funcionaban. Aunque los resultados del clasificador sobre una sola lengua, estuvieron a la altura de otros estudios, atendiendo al análisis previo en este mismo capítulo, se considera que esta no es la mejor manera de abordar ese problema.
+En este trabajo se han explorado el reconocimiento de emociones en la voz usando características cepstrales, ya que revisando la literatura, se asumió que eran de las que mejor funcionaban. Aunque los resultados del clasificador sobre una sola lengua estuvieron a la altura de otros estudios, atendiendo al análisis previo en este mismo capítulo se considera que esta no es la mejor manera de abordar ese problema.
 
 Por un lado se cree que sería recomendable no tratar las emociones como categorías discretas, ya que varían enormemente de un lenguaje a otro. Esto requiere un análisis más en profundidad sobre la fonética en el idioma en cuanto a la expresión emocional para conseguir una mayor independencia cultural.
 
