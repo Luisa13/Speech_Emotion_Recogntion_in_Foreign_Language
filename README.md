@@ -23,11 +23,8 @@ Project
        |_______model
 ```
 
+
+
+
 ### Author and License
 Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE)
-
-REFERENCES:
-* [Organinzing ML project](https://www.jeremyjordan.me/ml-projects-guide/)
-* [CookieCutter: Structure dataScience project](https://drivendata.github.io/cookiecutter-data-science/)
-* [ML project structure template](https://github.com/ThomasRobertFr/ml-project-structure)
-* [create ml app](https://github.com/shreyashankar/create-ml-app)
