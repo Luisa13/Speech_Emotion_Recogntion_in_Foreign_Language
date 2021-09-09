@@ -1,5 +1,5 @@
 # Speech Emotion Recognition in a Foreign Language
-Classify and recognize emotions through vi%e signal in a foreign language
+Classify and recognize emotions through voice signal in a foreign language.
 This work attemps to performs a speech emotional recognition through three languages. For this purpose, three different models have been implemented and trained in english and subsequently tested in other two languages which never took part in the training (french and german). It is assumed that speech audio signals carry emotional information that can be retrieved  and hence MFCC (Mel-Frecuency Cepstral Coefficients) are extracted since they are recognized as best suited  to represents emotions through prosody. Different classifiers based on convolutional neural network architecture were used. The results show that the CNN-LSTM outperform over the other options with a 92.06% of accuracy in a monolinguistic classification in english. On the other hand, appliying the same approach in a cross language classification did not deliver satisfactory results.
 
 ### Requirements
