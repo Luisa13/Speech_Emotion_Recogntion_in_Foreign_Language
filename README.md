@@ -1,5 +1,7 @@
 # Speech Emotion Recognition in a Foreign Language
+Is one able to recognize the sentiments behind a conversation in a unknown language? Is is possible to distinguish the same emotions in a foreign language that one does in their mother tongue? The emotional background hidden in the speach is a key factor in the human communication.
 This work attemps to performs a speech emotional recognition through three languages. For this purpose, three different models have been implemented and trained in english and subsequently tested in other two languages which never took part in the training (french and german). It is assumed that speech audio signals carry emotional information that can be retrieved  and hence MFCC (Mel-Frecuency Cepstral Coefficients) are extracted since they are recognized as best suited  to represents emotions through prosody. Different classifiers based on convolutional neural network architecture were used. The results show that the CNN-LSTM outperform over the other options with a 92.06% of accuracy in a monolinguistic classification in english with six classes. On the other hand, appliying the same approach in a cross language classification did not deliver satisfactory results.
+
 
 ### Requirements
 * Python 3.6 or higher
