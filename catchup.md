@@ -8,7 +8,7 @@ Nombre | Descripcion | Codigo   | Tutorial
 **Mkosaka** |RAVDESS con mel y MFCC con 1d y 2d. Implementa bastantes modelos entre ellos VG16. Muy recomendable, aunque la forma que tiene de leer las imagenes es confusa |[github](https://github.com/mkosaka1/Speech_Emotion_Recognition) | X
 **RAVDESS Transformer** | Muy muy complejo. Modelo usa transformer y CNN sobre RAVDESS que es aumentado con AWGN | [github](https://github.com/IliaZenkov/transformer-cnn-emotion-recognition)| X
 **Ayushgoal** | RAVDESS y SAVEE con tecnicas de data augmentation y cnn y lstm (2D)| [github](https://github.com/ayushgoyal7796/Speech-Emotion-Recognition) | X
-**BAIABAIA** | todo |[github](https://github.com/aascode/Speech-Emotion-Recognition-4)| X
+**BAIABAIA** | ser cross language techniques |[github](https://github.com/aascode/Speech-Emotion-Recognition-4)| X
 
 
 
