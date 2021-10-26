@@ -4,12 +4,20 @@ This work attemps to performs a speech emotional recognition through three langu
 
 ![image](https://user-images.githubusercontent.com/3811449/138940119-6fc90d68-d81d-4e08-8113-a9c3b6fffb96.png)
 
+*system proposal*
+
+
 ![image](https://user-images.githubusercontent.com/3811449/138965337-bf9a3c9e-df0f-44a2-9b29-d9c84f4103d3.png)
 
+*Architechture based on unidimensional CNN and corresponding performance*
 
 ![image](https://user-images.githubusercontent.com/3811449/138965191-08856635-c233-4fcb-9320-d9198d69b61d.png)
 
+*Architechture based on bidimensional CNN and corresponding performance*
+
 ![image](https://user-images.githubusercontent.com/3811449/138965623-7c42de66-ded6-46dc-931f-ceea3848d3aa.png)
+
+*Architechture based on bidimensional CNN - LSTM and corresponding performance*
 
 
 
