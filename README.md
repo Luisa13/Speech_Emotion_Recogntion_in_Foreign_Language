@@ -21,8 +21,10 @@ This work attemps to performs a speech emotional recognition through three langu
 
 
 
+### Datasets
+- **SAVEE** : (*Surrey Audio-Visual Expressed Emotion*)  It is an emotion recognition dataset that consists of recordings from 4 male actors in 7 different emotions, 480 British English utterances in total. The sentences were chosen from the standard TIMIT corpus and phonetically-balanced for each emotion [[1]](#1).
 
-
+- **TESS** : (*Toronto emotional speech set* ) Set of 200 target words were spoken in the carrier phrase "Say the word__ " by two actresses (aged 26 and 64 years) and recordings were made of the set portraying each of seven emotions (anger, disgust, fear, happiness, pleasant surprise, sadness, and neutral). There are 2800 data points (audio files) in total [[2]](#2)..
 
 
 
@@ -49,6 +51,11 @@ Project
 
 
 ### References
+
+<a id="1">[1]</a>  Jackson P., & ul Haq S. (2011). [Surrey Audio-Visual Expressed Emotion (SAVEE) database](http://kahlan.eps.surrey.ac.uk/savee/).
+
+<a id="2">[2]</a>  Kate Dupuis, M. Kathleen Pichora-Fuller (2010), University of Toronto, Psychology Department. [doi.org/10.5683/SP2/E8H2MF](https://tspace.library.utoronto.ca/handle/1807/24487)
+
 
 ### Author and License
 Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE)
