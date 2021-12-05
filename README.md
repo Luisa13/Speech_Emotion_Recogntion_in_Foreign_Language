@@ -21,12 +21,15 @@ This work attemps to performs a speech emotional recognition through three langu
 
 
 
-### Datasets
+### Datasets for training
 - **SAVEE** : (*Surrey Audio-Visual Expressed Emotion*)  It is an emotion recognition dataset that consists of recordings from 4 male actors in 7 different emotions, 480 British English utterances in total. The sentences were chosen from the standard TIMIT corpus and phonetically-balanced for each emotion [[1]](#1).
 
 - **TESS** : (*Toronto emotional speech set* ) Set of 200 target words were spoken in the carrier phrase "Say the word__ " by two actresses (aged 26 and 64 years) and recordings were made of the set portraying each of seven emotions (anger, disgust, fear, happiness, pleasant surprise, sadness, and neutral). There are 2800 data points (audio files) in total [[2]](#2)..
 
+### Datasets for test
+- **EMO-DB**: It's the freely available German emotional database. The database is created by the Institute of Communication Science, Technical University, Berlin, Germany. The database contains a total of 535 utterances. The EMODB database comprises of seven emotions: 1) anger; 2) boredom; 3) anxiety; 4) happiness; 5) sadness; 6) disgust; and 7) neutral. The data was recorded at a 48-kHz sampling rate and then down-sampled to 16-kHz.
 
+- **CaFE**: ( _Canadian French Emotional_) This speech dataset contains six different sentences, pronounced by six male and six female actors, in six basic emotions plus one neutral emotion. The six basic emotions are acted in two different intensities. It's [freely available](https://zenodo.org/record/1478765#.YazF8KTMIrg) under a Creative Commons license (CC BY-NC-SA 4.0) and was digitally recorded at a high-resolution (192 kHz sampling rate, 24 bits per sample).
 
 ### Requirements
 * Python 3.6 or higher
