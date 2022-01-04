@@ -61,4 +61,4 @@ Project
 
 
 ### Author and License
-Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE)
+Luisa Sanchez Avivar 2021 under licence of [GNU AGPL v 3.0](https://github.com/Luisa13/SpeechEmotionRecognition/blob/master/LICENSE). The original version of this work was firstly issued by University at [its repository](https://reunir.unir.net/handle/123456789/12260).
